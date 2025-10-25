@@ -1,0 +1,33 @@
+\cleardoublepage
+\pdfbookmark{\contentsname}{tableofcontents}
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}     
+
+\tableofcontents
+\clearpage
+
+\begingroup
+    \let\clearpage\relax
+    \let\cleardoublepage\relax
+    \let\cleardoublepage\relax
+
+    % Figures list
+    \phantomsection
+    \pdfbookmark{\listfigurename}{lof}
+    \listoffigures
+    \vspace*{8ex}
+
+    % Tables list
+    \phantomsection
+    \pdfbookmark{\listtablename}{lot}
+    \listoftables
+\endgroup
+
+\begingroup
+    % Code list
+    \phantomsection
+    \pdfbookmark{\listoflistingscaption}{lol}
+    \listoflistings
+\endgroup
+
+\cleardoublepage

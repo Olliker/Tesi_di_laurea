@@ -1,0 +1,40 @@
+\documentclass[
+    table,
+    12pt,
+    oneside,
+    a4paper,
+    italian
+]{book}
+
+\input{config/packages}
+\input{config/thesis_config}
+
+\date{}
+
+\hypersetup{pdfstartview=}
+\begin{document}
+    \frontmatter
+    \input{preface/1_title_page}
+    \increasepagenumbering % increase the page numbrering by 1, in order to cout the frontispiece
+    \input{preface/2_copyright}
+    \input{preface/3_acknowledgements}
+    \input{preface/4_abstract}
+    \input{preface/5_table_of_contents}
+    \printglossary[type=\acronymtype, title=Acronimi e abbreviazioni, toctitle=Acronimi e abbreviazioni]
+    \printglossary[type=main, title=Glossario, toctitle=Glossario]
+    \blankpage % example of a blank page that also increases the page couter by 1
+
+    \mainmatter
+    \input{chapters/1_introduction}
+    \input{chapters/2_processes}
+    \input{chapters/3_stage_desc}
+    \input{chapters/4_requirement_analysis}
+    \input{chapters/5_design_coding}
+    \input{chapters/6_verify_validate}
+    \input{chapters/7_conclusions}
+
+    \pagenumbering{roman}
+    \backmatter
+    \input{references/bibliography}
+    \input{references/webliography}
+\end{document}
