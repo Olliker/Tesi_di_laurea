@@ -1,45 +1,25 @@
 \chapter{Introduzione}
 \label{chap:introduzione}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[alt={Testo alternativo dell'immagine}, width=1\columnwidth]{img/quantum_entanglement.jpeg}
-    \caption{Lorem}
-    \label{fig:entanglement}
-\end{figure}
-
-Introduzione al contesto applicativo.
-
-Lorem Figure \ref{fig:entanglement}
-
-Esempio di utilizzo di un termine nel glossario \gls{api}.
-
-Esempio di citazione direttamente nel testo \cite{site:agile-manifesto}.
-
-Esempio di citazione nel piè di pagina \footcite{womak:lean-thinking}.
-
-\lipsum[1-2]
-
 \section{L'azienda}
-\lipsum[1]
+Spazio Dev S.r.l. è una realtà giovane, fondata nel 2023 a Tombolo (PD), che opera come partner tecnologico per aziende industriali e commerciali con un approccio aperto e flessibile. Offre sviluppo software su misura, integrazione di sistemi e servizi cloud; progetta siti web, e-commerce e soluzioni gestionali per migliorare i processi produttivi e commerciali, con focus su integrazioni affidabili e supporto post-rilascio.
+
+\subsection{ErpAI}
+\mbox{ErpAI} è un progetto di Spazio Dev S.r.l. volto a realizzare un gestionale ERP modulare, destinato a essere venduto e personalizzato per le aziende clienti. La piattaforma è pensata per coprire anagrafiche (prodotti, clienti, fornitori), flussi amministrativi (fatture di vendita e acquisto, ordini, magazzino) e componenti avanzate come schedulazione di macchine/turni e previsione delle vendite. L’architettura modulare consente di attivare solo i domini necessari e di integrarli con sistemi esistenti tramite API, mantenendo la flessibilità per personalizzazioni settoriali e successive estensioni di prodotto.
 
 \section{L'idea}
-Introduzione all'idea dello stage\footcite{article:spooky}.
-\lipsum[1-3]
+Per completare l’offerta di ErpAI, è stata identificata la necessità di un motore di previsione vendite che supporti la pianificazione produttiva e riduca il rischio di stock-out o overstock. Il progetto nasce dal confronto con le richieste di clienti che vogliono decisioni più tempestive su produzione, approvvigionamenti e allocazione delle risorse.
+
+Il lavoro dello stage si concentra su questa componente predittiva: partire dai dati storici delle fatture, pulirli e trasformarli in feature utili, addestrare un modello (XGBoost) per stimare la domanda futura, valutarlo usando WAPE come metrica principale e rendere i risultati disponibili ai moduli di pianificazione dell’ERP. Il modulo è implementato in Python ed esposto tramite FastAPI per l’integrazione via API con ErpAI; include spiegazioni delle previsioni con SHAP per aderire ai principi di explainable AI (XAI) e facilitare il confronto con gli stakeholder. La prima versione è stata sviluppata su un caso aziendale specifico e potrà essere adattata in futuro per gestire dataset e contesti di aziende differenti, variando feature, pre-processing e parametri del modello in base alle esigenze.
 
 \section{Organizzazione del testo}
 \begin{description}
-    \item[{\hyperref[chap:processi-metodologie]{Il secondo capitolo}}] descrive ...
-    
-    \item[{\hyperref[chap:descrizione-stage]{Il terzo capitolo}}] approfondisce ...
-    
-    \item[{\hyperref[chap:analisi-requisiti]{Il quarto capitolo}}] approfondisce ...
-    
-    \item[{\hyperref[chap:progettazione-codifica]{Il quinto capitolo}}] approfondisce ...
-    
-    \item[{\hyperref[chap:verifica-validazione]{Il sesto capitolo}}] approfondisce ...
-    
-    \item[{\hyperref[chap:conclusioni]{Nel settimo capitolo}}] descrive ...
+    \item[{\hyperref[chap:processi-metodologie]{Il secondo capitolo}}] introduce processi e metodologie usati durante lo stage, con focus sulle scelte pratiche adottate su dati reali.
+    \item[{\hyperref[chap:descrizione-stage]{Il terzo capitolo}}] inquadra Spazio Dev, il percorso di stage e gli obiettivi concordati.
+    \item[{\hyperref[chap:analisi-requisiti]{Il quarto capitolo}}] dettaglia i requisiti funzionali e non funzionali del motore di previsione e i vincoli di integrazione con ErpAI.
+    \item[{\hyperref[chap:progettazione-codifica]{Il quinto capitolo}}] descrive progettazione e sviluppo: pipeline dati, modello XGBoost, API FastAPI e explainability con SHAP.
+    \item[{\hyperref[chap:verifica-validazione]{Il sesto capitolo}}] presenta verifiche e validazione su WAPE, robustezza e integrazione nel flusso ERP.
+    \item[{\hyperref[chap:conclusioni]{Nel settimo capitolo}}] raccoglie conclusioni e possibili evoluzioni per adattare il motore a clienti e dataset differenti.
 \end{description}
 
 Riguardo la stesura del testo, relativamente al documento sono state adottate le seguenti convenzioni tipografiche:
@@ -48,17 +28,5 @@ Riguardo la stesura del testo, relativamente al documento sono state adottate le
 	\item per la prima occorrenza dei termini riportati nel glossario viene utilizzata la seguente nomenclatura: \gls{apig};
 	\item i termini in lingua straniera o facenti parti del gergo tecnico sono evidenziati con il carattere \textit{corsivo}.
 \end{itemize}
-
-\begin{listing}[H]
-\begin{minted}{c}
-#include <stdio.h>
-int main() {
-    print("Hello, world!");
-    return 0;
-}
-\end{minted}
-\caption{Example of code}
-\label{listing:a}
-\end{listing}
 
 \newpage
