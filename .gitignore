@@ -25,6 +25,7 @@
 *.synctex.gz
 *.toc
 *.xmpi
+thesis/files/thesis.xmpdata
 
 # minted cache output
 **/minted-caches/

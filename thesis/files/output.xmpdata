@@ -1,5 +1,5 @@
-\Title{Lorem Ipsum Dolor Sit Amet}
-\Author{Paperino Paolino}
+\Title{Progettazione di un Motore di Previsione Acquisti per Sistemi ERP Aziendali}
+\Author{Oliver Florin Stiglet}
 \Language{it-IT}
-\Subject{Lorem Ipsum Dolor sit}
-\Keywords{Lorem\sep Ipsum\sep Dolor}
+\Subject{Motore di previsione per acquisti integrato in ERP, sviluppo e integrazione}
+\Keywords{Previsione vendite\sep ERP\sep XGBoost\sep FastAPI\sep Explainable AI}
