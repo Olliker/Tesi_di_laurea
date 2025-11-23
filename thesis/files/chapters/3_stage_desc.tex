@@ -2,76 +2,76 @@
 \label{chap:descrizione-stage}
 
 \section{Introduzione al progetto}
-\begin{figure}[H] 
-    \centering 
-    \includegraphics[alt={Testo alternativo dell'immagine}, width=0.5\columnwidth]{img/pk_estate.jpeg}
-    \caption{Caption}
-    \label{fig:pk_estate}
-\end{figure}
-\lipsum[1]
+Il modulo di previsione sviluppato durante lo stage stima la domanda futura di prodotti finiti per supportare la pianificazione MRP di \textit{ErpAI}. Le stime si basano sullo storico delle fatture di vendita e vengono propagate lungo le distinte base per evidenziare i fabbisogni di semilavorati e materie prime. I risultati vengono messi a disposizione dei planner come proposte rivedibili, affiancando inizialmente il processo manuale.
+
+Obiettivi principali:
+\begin{itemize}
+    \item ridurre stock-out e fermate impianto anticipando materiali critici;
+    \item limitare overstock e costi di magazzino evitando produzioni o acquisti non necessari;
+    \item fornire previsioni integrabili con il modulo di planning e l’interfaccia utente per approvare o modificare le proposte.
+\end{itemize}
+
 
 \section{Analisi preventiva dei rischi}
 
-Durante la fase di analisi iniziale sono stati individuati alcuni possibili rischi a cui si potrà andare incontro.
-Si è quindi proceduto a elaborare delle possibili soluzioni per far fronte a tali rischi.
+Durante la fase iniziale sono stati individuati alcuni rischi specifici per il modulo di previsione e la sua integrazione:
 
-\begin{risk}{Performance del simulatore hardware}
-    \riskdescription{le performance del simulatore hardware e la comunicazione con questo potrebbero risultare lenti o non abbastanza buoni da causare il fallimento dei test}
-    \risksolution{coinvolgimento del responsabile a capo del progetto relativo il simulatore hardware}
-    \label{risk:hardware-simulator} 
+\begin{risk}{Qualità e quantità dei dati storici}
+    \riskdescription{dati di vendita incompleti o disomogenei possono ridurre l’accuratezza del modello}
+    \risksolution{pulizia e normalizzazione dei dataset, regole di validazione condivise con i referenti di business}
+    \label{risk:data-quality}
 \end{risk}
 
-\section{Requisiti e obiettivi}
+\begin{risk}{Integrazione con l’ERP e le API}
+    \riskdescription{ritardi o incongruenze nello scambio dati tra modulo di previsione, planning e ERP}
+    \risksolution{contratto API documentato (OpenAPI), ambiente di staging per test end-to-end prima del rilascio}
+    \label{risk:integration-api}
+\end{risk}
 
-\begin{center}
-    \rowcolors{1}{}{tableGray}
-    \begin{longtable}{|p{2.25cm}|p{7.75cm}|p{2.25cm}|}
-    \hline
-    \multicolumn{1}{|c|}{\textbf{A}} & \multicolumn{1}{c|}{\textbf{B}}\\ 
-    \hline 
-    \endfirsthead
-    \rowcolor{white}
-    \multicolumn{3}{c}{{\bfseries \tablename\ \thetable{} -- Continuo della tabella}}\\
-    \hline
-    \multicolumn{1}{|c|}{\textbf{A}} & \multicolumn{1}{c|}{B}\\ \hline 
-    \endhead
-    \hline
-    \rowcolor{white}
-    \multicolumn{3}{|r|}{{Continua nella prossima pagina...}}\\
-    \hline
-    \endfoot
-    \endlastfoot 
-    
-    AA & BB \\
-    \hline
-    AA & BB \\
-    \hline
-    AA & BB \\
-    \hline
-    AA & BB \\
-    \hline
-    \hiderowcolors
-    \caption{Lorem.}
-    \label{tab:requisiti_obbiettivi}
-    \end{longtable}
-\end{center}
+\begin{risk}{Performance e tempi di risposta}
+    \riskdescription{tempi di addestramento o interrogazione troppo lunghi per l’uso operativo}
+    \risksolution{limitazione delle feature non essenziali, caching dei risultati, pianificazione di job batch fuori orario}
+    \label{risk:performance}
+\end{risk}
+
+\begin{risk}{Adozione da parte dei planner}
+    \riskdescription{diffidenza verso i risultati del modello e ritardi nell’uso in produzione}
+    \risksolution{esecuzione parallela al processo manuale per più cicli, raccolta feedback e correzioni iterative}
+    \label{risk:user-adoption}
+\end{risk}
 
 \section{Pianificazione}
-\begin{figure}[H]
-    \centering
-    \includegraphics[alt={Testo alternativo dell'immagine}, width=0.5\columnwidth]{img/pk_estate.jpeg}
-    \caption{Caption}
-    \label{fig:pk_estate_2}
-\end{figure}
-\lipsum[1]
+\subsection{Modalità di stage e interazione}
+Lo stage si svolge in presenza, con allineamenti quotidiani e tre touchpoint settimanali con il tutor aziendale per supporto tecnico e validazione degli step. La comunicazione avviene di persona; il tutor fornisce revisione del codice, risoluzione problemi e verifica delle scelte progettuali.
 
-\subsection{subsection}
-\lipsum[1]
-
-\subsubsection{subsubsection}
-\lipsum[1]
-
-\paragraph{paragraph}
-\lipsum[1]
-
+\subsection{Pianificazione settimanale}
+\begin{center}
+\rowcolors{1}{}{tableGray}
+\begin{longtable}{|c|p{8cm}|c|}
+\hline
+\textbf{Settimana} & \textbf{Obiettivi/Attività} & \textbf{Ore}\\ \hline
+\endfirsthead
+\rowcolor{white}
+\multicolumn{3}{c}{{\bfseries \tablename\ \thetable{} -- Continuo della tabella}}\\
+\hline
+\textbf{Settimana} & \textbf{Obiettivi/Attività} & \textbf{Ore}\\ \hline
+\endhead
+\hline
+\rowcolor{white}
+\multicolumn{3}{|r|}{{Continua nella prossima pagina...}}\\
+\hline
+\endfoot
+\endlastfoot
+1 & Analisi requisiti e rischi; studio delle tecnologie da utilizzare. & 40\\ \hline
+2 & Progettazione e revisione della documentazione esistente. & 40\\ \hline
+3 & Codifica del progetto. & 40\\ \hline
+4 & Codifica del progetto. & 40\\ \hline
+5 & Codifica del progetto. & 40\\ \hline
+6 & Codifica del progetto. & 40\\ \hline
+7 & Codifica dei test e stesura della documentazione. & 40\\ \hline
+8 & Preparazione della presentazione finale, test conclusivi e chiusura attività. & 20\\ \hline
+\caption{Pianificazione settimanale delle attività di stage.}
+\label{tab:pianificazione_settimanale}
+\end{longtable}
+\end{center}
 \newpage

@@ -2,73 +2,139 @@
 \label{chap:analisi-requisiti}
 
 \section{Casi d'uso}
-Per lo studio dei casi di utilizzo del prodotto sono stati creati dei diagrammi.
-I diagrammi dei casi d'uso (in inglese \textit{Use Case Diagram}) sono diagrammi di tipo \gls{uml} dedicati alla descrizione delle funzioni o servizi offerti da un sistema, così come sono percepiti e utilizzati dagli attori che interagiscono col sistema stesso.
-Essendo il progetto finalizzato alla creazione di un tool \gls{TermineSenzaAcronimo} per l'automazione di un processo, le interazioni da parte dell'utilizzatore devono essere ovviamente ridotte allo stretto necessario. Per questo motivo i diagrammi d'uso risultano semplici e in numero ridotto.
+In avvio di stage sono stati definiti requisiti e interazioni minime tra chi usa il gestionale e il motore di previsione, così da focalizzare solo i casi d’uso necessari alle previsioni.
+
+\subsection{Attori individuati}
+Gli attori che interagiscono con il motore di previsione sono:
+\begin{itemize}
+    \item \textbf{Utente finale}: usa l’interfaccia di ErpAI per avviare previsioni e consultare i risultati.
+    \item \textbf{Gestionale ErpAI}: applicazione principale che inoltra le richieste al modulo di previsione via API protette, gestisce autenticazione e memorizza/mostra i risultati.
+    \item \textbf{Modulo di previsione}: microservizio che aggiorna i dati, allena il modello, genera previsioni e notifica ErpAI via callback.
+    \item \textbf{Modulo chatbot}: microservizio che può interrogare il modulo di previsione via API per ottenere previsioni e spiegazioni da usare nelle risposte.
+\end{itemize}
+L’interazione è orchestrata da ErpAI, che media verso il modulo di previsione e il chatbot.
+
+\subsection{Casi d'uso}
+\begin{center}
+    \rowcolors{1}{}{tableGray}
+    \begin{longtable}{|p{2.2cm}|p{11.8cm}|}
+    \hline
+    \multicolumn{1}{|c|}{\textbf{ID}} & \multicolumn{1}{c|}{\textbf{Descrizione}}\\
+    \hline 
+    \endfirsthead
+    \rowcolor{white}
+    \multicolumn{2}{c}{{\bfseries \tablename\ \thetable{} -- Continuo della tabella}}\\
+    \hline
+    \multicolumn{1}{|c|}{\textbf{ID}} & \multicolumn{1}{c|}{\textbf{Descrizione}}\\
+    \hline 
+    \endhead
+    \hline
+    \rowcolor{white}
+    \multicolumn{2}{|r|}{{Continua nella prossima pagina...}}\\
+    \hline
+    \endfoot
+    \endlastfoot 
+    
+    UC1 & \textbf{Attori}: Utente finale.\\
+        & \textbf{Scopo}: Avviare una richiesta di previsione.\\
+        & \textbf{Pre-condizione}: Autenticazione effettuata su ErpAI.\\
+        & \textbf{Post-condizione}: Richiesta creata e inoltrata a ErpAI. \\ \hline
+    UC1.1 & \textbf{Attori}: Utente finale.\\
+        & \textbf{Scopo}: Selezionare l’intervallo temporale per la previsione.\\
+        & \textbf{Pre-condizione}: Interfaccia di ErpAI aperta sulla schermata di previsione.\\
+        & \textbf{Post-condizione}: Intervallo impostato. \\ \hline
+    UC1.2 & \textbf{Attori}: Utente finale.\\
+        & \textbf{Scopo}: Confermare e inviare la richiesta.\\
+        & \textbf{Pre-condizione}: Parametri configurati (intervallo selezionato).\\
+        & \textbf{Post-condizione}: Richiesta inviata a ErpAI. \\ \hline
+
+    UC2 & \textbf{Attori}: Gestionale ErpAI.\\
+        & \textbf{Scopo}: Inoltrare la richiesta al modulo di previsione.\\
+        & \textbf{Pre-condizione}: Richiesta ricevuta dal frontend, API del modulo raggiungibile.\\
+        & \textbf{Post-condizione}: Richiesta inoltrata. \\ \hline
+    UC2.1 & \textbf{Attori}: Gestionale ErpAI.\\
+        & \textbf{Scopo}: Richiedere token al modulo di previsione.\\
+        & \textbf{Pre-condizione}: Credenziali client configurate.\\
+        & \textbf{Post-condizione}: Token ricevuto oppure errore di autenticazione. \\ \hline
+    UC2.2 & \textbf{Attori}: Gestionale ErpAI.\\
+        & \textbf{Scopo}: Inviare la richiesta con token al modulo di previsione.\\
+        & \textbf{Pre-condizione}: Token valido, parametri di previsione disponibili.\\
+        & \textbf{Post-condizione}: Richiesta accettata o errore ricevuto. \\ \hline
+
+    UC3 & \textbf{Attori}: Modulo di previsione.\\
+        & \textbf{Scopo}: Processare la previsione e notificare ErpAI.\\
+        & \textbf{Pre-condizione}: Richiesta UC2.2 ricevuta e valida.\\
+        & \textbf{Post-condizione}: Previsione elaborata o errore rilevato. \\ \hline
+    UC3.1 & \textbf{Attori}: Modulo di previsione.\\
+        & \textbf{Scopo}: Elaborare dati e generare previsione.\\
+        & \textbf{Pre-condizione}: Richiesta valida.\\
+        & \textbf{Post-condizione}: Previsione pronta oppure errore registrato. \\ \hline
+    UC3.2 & \textbf{Attori}: Modulo di previsione.\\
+        & \textbf{Scopo}: Notificare il completamento a ErpAI.\\
+        & \textbf{Pre-condizione}: Processo terminato (successo o fallimento).\\
+        & \textbf{Post-condizione}: Stato aggiornato in ErpAI. \\ \hline
+    UC3.E & \textbf{Attori}: Modulo di previsione.\\
+        & \textbf{Scopo}: Notificare errore a ErpAI.\\
+        & \textbf{Pre-condizione}: Errore registrato durante UC3.1.\\
+        & \textbf{Post-condizione}: Stato marcato come fallito in ErpAI. \\ \hline
+
+    UC4 & \textbf{Attori}: Modulo Chatbot.\\
+        & \textbf{Scopo}: Richiedere contesto previsione.\\
+        & \textbf{Pre-condizione}: Chatbot autorizzato verso le API del modulo di previsione.\\
+        & \textbf{Post-condizione}: Richieste pronte o dati ricevuti/errore gestito. \\ \hline
+    UC4.1 & \textbf{Attori}: Modulo Chatbot.\\
+        & \textbf{Scopo}: Preparare richiesta e token.\\
+        & \textbf{Pre-condizione}: Credenziali client configurate.\\
+        & \textbf{Post-condizione}: Token ricevuto oppure errore di autenticazione. \\ \hline
+    UC4.2 & \textbf{Attori}: Modulo Chatbot.\\
+        & \textbf{Scopo}: Recuperare dati previsionali via API.\\
+        & \textbf{Pre-condizione}: Token valido, ID previsione noto.\\
+        & \textbf{Post-condizione}: Dati ricevuti oppure errore gestito. \\ \hline
+    UC4.E & \textbf{Attori}: Modulo Chatbot.\\
+        & \textbf{Scopo}: Gestire errore API.\\
+        & \textbf{Pre-condizione}: Errore nelle chiamate di UC4.1 o UC4.2.\\
+        & \textbf{Post-condizione}: Errore registrato, risposta di errore al chiamante. \\ \hline
+    \end{longtable}
+\end{center}
 
 \begin{figure}[H]
-    \vspace{2em}
     \centering
-    \includegraphics[alt={Testo alternativo dell'immagine}, width=0.75\columnwidth]{img/usecase/scenario-principale.jpeg}
-    \caption{Use Case 0: Scenario principale}
-    \label{fig:scenario_principale}
+    \includegraphics[width=\linewidth]{img/usecase/usecase1.png}
+    \caption{Use case 1: avvio e invio richiesta di previsione}
 \end{figure}
 
-\begin{usecase}{0}{Scenario principale}
-    \usecaseactors{Sviluppatore applicativi.}
-    \usecasepre{Lo sviluppatore è entrato nel plugin di simulazione all'interno dell'IDE.}
-    \usecasedesc{La finestra di simulazione mette a disposizione i comandi per configurare, registrare o eseguire un test.}
-    \usecasepost{Il sistema è pronto per permettere una nuova interazione.}
-    \label{uc:uc_scenario_principale}
-\end{usecase}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/usecase/usecase2.png}
+    \caption{Use case 2: inoltro della richiesta da ErpAI al modulo di previsione}
+\end{figure}
 
-\begin{usecase}{1}{Gestione Utente}
-    \usecaseactors{Amministratore, Utente Registrato.}
-    \usecasepre{L'utente deve essere autenticato nel sistema.}
-    \usecasedesc{L'utente può gestire le informazioni del proprio profilo.}
-    \usecasepost{Le modifiche vengono salvate nel sistema.}
-    \usecasealt{Se l'utente non è autenticato, visualizza un messaggio di errore.}
-    \label{uc:uc_casi_uso}
-\end{usecase}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/usecase/usecase3.png}
+    \caption{Use case 3: elaborazione e notifica da parte del modulo di previsione}
+\end{figure}
 
-\begin{usecase}{2}{Creazione Prodotto}
-    \usecaseactors{Amministratore.}
-    \usecasepre{L'amministratore ha effettuato l'accesso al sistema.}
-    \usecasedesc{L'amministratore può aggiungere un nuovo prodotto al catalogo.}
-    \usecasepost{Il nuovo prodotto viene aggiunto con successo.}
-    \usecasealt{Se i campi obbligatori non sono compilati, visualizza un messaggio di errore.}
-    \label{uc:uc_creazione_prodotto}
-\end{usecase}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{img/usecase/usecase4.png}
+    \caption{Use case 4: interazione del modulo chatbot con il modulo di previsione}
+\end{figure}
 
-\section{Tracciamento dei requisiti}
-Da un'attenta analisi dei requisiti e degli use case effettuata sul progetto è stata stilata la tabella che traccia i requisiti in rapporto agli use case.\\
-Sono stati individuati diversi tipi di requisiti e si è quindi fatto utilizzo di un codice identificativo per distinguerli.\\
-Il codice dei requisiti, dove ogni requisito è identificato con il carattere \textbf{R}, è così strutturato:
-\begin{enumerate}
-    \item[\textbf{F}:] Funzionale.
-    \item[\textbf{Q}:] Qualitativo.
-    \item[\textbf{V}:] Di vincolo.
-    \item[\textbf{N}:] Obbligatorio (necessario).
-    \item[\textbf{D}:] Desiderabile.
-    \item[\textbf{Z}:] Opzionale.
-\end{enumerate}
+\section{Requisiti}
+Questa sezione raccoglie i requisiti del progetto di previsione e pianificazione per \textit{ErpAI}, organizzati in obbligatori (O), desiderabili (D) e facoltativi (F). La codifica usa un prefisso che identifica la priorità (O/D/F) seguito da un numero progressivo.
 
-Nelle tabelle \ref{tab:requisiti_funzionali}, \ref{tab:requisiti_qualitativi} e \ref{tab:requisiti_vincolo} sono riassunti i requisiti e il loro tracciamento con gli use case delineati in fase di analisi.
-
-\section{Tabelle dei requisiti}
 \begin{center}
     \rowcolors{1}{}{tableGray}
-    \begin{longtable}{|p{2.25cm}|p{7.75cm}|p{2.25cm}|}
+    \begin{longtable}{|p{2cm}|p{9cm}|p{3cm}|}
     \hline
-    %\rowcolor{hyperColor!5}
-    \multicolumn{1}{|c|}{\textbf{Requisito}} & \multicolumn{1}{c|}{\textbf{Descrizione}} & \multicolumn{1}{c|}{\textbf{Use Case}}\\
+    \multicolumn{1}{|c|}{\textbf{ID}} & \multicolumn{1}{c|}{\textbf{Descrizione}} & \multicolumn{1}{c|}{\textbf{Categoria}}\\
     \hline 
     \endfirsthead
     \rowcolor{white}
     \multicolumn{3}{c}{{\bfseries \tablename\ \thetable{} -- Continuo della tabella}}\\
     \hline
-    %\rowcolor{hyperColor!5}
-    \multicolumn{1}{|c|}{\textbf{Requisito}} & \multicolumn{1}{c|}{\textbf{Descrizione}} & \multicolumn{1}{c|}{\textbf{Use Case}}\\
+    \multicolumn{1}{|c|}{\textbf{ID}} & \multicolumn{1}{c|}{\textbf{Descrizione}} & \multicolumn{1}{c|}{\textbf{Categoria}}\\
     \hline 
     \endhead
     \hline
@@ -76,84 +142,17 @@ Nelle tabelle \ref{tab:requisiti_funzionali}, \ref{tab:requisiti_qualitativi} e 
     \multicolumn{3}{|r|}{{Continua nella prossima pagina...}}\\
     \hline
     \endfoot
-    \endlastfoot
+    \endlastfoot 
     
-    RFN-1 & L’interfaccia permette di configurare il tipo di sonde del test & UC1 \\
-    \hline
-    \hiderowcolors
-    \caption{Tabella del tracciamento dei requisiti funzionali.}
-    \label{tab:requisiti_funzionali}
-    \end{longtable}
-\end{center}
-
-\begin{center}
-    \rowcolors{1}{}{tableGray}
-    \begin{longtable}{|p{2.25cm}|p{7.75cm}|p{2.25cm}|}
-    \hline
-    %\rowcolor{hyperColor!5}
-    \multicolumn{1}{|c|}{\textbf{Requisito}} & \multicolumn{1}{c|}{\textbf{Descrizione}} & \multicolumn{1}{c|}{\textbf{Use Case}}\\
-    \hline 
-    \endfirsthead
-    \rowcolor{white}
-    \multicolumn{3}{c}{{\bfseries \tablename\ \thetable{} -- Continuo della tabella}}\\
-    \hline
-    %\rowcolor{hyperColor!5}
-    \multicolumn{1}{|c|}{\textbf{Requisito}} & \multicolumn{1}{c|}{\textbf{Descrizione}} & \multicolumn{1}{c|}{\textbf{Use Case}}\\
-    \hline 
-    \endhead
-    \hline
-    \rowcolor{white}
-    \multicolumn{3}{|r|}{{Continua nella prossima pagina...}}\\
-    \hline
-    %\caption{Tabella del tracciamento dei requisiti qualitativi.}
-    \endfoot
-    \endlastfoot
-    
-    RQD-1n & Le prestazioni del simulatore hardware deve garantire la giusta esecuzione dei test e non la generazione di falsi negativi & - \\
-    \hline
-    RQD-1n & Le prestazioni del simulatore hardware deve garantire la giusta esecuzione dei test e non la generazione di falsi negativi & - \\
-    \hline
-    RQD-1n & Le prestazioni del simulatore hardware deve garantire la giusta esecuzione dei test e non la generazione di falsi negativi & - \\
-    \hline
-    RQD-1n & Le prestazioni del simulatore hardware deve garantire la giusta esecuzione dei test e non la generazione di falsi negativi & - \\
-    \hline
-    RQD-1n & Le prestazioni del simulatore hardware deve garantire la giusta esecuzione dei test e non la generazione di falsi negativi & - \\
-    \hline
-    RQD-1n & Le prestazioni del simulatore hardware deve garantire la giusta esecuzione dei test e non la generazione di falsi negativi & - \\
-    \hline
-    \hiderowcolors
-    \caption{Tabella del tracciamento dei requisiti qualitativi.}
-    \label{tab:requisiti_qualitativi}
-    \end{longtable}
-\end{center}
-
-\begin{center}
-    \rowcolors{1}{}{tableGray}
-    \begin{longtable}{|p{2.25cm}|p{7.75cm}|p{2.25cm}|}
-    \hline
-    %\rowcolor{hyperColor!5}
-    \multicolumn{1}{|c|}{\textbf{Requisito}} & \multicolumn{1}{c|}{\textbf{Descrizione}} & \multicolumn{1}{c|}{\textbf{Use Case}}\\
-    \hline 
-    \endfirsthead
-    \rowcolor{white}
-    \multicolumn{3}{c}{{\bfseries \tablename\ \thetable{} -- Continuo della tabella}}\\
-    \hline
-    %\rowcolor{hyperColor!5}
-    \multicolumn{1}{|c|}{\textbf{Requisito}} & \multicolumn{1}{c|}{\textbf{Descrizione}} & \multicolumn{1}{c|}{\textbf{Use Case}}\\
-    \hline 
-    \endhead
-    \hline
-    \rowcolor{white}
-    \multicolumn{3}{|r|}{{Continua nella prossima pagina...}}\\
-    \hline
-    \endfoot
-    \endlastfoot
-    
-    RVO-1 & La libreria per l'esecuzione dei test automatici deve essere riutilizzabile & - \\
-    \hline
-    \hiderowcolors
-    \caption{Tabella del tracciamento dei requisiti di vincolo.}
-    \label{tab:requisiti_vincolo}
+    O01 & Data-set e data-model consolidati. & Obbligatorio \\ \hline
+    O02 & Pipeline di previsione con intervalli di confidenza. & Obbligatorio \\ \hline
+    O03 & Motore MRP con piani compatibili con lead-time e scorte minime. & Obbligatorio \\ \hline
+    D01 & Logica base di feedback learning da input dell’operatore. & Desiderabile \\ \hline
+    D02 & Automazione della valutazione delle spiegazioni. & Desiderabile \\ \hline
+    D03 & Simulazione dell’impatto delle azioni correttive nel tempo. & Desiderabile \\ \hline
+    F01 & Prototipazione grafica per output prescrittivi. & Facoltativo \\ \hline
+    F02 & Estensione a scenari multi-macchina. & Facoltativo \\ \hline
+    F03 & Integrazione con notifiche real-time per allarmi e azioni. & Facoltativo \\ \hline
     \end{longtable}
 \end{center}
 
