@@ -97,6 +97,9 @@ L’interazione è orchestrata da ErpAI, che media verso il modulo di previsione
     \end{longtable}
 \end{center}
 
+\subsection{Diagrammi dei casi d'uso}
+I diagrammi seguenti descrivono i flussi dei casi d’uso presentati.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{img/usecase/usecase1.png}
@@ -122,37 +125,55 @@ L’interazione è orchestrata da ErpAI, che media verso il modulo di previsione
 \end{figure}
 
 \section{Requisiti}
-Questa sezione raccoglie i requisiti del progetto di previsione e pianificazione per \textit{ErpAI}, organizzati in obbligatori (O), desiderabili (D) e facoltativi (F). La codifica usa un prefisso che identifica la priorità (O/D/F) seguito da un numero progressivo.
+Questa sezione sintetizza i requisiti del modulo di previsione. I backlog item sono stati raccolti e prioritizzati insieme al Product Owner, etichettati per criticità e condivisi come base di accordo con gli stakeholder.
 
+\subsection{Codifica requisiti}
+Ogni requisito del modulo di previsione per \textit{ErpAI} è codificato nel seguente formato:
+\begin{itemize}
+    \item \textbf{Formato}: \texttt{R.x.y}
+    \item \textbf{Tipologia} (\texttt{x}): O = obbligatorio; D = desiderabile; F = facoltativo
+    \item \textbf{Progressivo} (\texttt{y}): valore numerico progressivo a partire da 0
+\end{itemize}
+
+\subsection{Elenco requisiti}
 \begin{center}
+    \renewcommand{\arraystretch}{1.2}
     \rowcolors{1}{}{tableGray}
-    \begin{longtable}{|p{2cm}|p{9cm}|p{3cm}|}
+    \begin{longtable}{|p{2.5cm}|p{11.5cm}|}
     \hline
-    \multicolumn{1}{|c|}{\textbf{ID}} & \multicolumn{1}{c|}{\textbf{Descrizione}} & \multicolumn{1}{c|}{\textbf{Categoria}}\\
+    \multicolumn{1}{|c|}{\textbf{ID}} & \multicolumn{1}{c|}{\textbf{Descrizione}}\\
     \hline 
     \endfirsthead
     \rowcolor{white}
-    \multicolumn{3}{c}{{\bfseries \tablename\ \thetable{} -- Continuo della tabella}}\\
+    \multicolumn{2}{c}{{\bfseries \tablename\ \thetable{} -- Continuo della tabella}}\\
     \hline
-    \multicolumn{1}{|c|}{\textbf{ID}} & \multicolumn{1}{c|}{\textbf{Descrizione}} & \multicolumn{1}{c|}{\textbf{Categoria}}\\
+    \multicolumn{1}{|c|}{\textbf{ID}} & \multicolumn{1}{c|}{\textbf{Descrizione}}\\
     \hline 
     \endhead
     \hline
     \rowcolor{white}
-    \multicolumn{3}{|r|}{{Continua nella prossima pagina...}}\\
+    \multicolumn{2}{|r|}{{Continua nella prossima pagina...}}\\
     \hline
     \endfoot
     \endlastfoot 
     
-    O01 & Data-set e data-model consolidati. & Obbligatorio \\ \hline
-    O02 & Pipeline di previsione con intervalli di confidenza. & Obbligatorio \\ \hline
-    O03 & Motore MRP con piani compatibili con lead-time e scorte minime. & Obbligatorio \\ \hline
-    D01 & Logica base di feedback learning da input dell’operatore. & Desiderabile \\ \hline
-    D02 & Automazione della valutazione delle spiegazioni. & Desiderabile \\ \hline
-    D03 & Simulazione dell’impatto delle azioni correttive nel tempo. & Desiderabile \\ \hline
-    F01 & Prototipazione grafica per output prescrittivi. & Facoltativo \\ \hline
-    F02 & Estensione a scenari multi-macchina. & Facoltativo \\ \hline
-    F03 & Integrazione con notifiche real-time per allarmi e azioni. & Facoltativo \\ \hline
+    R.O.0 & Il sistema deve stimare quante vendite (in pezzi) l’azienda effettuerà nei periodi futuri configurabili, partendo dai dati ERP. \\ \hline
+    R.O.1 & Le esecuzioni di previsione devono essere gestite come job asincroni con stati tracciati (creazione, avanzamento, successo/fallimento) e consultabili. \\ \hline
+    R.O.2 & Le previsioni devono essere salvate in archivi aziendali con identificativo di run, righe previsionali e controlli su duplicati/chiavi univoche. \\ \hline
+    R.O.3 & I dati ERP devono essere sincronizzati periodicamente in un data store locale, con normalizzazione e indici per l’uso del modello. \\ \hline
+    R.O.4 & L’accesso alle funzionalità di previsione e alle consultazioni deve essere protetto tramite autenticazione e validazione di token/JWKS. \\ \hline
+    R.O.5 & Il sistema deve notificare un endpoint applicativo configurabile al termine dei job (successo o errore). \\ \hline
+    R.O.6 & La gestione degli errori non deve interrompere l’elaborazione: i task in background devono gestire eccezioni senza bloccare il servizio. \\ \hline
+    R.O.7 & Le API devono esporre documentazione coerente e accessibile per l’integrazione con i servizi aziendali. \\ \hline
+    R.O.8 & Il servizio deve essere distribuibile in modo riproducibile (container/docker-compose) con configurazione via variabili ambiente. \\ \hline
+    R.D.0 & Il sistema dovrebbe produrre spiegazioni delle previsioni (es. feature importanti) e associarle ai risultati salvati. \\ \hline
+    R.D.1 & Il sistema dovrebbe offrire un contesto consultabile (ricerca/testo) sulle previsioni per supportare chatbot o analisi esplorativa. \\ \hline
+    R.D.2 & Il modello dovrebbe calcolare e tracciare metriche di accuratezza per ogni run, con target di errore medio sotto il 20\%. \\ \hline
+    R.D.3 & Il sistema dovrebbe supportare analisi “what-if”, consentendo di variare parametri e confrontare scenari di previsione. \\ \hline
+    R.D.4 & Il sistema dovrebbe supportare logistica di validazione automatica (test su dati di holdout) prima di promuovere un nuovo modello in produzione. \\ \hline
+    R.F.0 & Potrebbe essere utile fornire esportazioni in formati aggiuntivi (CSV/Excel/JSON) per integrazioni non API. \\ \hline
+    R.F.1 & Potrebbe essere utile offrire notifiche opzionali via email/Slack oltre al webhook configurabile. \\ \hline
+    R.F.2 & Potrebbe essere utile prevedere dashboard sintetiche per monitorare trend e performance del modello. \\ \hline
     \end{longtable}
 \end{center}
 
