@@ -9,8 +9,8 @@ Gli attori che interagiscono con il motore di previsione sono:
 \begin{itemize}
     \item \textbf{Utente finale}: usa l’interfaccia di ErpAI per avviare previsioni e consultare i risultati.
     \item \textbf{Gestionale ErpAI}: applicazione principale che inoltra le richieste al modulo di previsione via API protette, gestisce autenticazione e memorizza/mostra i risultati.
-    \item \textbf{Modulo di previsione}: microservizio che aggiorna i dati, allena il modello, genera previsioni e notifica ErpAI via callback.
-    \item \textbf{Modulo chatbot}: microservizio che può interrogare il modulo di previsione via API per ottenere previsioni e spiegazioni da usare nelle risposte.
+    \item \textbf{Modulo di previsione}: modulo che aggiorna i dati, allena il modello, genera previsioni e notifica ErpAI via callback.
+    \item \textbf{Modulo chatbot}: modulo che può interrogare il modulo di previsione via API per ottenere previsioni e spiegazioni da usare nelle risposte.
 \end{itemize}
 L’interazione è orchestrata da ErpAI, che media verso il modulo di previsione e il chatbot.
 
