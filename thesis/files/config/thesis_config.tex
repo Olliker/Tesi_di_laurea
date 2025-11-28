@@ -6,6 +6,9 @@
 \definecolor{hyperColor}{HTML}{0B3EE3}
 \definecolor{tableGray}{HTML}{F5F5F7}
 \definecolor{veryPeri}{HTML}{6667ab}
+\definecolor{codeBg}{HTML}{F7F8FA}
+\definecolor{codeFrame}{HTML}{E1E4EA}
+\definecolor{codeNumber}{HTML}{6A737D}
 
 % Set line height
 \linespread{1.5}
@@ -139,6 +142,26 @@
 \renewcommand\listoflistingscaption{Elenco dei codici sorgenti}
 \counterwithin*{listing}{chapter}
 \renewcommand\thelisting{\thechapter.\arabic{listing}}
+
+% Minted styling (code blocks)
+\setminted{
+    style=friendly,
+    bgcolor=codeBg,
+    frame=lines,
+    rulecolor=\color{codeFrame},
+    framesep=5pt,
+    linenos=true,
+    numbersep=4pt,
+    xleftmargin=0pt,
+    autogobble=true,
+    tabsize=4,
+    baselinestretch=1.05,
+    fontfamily=tt,
+    fontsize=\small,
+    breaklines=true,
+    breakanywhere=true
+}
+\renewcommand\theFancyVerbLine{\textcolor{codeNumber}{\scriptsize\arabic{FancyVerbLine}}}
 
 % Set up hyperlinks
 \hypersetup{

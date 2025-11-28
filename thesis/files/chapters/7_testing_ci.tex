@@ -1,0 +1,19 @@
+\chapter{Testing e Continuous Integration}
+\label{chap:testing}
+
+La qualità del modulo di previsione è stata assicurata tramite una suite di test strutturata su più livelli e una pipeline di Continuous Integration (CI) che esegue automaticamente i controlli ad ogni commit.
+
+\section{Struttura dei test}
+La suite copre la logica applicativa e i componenti infrastrutturali con granularità crescente:
+\begin{itemize}
+    \item \textbf{Unit}: verificano singole unità senza dipendenze reali (funzioni pure, helper).
+    \item \textbf{Config/modelli}: controllano default e validazione di config (XGBoost, Chroma, DuckDB) e modelli di dominio (search result, notifiche, SHAP).
+    \item \textbf{Dipendenze}: testano il wiring/factory delle dipendenze (creazione repository/servizi dal container DI, caricamento funzioni di embedding).
+    \item \textbf{Repository con mock}: simulano query e salvataggi con stub o fixture in memoria (DuckDB, DB, Chroma, Job).
+    \item \textbf{Servizi}: esercitano comportamento applicativo/ML isolato (DataFrameService/InvoiceConversionService per feature e aggregazioni; XGBoostService/ForecastingService per training/prediction/autoregressione; DataNormalizeService/ShapService per testo e plot; ChromaSearchService per la ricerca con fallback).
+    \item \textbf{Utility}: coprono metriche (MAPE/SMAPE/WAPE), JWT, notifiche, job.
+    \item \textbf{Integrazione}: verificano componenti che parlano con storage/config reali (repository DB/Job agganciati a DuckDB o alle dipendenze effettive).
+\end{itemize}
+
+\section{Continuous Integration}
+La pipeline CI esegue automaticamente linting, unit/integration test e build della documentazione/PDF della tesi ad ogni push. L’obiettivo è garantire che le modifiche non introducano regressioni, che la codebase resti coerente con gli standard definiti e che gli artefatti (API docs, PDF) siano sempre aggiornati.

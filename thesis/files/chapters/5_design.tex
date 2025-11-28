@@ -1,5 +1,5 @@
 \chapter{Progettazione}
-\label{chap:progettazione}
+\label{chap:design}
 Una parte consistente del monte ore iniziale dello stage è stata investita nella fase di progettazione: definizione dell’architettura del modulo di previsione, individuazione dei confini funzionali e selezione degli strumenti. Le prime settimane sono state dedicate alla prova comparativa delle tecnologie (modello, API, orchestrazione), allo studio della documentazione ufficiale e alla costruzione di prototipi rapidi; ciò ha permesso di arrivare alla fase successiva con scelte già validate e di avviare lo sviluppo su basi stabili.
 
 \section{Tecnologie e strumenti}
@@ -170,72 +170,17 @@ Il sistema adotta il Repository Pattern per isolare completamente la logica di a
     \item \textbf{ChromaRepository}: accesso a Chroma DB (salvataggio/interrogazione embedding e metadati semantici).
 \end{itemize}
 
-\begin{listing}[H]
-\inputminted[fontsize=\small, breaklines, linenos=true, bgcolor=gray!10]{python}{code/repository_pattern.py}
-\caption{Esempio di repository per Chroma (\texttt{code/repository\_pattern.py}).}
+\captionsetup{type=listing, belowskip=0pt}
+\inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/repository_pattern.py}
+\captionof{listing}{Esempio di repository per Chroma (\texttt{code/repository\_pattern.py}).}
 \label{listing:repository-pattern}
-\end{listing}
 
 \subsection{Inversione del controllo}
 Il modulo di previsione utilizza il principio di Inversion of Control tramite Dependency Injection per gestire le relazioni tra i vari componenti del sistema.
 In pratica, i servizi non creano direttamente gli oggetti di cui hanno bisogno, ma li ricevono già pronti dall’esterno, ad esempio tramite il costruttore.
 Questo approccio rende il codice più ordinato e facile da mantenere, perché ogni componente è meno dipendente dagli altri.
 Permette inoltre di sostituire rapidamente una parte del sistema senza modificare il resto dell’applicazione, e semplifica molto anche la fase di test, dove è possibile fornire versioni simulate delle dipendenze.
-\begin{listing}[H]
-\inputminted[fontsize=\small, breaklines, linenos=true, bgcolor=gray!10]{python}{code/dependecy_injection.py}
-\caption{Esempio di dependency injection (\texttt{forecasting\_service.py}).}
+\captionsetup{type=listing, belowskip=0pt}
+\inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/dependency_injection.py}
+\captionof{listing}{Esempio di dependency injection (\texttt{forecasting\_service.py}).}
 \label{listing:dependency-injection}
-\end{listing}
-
-\section{Struttura del progetto}
-La struttura delle directory del progetto è organizzata per separare chiaramente i vari componenti e facilitare la navigazione del codice (Figura~\ref{fig:repo-structure}).
-Di seguito è riportata una descrizione delle principali cartelle e file presenti nel repository.
-\subsection{Root}
-\begin{itemize}
-    \item \textbf{ErpAI-Forecasting/}: cartella principale del progetto contenente tutto il codice sorgente.
-    \begin{itemize}
-        \item \textbf{.gitea/}: cartella contenente le configurazioni per l’integrazione continua con Gitea.
-        \item \textbf{auth-server/}: modulo di autenticazione.
-        \item \textbf{forecasting/}: modulo principale del sistema.
-        \item \textbf{duckdb/}: servizio di sincronizzazione dati ERP con scheduler mensile.
-        \item \textbf{kong/}: cartella contenente la configurazione del gateway API che espone i servizi interni.
-        \item \textbf{openapi/}: servizio che pubblica la documentazione ERP.
-        \item \textbf{.env}: variabili d’ambiente.
-        \item \textbf{.gitignore}: file di esclusione git.
-        \item \textbf{alembic.ini}: configurazione di Alembic per le migrazioni del database.
-        \item \textbf{compose.base.yml}: definizione Docker Compose base.
-        \item \textbf{compose.yml}: definizione Docker Compose principale.
-        \item \textbf{Dockerfile}: build dell’immagine principale.
-        \item \textbf{pytest.ini}: configurazioni per i test.
-        \item \textbf{README.md}: documentazione di progetto.
-    \end{itemize}
-\end{itemize}
-\subsection{forecasting}
-Approfondiamo il modulo di previsione in quanto cuore del sistema e oggetto principale di questo lavoro di tesi.
-\begin{itemize}
-    \item \textbf{app/}: cartella principale del modulo di previsione.
-    \begin{itemize}
-        \item \textbf{api/}: cartella che contiene i router FastAPI per gli endpoint REST.
-        \item \textbf{db/}: cartella che contiene engine e setup DB locale.
-        \item \textbf{dependencies/}: cartella che contiene la configurazione per la dependency injection.
-        \item \textbf{models/}: cartella che contiene i modelli Pydantic e SQLModel per payload e tabelle.
-        \item \textbf{repositories/}: cartella che contiene le implementazioni del repository pattern per l’accesso ai database esterni.
-        \item \textbf{services/}: cartella che contiene le classi che implementano la logica di business e orchestrazione del flusso di previsione.
-    \end{itemize}
-    \item \textbf{chroma-data/}: cartella che contiene i dati persistenti di Chroma DB.
-    \item \textbf{graphs/}: cartella che contiene gli output grafici SHAP generati.
-    \item \textbf{migrations/}: cartella che contiene gli script Alembic per la gestione delle migrazioni del database.
-    \item \textbf{tests/}: cartella che contiene la suite di test.
-    \item \textbf{compose.forecasting.yml}: definizione Docker Compose specifica per il servizio forecasting.
-    \item \textbf{Dockerfile}: build dell’immagine del servizio forecasting.
-    \item \textbf{requirements.txt}: dipendenze Python.
-\end{itemize}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\linewidth]{img/repository.png}
-    \caption{Struttura delle directory del progetto.}
-    \label{fig:repo-structure}
-\end{figure}
-
-\newpage
