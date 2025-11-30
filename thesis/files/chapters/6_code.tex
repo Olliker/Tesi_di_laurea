@@ -423,3 +423,69 @@ Il metodo chiave è \texttt{forecast} e coordina l’intero processo di previsio
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/Services/forecasting_service.py}
 \captionof{listing}{Metodo \texttt{forecast} di \texttt{ForecastingService}}
 \label{listing:forecasting-service}
+
+\section{API Router}
+Nella cartella \texttt{api/} si trovano i router FastAPI che espongono gli endpoint REST per interagire con il modulo di previsione, coperti da autenticazione JWT tramite le dipendenze definite nel modulo \texttt{jwt\_dependencies}. Per completezza si include anche il router di autenticazione dell’\texttt{auth-server}, che è un modulo separato rispetto al servizio di forecasting ma fornisce le chiavi pubbliche e i token necessari.
+
+\subsection{Authentication (Auth Server)}
+\label{sec:code-api-authentication}
+Router dell’\texttt{auth-server}, modulo autonomo che rilascia token JWT e pubblica il JWKS usato dagli altri servizi:
+\begin{itemize}
+    \item \texttt{GET /.well-known/jwks.json}: restituisce il set di chiavi pubbliche in formato JWKS tramite \texttt{JWKService}.
+    \item \texttt{POST /token}: espone la dependency \texttt{jwt\_dependencies.get\_new\_token} per generare un nuovo JWT firmato.
+\end{itemize}
+\captionsetup{type=listing, belowskip=0pt}
+\inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/api/authentication.py}
+\captionof{listing}{Router di autenticazione (\texttt{api/authentication.py}, modulo \texttt{auth-server})}
+\label{listing:api-authentication}
+
+\subsection{JWT}
+\label{sec:code-api-jwt}
+Router minimale per verificare i token JWT in ingresso:
+\begin{itemize}
+    \item endpoint \texttt{POST /verify-token} che accetta le credenziali via dependency injection e restituisce un semplice messaggio di conferma.
+    \item sfrutta \texttt{jwt\_dependencies.check\_token} per bloccare le richieste non autorizzate.
+\end{itemize}
+\captionsetup{type=listing, belowskip=0pt}
+\inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/api/jwt.py}
+\captionof{listing}{Router JWT (\texttt{api/jwt.py})}
+\label{listing:api-jwt}
+
+\subsection{Forecasting}
+\label{sec:code-api-forecasting}
+L’endpoint di previsione avvia in background una run di forecasting e restituisce subito l’identificativo del job:
+\begin{itemize}
+    \item \texttt{POST /forecast}: riceve \texttt{start\_date} e \texttt{periods}, crea un \texttt{Job} di tipo \texttt{forecasting} e imposta l’header \texttt{Location} verso \texttt{/jobs/\{id\}}.
+    \item avvia un task asincrono che aggiorna lo stato del job (\texttt{queued} $\rightarrow$ \texttt{running} $\rightarrow$ \texttt{succeeded}/\texttt{failed}), invoca \texttt{ForecastingService.forecast} e invia notifiche esterne tramite \texttt{NotificationService}.
+    \item in caso di errore durante il task, marca il job come \texttt{failed} e spedisce una notifica con il dettaglio dell’errore.
+\end{itemize}
+\captionsetup{type=listing, belowskip=0pt}
+\inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/api/forecasting.py}
+\captionof{listing}{Router di previsione (\texttt{api/forecasting.py})}
+\label{listing:api-forecasting}
+
+\subsection{Job}
+\label{sec:code-api-job}
+Router per interrogare lo stato dei job di training/forecasting:
+\begin{itemize}
+    \item \texttt{GET /jobs}: ritorna la lista dei job con filtri opzionali \texttt{kind} e \texttt{status}.
+    \item \texttt{GET /jobs/\{job\_id\}}: restituisce il singolo job oppure 404 se non esiste.
+    \item la logica di persistenza e filtro è delegata a \texttt{JobService}.
+\end{itemize}
+\captionsetup{type=listing, belowskip=0pt}
+\inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/api/job.py}
+\captionof{listing}{Router dei job (\texttt{api/job.py})}
+\label{listing:api-job}
+
+\subsection{ChromaDB}
+\label{sec:code-api-chromadb}
+Endpoint per la ricerca semantica su previsioni ed embedding SHAP indicizzati in ChromaDB:
+\begin{itemize}
+    \item \texttt{GET /context}: accetta una domanda naturale (\texttt{question}), il numero di risultati desiderati e, opzionalmente, un \texttt{forecast\_id} per filtrare.
+    \item inizializza pigramente un singleton di \texttt{ChromaSearchService}, esegue \texttt{query\_forecast} e restituisce predizioni/spiegazioni rilevanti.
+    \item in caso di eccezione solleva un \texttt{HTTPException} 500 con il dettaglio dell’errore.
+\end{itemize}
+\captionsetup{type=listing, belowskip=0pt}
+\inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/api/chromadb.py}
+\captionof{listing}{Router ChromaDB (\texttt{api/chromadb.py})}
+\label{listing:api-chromadb}

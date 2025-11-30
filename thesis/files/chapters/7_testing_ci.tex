@@ -1,19 +1,54 @@
 \chapter{Testing e Continuous Integration}
 \label{chap:testing}
-
-La qualità del modulo di previsione è stata assicurata tramite una suite di test strutturata su più livelli e una pipeline di Continuous Integration (CI) che esegue automaticamente i controlli ad ogni commit.
-
-\section{Struttura dei test}
-La suite copre la logica applicativa e i componenti infrastrutturali con granularità crescente:
+Durante l'ultimo periodo dello stage mi sono occupato di implementare una suite di test automatizzati e una pipeline di Continuous Integration per il progetto.
+Nella cartella \texttt{tests/} del repository sono stati creati diversi test per coprire le funzionalità principali del sistema.
+I test si occupano di:
 \begin{itemize}
-    \item \textbf{Unit}: verificano singole unità senza dipendenze reali (funzioni pure, helper).
-    \item \textbf{Config/modelli}: controllano default e validazione di config (XGBoost, Chroma, DuckDB) e modelli di dominio (search result, notifiche, SHAP).
-    \item \textbf{Dipendenze}: testano il wiring/factory delle dipendenze (creazione repository/servizi dal container DI, caricamento funzioni di embedding).
-    \item \textbf{Repository con mock}: simulano query e salvataggi con stub o fixture in memoria (DuckDB, DB, Chroma, Job).
-    \item \textbf{Servizi}: esercitano comportamento applicativo/ML isolato (DataFrameService/InvoiceConversionService per feature e aggregazioni; XGBoostService/ForecastingService per training/prediction/autoregressione; DataNormalizeService/ShapService per testo e plot; ChromaSearchService per la ricerca con fallback).
-    \item \textbf{Utility}: coprono metriche (MAPE/SMAPE/WAPE), JWT, notifiche, job.
-    \item \textbf{Integrazione}: verificano componenti che parlano con storage/config reali (repository DB/Job agganciati a DuckDB o alle dipendenze effettive).
+    \item Garantire la correttezza delle funzionalità principali del sistema.
+    \item Validare le integrazioni con librerie esterne e servizi di terze parti.
+    \item Prevenire regressioni durante lo sviluppo di nuove funzionalità.
 \end{itemize}
+I test si sono divisi in unit test e integration tests, eseguiti tramite il framework \texttt{pytest}.
+
+\section{Unit Test}
+Gli unit test verificano il comportamento di singole funzioni o classi in isolamento, utilizzando mock e stub per simulare dipendenze esterne. Questi test sono veloci da eseguire e forniscono un feedback immediato durante lo sviluppo.
+Sono stati effettuati test per tutto il codice raggiungendo una copertura del 85\%.
+\subsection{Esempio}
+Il file \texttt{test\_forecasting\_service.py} isola la logica del servizio di forecasting sostituendo tutte le dipendenze con stub:
+\begin{itemize}
+    \item \textbf{Happy path}: con finti \texttt{XGBoostService}, \texttt{ShapService} e \texttt{DataNormalizeService} verifica che vengano invocati con i parametri attesi e che il payload persistito contenga predizioni, spiegazioni e documenti per ChromaDB/DB.
+    \item \textbf{Errore di serializzazione}: forza un errore nella costruzione del \texttt{DataFrame} di output e controlla che il metodo gestisca l’eccezione senza restituire la chiave \texttt{predictions\_rows}.
+\end{itemize}
+\captionsetup{type=listing, belowskip=0pt}
+\inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/tests/test_forecasting_service.py}
+\captionof{listing}{Unit test del servizio di forecasting (\texttt{code/tests/test\_forecasting\_service.py})}
+\label{listing:unit-forecasting-service}
+
+\section{Integration Tests}
+I test di integrazione verificano che i vari componenti del sistema funzionino correttamente insieme. Questi test sono più lenti da eseguire rispetto agli unit test, ma sono fondamentali per garantire che le interazioni tra i moduli siano corrette.
+Sono stati creati test per le principali funzionalità del sistema, come l'interazione con il database e le chiamate API.
+\subsection{Esempio}
+Il test \texttt{test\_chromadb\_api.py} valida l’endpoint \texttt{/context} simulando la dipendenza JWT e il servizio di ricerca ChromaDB:
+\begin{itemize}
+    \item usa \texttt{app.dependency\_overrides} per bypassare la verifica del token con un principal fittizio;
+    \item sostituisce \texttt{\_get\_service} con uno stub per controllare il risultato e tracciare i parametri ricevuti;
+    \item verifica sia il caso di successo (200 con predizioni) sia l’errore server (500) propagato da un servizio che solleva eccezione.
+\end{itemize}
+\captionsetup{type=listing, belowskip=0pt}
+\inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/tests/test_chromadb_api.py}
+\captionof{listing}{Integration test per l’endpoint \texttt{/context}}
+\label{listing:integration-chromadb}
 
 \section{Continuous Integration}
-La pipeline CI esegue automaticamente linting, unit/integration test e build della documentazione/PDF della tesi ad ogni push. L’obiettivo è garantire che le modifiche non introducano regressioni, che la codebase resti coerente con gli standard definiti e che gli artefatti (API docs, PDF) siano sempre aggiornati.
+Nella pipeline di Continuous Integration la suite di test viene eseguita automaticamente su ogni push (tutti i branch), sulle pull request verso \texttt{develop} e può essere avviata manualmente. Il job principale gira su un runner \texttt{archlinux} all’interno di un container Python 3.12 pubblicato internamente, così da replicare lo stesso ambiente usato in sviluppo e in staging.
+\begin{itemize}
+    \item Il caching di \texttt{pip} riduce i tempi di installazione usando come chiave l’hash dei \texttt{requirements.txt}.
+    \item Le dipendenze vengono installate per tutti i moduli (\texttt{auth-server}, \texttt{duckdb}, \texttt{forecasting}) più i pacchetti test comuni (\texttt{pytest}, \texttt{pytest-asyncio}, \texttt{anyio}, \texttt{pytest-cov}).
+    \item L’esecuzione dei test usa database SQLite in memoria per evitare side effect esterni e genera il report di copertura in formato XML/HTML.
+\end{itemize}
+\captionsetup{type=listing, belowskip=0pt}
+\inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{yaml}{code/ci.yml}
+\captionof{listing}{Pipeline di Continuous Integration}
+\label{listing:ci-pipeline}
+
+\newpage
