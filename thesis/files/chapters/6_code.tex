@@ -14,9 +14,9 @@ Di seguito è riportata una descrizione delle principali cartelle e file present
         \item \textbf{.gitea/}: cartella contenente le configurazioni per l’integrazione continua con Gitea.
         \item \textbf{auth-server/}: modulo di autenticazione.
         \item \textbf{forecasting/}: modulo principale del sistema.
-        \item \textbf{duckdb/}: servizio di sincronizzazione dati ERP con scheduler mensile.
+        \item \textbf{duckdb/}: servizio di sincronizzazione dati \gls{erp} con scheduler mensile.
         \item \textbf{kong/}: cartella contenente la configurazione del gateway API che espone i servizi interni.
-        \item \textbf{openapi/}: servizio che pubblica la documentazione ERP.
+        \item \textbf{openapi/}: servizio che pubblica la documentazione \acrshort{erp}.
         \item \textbf{.env}: variabili d’ambiente.
         \item \textbf{.gitignore}: file di esclusione git.
         \item \textbf{alembic.ini}: configurazione di Alembic per le migrazioni del database.
@@ -184,17 +184,6 @@ Questo modello definisce e valida l’esito di una ricerca semantica su previsio
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/models/search_result.py}
 \caption{Modello Pydantic \texttt{ForecastSearchResult} (\texttt{models/search\_result.py}).}
 \label{listing:model-forecast-search-result}
-\end{listing}
-
-\subsubsection{ShapExplanation}
-Questo modello definisce e valida la serializzazione dei valori SHAP:
-\begin{itemize}
-    \item \textbf{values}: array NumPy di float per i valori SHAP, convertiti in lista in serializzazione.
-\end{itemize}
-\begin{listing}[H]
-\inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/models/shap_explanation.py}
-\caption{Modello Pydantic \texttt{ShapExplanation} (\texttt{models/shap\_explanation.py}).}
-\label{listing:model-shap-explanation}
 \end{listing}
 
 \subsection{Modelli SQLModel}

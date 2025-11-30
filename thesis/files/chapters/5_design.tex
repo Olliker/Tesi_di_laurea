@@ -55,7 +55,7 @@ L’architettura complessiva del sistema (Figura~\ref{fig:architettura-generale}
 Il modulo \textit{ErpAI-Forecasting} si inserisce come componente aggiuntivo della piattaforma ErpAI e fornisce funzionalità di previsione basate su modelli di machine learning. 
 Tutte le comunicazioni verso il modulo avvengono tramite l’API Gateway, che gestisce la validazione dei token JWT presso l’Auth Server, l’instradamento delle richieste e l’esposizione controllata delle API pubbliche e interne.
 
-L’orchestrazione vera e propria è realizzata all’interno del Modulo di Previsione, che combina tre elementi chiave: dati ERP sincronizzati tramite DuckDB, un modello XGBoost ottimizzato per il dominio applicativo, e un sistema di persistenza distribuito che comprende Prevision DB e Chroma DB. 
+L’orchestrazione vera e propria è realizzata all’interno del Modulo di Previsione, che combina tre elementi chiave: dati \gls{erp} sincronizzati tramite DuckDB, un modello XGBoost ottimizzato per il dominio applicativo, e un sistema di persistenza distribuito che comprende Prevision DB e Chroma DB. 
 Questa architettura permette di separare nettamente l’elaborazione analitica (DuckDB), l’inferenza e l’explainability (Modulo di Previsione) e la persistenza (Prevision DB / Chroma DB).  
 La presenza di contratti ben definiti (schema delle API REST, modelli Pydantic, formati dei dataset e versioning dei modelli) garantisce la possibilità di sostituire o aggiornare ciascun componente senza introdurre impatti a catena sugli altri servizi.
 
@@ -78,9 +78,9 @@ Si appoggia ad Auth DB per memorizzare utenti, ruoli e chiavi pubbliche/privati 
 L’API Gateway consulta l’Auth Server (o i suoi metadati JWKS) per validare l’autenticità delle richieste in ingresso.
 
 \subsection{Modulo DuckDB}
-DuckDB è il database embedded che alimenta il forecasting e ospita la replica dei dati ERP. La configurazione legge l’URL da \texttt{DUCKDB\_URL} (o \texttt{DUCKDB\_DATABASE\_URL} nel servizio di sync), costruisce il percorso su filesystem e, se la directory non è scrivibile, ripiega su un file locale in sola lettura quando già esistente. Il repository di forecasting espone \texttt{fetch\_fact\_invoices}, che restituisce \texttt{fact\_invoices} come DataFrame Pandas da usare per normalizzazione e preparazione dei dataset.
+DuckDB è il database embedded che alimenta il forecasting e ospita la replica dei dati \acrshort{erp}. La configurazione legge l’URL da \texttt{DUCKDB\_URL} (o \texttt{DUCKDB\_DATABASE\_URL} nel servizio di sync), costruisce il percorso su filesystem e, se la directory non è scrivibile, ripiega su un file locale in sola lettura quando già esistente. Il repository di forecasting espone \texttt{fetch\_fact\_invoices}, che restituisce \texttt{fact\_invoices} come DataFrame Pandas da usare per normalizzazione e preparazione dei dataset.
 \begin{itemize}
-    \item \textbf{Sincronizzazione}: un servizio di orchestrazione preleva i dati ERP attraverso i seguenti metodi:
+    \item \textbf{Sincronizzazione}: un servizio di orchestrazione preleva i dati \acrshort{erp} attraverso i seguenti metodi:
     \begin{itemize}
         \item \textbf{fetch\_invoices}: sincronizza la tabella \texttt{invoices} con le informazioni delle fatture di vendita emesse.
         \item \textbf{fetch\_articles}: sincronizza la tabella \texttt{articles} con tutti gli articoli in vendita.

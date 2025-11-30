@@ -157,10 +157,10 @@ Ogni requisito del modulo di previsione per \textit{ErpAI} è codificato nel seg
     \endfoot
     \endlastfoot 
     
-    R.O.0 & Il sistema deve stimare quante vendite (in pezzi) l’azienda effettuerà nei periodi futuri configurabili, partendo dai dati ERP. \\ \hline
+    R.O.0 & Il sistema deve stimare quante vendite (in pezzi) l’azienda effettuerà nei periodi futuri configurabili, partendo dai dati \gls{erp}. \\ \hline
     R.O.1 & Le esecuzioni di previsione devono essere gestite come job asincroni con stati tracciati (creazione, avanzamento, successo/fallimento) e consultabili. \\ \hline
     R.O.2 & Le previsioni devono essere salvate in archivi aziendali con identificativo di run, righe previsionali e controlli su duplicati/chiavi univoche. \\ \hline
-    R.O.3 & I dati ERP devono essere sincronizzati periodicamente in un data store locale, con normalizzazione e indici per l’uso del modello. \\ \hline
+    R.O.3 & I dati \acrshort{erp} devono essere sincronizzati periodicamente in un data store locale, con normalizzazione e indici per l’uso del modello. \\ \hline
     R.O.4 & L’accesso alle funzionalità di previsione e alle consultazioni deve essere protetto tramite autenticazione e validazione di token/JWKS. \\ \hline
     R.O.5 & Il sistema deve notificare un endpoint applicativo configurabile al termine dei job (successo o errore). \\ \hline
     R.O.6 & La gestione degli errori non deve interrompere l’elaborazione: i task in background devono gestire eccezioni senza bloccare il servizio. \\ \hline

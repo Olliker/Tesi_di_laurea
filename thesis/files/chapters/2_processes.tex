@@ -2,7 +2,7 @@
 \label{chap:processi-metodologie}
 
 \section{Organizzazione e collaborazione}
-Lo stage si inserisce nel progetto \textit{ErpAI} di Spazio Dev, con l’obiettivo di realizzare il primo motore di previsione delle vendite integrato nell’ERP proprietario. Il team conta un referente tecnico aziendale, due sviluppatori e il sottoscritto; lo sviluppo del modulo di previsione e delle componenti di explainable AI è assegnato a me. Le procedure sono in evoluzione perché l’azienda è giovane e in crescita, ma già orientate a documentazione condivisa, verifiche automatizzate e tracciabilità delle decisioni.
+Lo stage si inserisce nel progetto \textit{ErpAI} di Spazio Dev, con l’obiettivo di realizzare il primo motore di previsione delle vendite integrato nell’\gls{erp} proprietario. Il team conta un referente tecnico aziendale, due sviluppatori e il sottoscritto; lo sviluppo del modulo di previsione e delle componenti di explainable AI è assegnato a me. Le procedure sono in evoluzione perché l’azienda è giovane e in crescita, ma già orientate a documentazione condivisa, verifiche automatizzate e tracciabilità delle decisioni.
 
 \subsection{Ambienti e strumenti di sviluppo}
 L’azienda consente a ciascun sviluppatore di utilizzare il proprio sistema operativo e l’IDE preferito, nel rispetto delle convenzioni di progetto. La coerenza tra i team è garantita dalla containerizzazione: tutti i progetti sono eseguiti in Docker e, quando serve un ambiente di sviluppo replicabile, viene adottato ddev. Quest’ultimo offre configurazioni preimpostate e comandi uniformi per avviare i servizi, aggiornare le dipendenze e verificare l’applicazione in locale. Ne derivano onboarding più rapido, dipendenze allineate e test eseguiti in ambienti equivalenti a quelli usati per l’integrazione continua.
@@ -24,7 +24,7 @@ La comunicazione avviene su canali Telegram dedicati a ciascun progetto, dove te
 \subsection{Version control e branching}
 Il codice è gestito con Git\footnote{\url{https://git-scm.com/}}, sistema di controllo versione distribuito, e ospitato su Gitea\footnote{\url{https://about.gitea.com/}}, piattaforma self-hosted per repository e merge request. È adottato un modello di branching ispirato a Gitflow ma ridotto alle necessità del progetto:
 \begin{itemize}
-    \item \textbf{main}: contiene le versioni rilasciabili e sincronizzate con l’ERP;
+    \item \textbf{main}: contiene le versioni rilasciabili e sincronizzate con l’\acrshort{erp};
     \item \textbf{develop}: integra in modo continuo le attività in corso;
     \item \textbf{feature/<nome>}: per lo sviluppo di nuove funzionalità;
     \item \textbf{fix/<nome>}: per correggere errori individuati in test o review;
