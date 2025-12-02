@@ -33,7 +33,7 @@
 \setlength{\headheight}{14.5pt}
 \addtolength{\topmargin}{-2.45pt}
 
-% Add a subscript G to a glossary entry
+% Glossary entry marker (subscript G)
 \newcommand{\glox}{\textsubscript{\textbf{\textit{G}}}}
 
 % Improvements the paragraph command
@@ -113,6 +113,9 @@
 
 % Make glossaries and bibliography
 \makeglossaries
+% Custom formatting: no colon separator, no auto-dot after description
+\newcommand*{\glossaryentryfield}[5]{\item[\glsentryitem{#1}{#2}] #5}
+\renewcommand*{\glspostdescription}{}
 % Redefine the format for the glossary entries to be italic
 \renewcommand*{\glstextformat}[1]{\textit{#1}\glox}
 %\glsaddall

@@ -7,17 +7,20 @@ In avvio di stage sono stati definiti requisiti e interazioni minime tra chi usa
 \subsection{Attori individuati}
 Gli attori che interagiscono con il motore di previsione sono:
 \begin{itemize}
-    \item \textbf{Utente finale}: usa l’interfaccia di ErpAI per avviare previsioni e consultare i risultati.
-    \item \textbf{Gestionale ErpAI}: applicazione principale che inoltra le richieste al modulo di previsione via API protette, gestisce autenticazione e memorizza/mostra i risultati.
-    \item \textbf{Modulo di previsione}: modulo che aggiorna i dati, allena il modello, genera previsioni e notifica ErpAI via callback.
-    \item \textbf{Modulo chatbot}: modulo che può interrogare il modulo di previsione via API per ottenere previsioni e spiegazioni da usare nelle risposte.
+    \item \textbf{Utente finale}: usa l’interfaccia di \textit{ErpAI} per avviare previsioni e consultare i risultati.
+    \item \textbf{Gestionale \textit{ErpAI}}: applicazione principale che inoltra le richieste al modulo di previsione via \gls{api} protette, gestisce autenticazione e memorizza/mostra i risultati.
+    \item \textbf{Modulo di previsione}: modulo che aggiorna i dati, allena il modello, genera previsioni e notifica \textit{ErpAI} via \gls{callback}.
+    \item \textbf{Modulo chatbot}: modulo che può interrogare il modulo di previsione via \gls{api} per ottenere previsioni e spiegazioni da usare nelle risposte.
 \end{itemize}
-L’interazione è orchestrata da ErpAI, che media verso il modulo di previsione e il chatbot.
+L’interazione è orchestrata da \textit{ErpAI}, che media verso il modulo di previsione e il chatbot.
 
 \subsection{Casi d'uso}
+La Tabella~\ref{tab:casi-uso} riporta i casi d’uso principali individuati per il modulo di previsione.
 \begin{center}
+    \renewcommand{\arraystretch}{1.2}
     \rowcolors{1}{}{tableGray}
     \begin{longtable}{|p{2.2cm}|p{11.8cm}|}
+    \caption{Casi d’uso principali del modulo di previsione}\label{tab:casi-uso}\\
     \hline
     \multicolumn{1}{|c|}{\textbf{ID}} & \multicolumn{1}{c|}{\textbf{Descrizione}}\\
     \hline 
@@ -37,32 +40,32 @@ L’interazione è orchestrata da ErpAI, che media verso il modulo di previsione
     
     UC1 & \textbf{Attori}: Utente finale.\\
         & \textbf{Scopo}: Avviare una richiesta di previsione.\\
-        & \textbf{Pre-condizione}: Autenticazione effettuata su ErpAI.\\
-        & \textbf{Post-condizione}: Richiesta creata e inoltrata a ErpAI. \\ \hline
+        & \textbf{Pre-condizione}: Autenticazione effettuata su \textit{ErpAI}.\\
+        & \textbf{Post-condizione}: Richiesta creata e inoltrata a \textit{ErpAI}. \\ \hline
     UC1.1 & \textbf{Attori}: Utente finale.\\
         & \textbf{Scopo}: Selezionare l’intervallo temporale per la previsione.\\
-        & \textbf{Pre-condizione}: Interfaccia di ErpAI aperta sulla schermata di previsione.\\
+        & \textbf{Pre-condizione}: Interfaccia di \textit{ErpAI} aperta sulla schermata di previsione.\\
         & \textbf{Post-condizione}: Intervallo impostato. \\ \hline
     UC1.2 & \textbf{Attori}: Utente finale.\\
         & \textbf{Scopo}: Confermare e inviare la richiesta.\\
         & \textbf{Pre-condizione}: Parametri configurati (intervallo selezionato).\\
-        & \textbf{Post-condizione}: Richiesta inviata a ErpAI. \\ \hline
+        & \textbf{Post-condizione}: Richiesta inviata a \textit{ErpAI}. \\ \hline
 
-    UC2 & \textbf{Attori}: Gestionale ErpAI.\\
+    UC2 & \textbf{Attori}: Gestionale \textit{ErpAI}.\\
         & \textbf{Scopo}: Inoltrare la richiesta al modulo di previsione.\\
-        & \textbf{Pre-condizione}: Richiesta ricevuta dal frontend, API del modulo raggiungibile.\\
+        & \textbf{Pre-condizione}: Richiesta ricevuta dal frontend, \gls{api} del modulo raggiungibile.\\
         & \textbf{Post-condizione}: Richiesta inoltrata. \\ \hline
-    UC2.1 & \textbf{Attori}: Gestionale ErpAI.\\
+    UC2.1 & \textbf{Attori}: Gestionale \textit{ErpAI}.\\
         & \textbf{Scopo}: Richiedere token al modulo di previsione.\\
         & \textbf{Pre-condizione}: Credenziali client configurate.\\
         & \textbf{Post-condizione}: Token ricevuto oppure errore di autenticazione. \\ \hline
-    UC2.2 & \textbf{Attori}: Gestionale ErpAI.\\
+    UC2.2 & \textbf{Attori}: Gestionale \textit{ErpAI}.\\
         & \textbf{Scopo}: Inviare la richiesta con token al modulo di previsione.\\
         & \textbf{Pre-condizione}: Token valido, parametri di previsione disponibili.\\
         & \textbf{Post-condizione}: Richiesta accettata o errore ricevuto. \\ \hline
 
     UC3 & \textbf{Attori}: Modulo di previsione.\\
-        & \textbf{Scopo}: Processare la previsione e notificare ErpAI.\\
+        & \textbf{Scopo}: Processare la previsione e notificare \textit{ErpAI}.\\
         & \textbf{Pre-condizione}: Richiesta UC2.2 ricevuta e valida.\\
         & \textbf{Post-condizione}: Previsione elaborata o errore rilevato. \\ \hline
     UC3.1 & \textbf{Attori}: Modulo di previsione.\\
@@ -70,62 +73,66 @@ L’interazione è orchestrata da ErpAI, che media verso il modulo di previsione
         & \textbf{Pre-condizione}: Richiesta valida.\\
         & \textbf{Post-condizione}: Previsione pronta oppure errore registrato. \\ \hline
     UC3.2 & \textbf{Attori}: Modulo di previsione.\\
-        & \textbf{Scopo}: Notificare il completamento a ErpAI.\\
+        & \textbf{Scopo}: Notificare il completamento a \textit{ErpAI}.\\
         & \textbf{Pre-condizione}: Processo terminato (successo o fallimento).\\
-        & \textbf{Post-condizione}: Stato aggiornato in ErpAI. \\ \hline
+        & \textbf{Post-condizione}: Stato aggiornato in \textit{ErpAI}. \\ \hline
     UC3.E & \textbf{Attori}: Modulo di previsione.\\
-        & \textbf{Scopo}: Notificare errore a ErpAI.\\
+        & \textbf{Scopo}: Notificare errore a \textit{ErpAI}.\\
         & \textbf{Pre-condizione}: Errore registrato durante UC3.1.\\
-        & \textbf{Post-condizione}: Stato marcato come fallito in ErpAI. \\ \hline
+        & \textbf{Post-condizione}: Stato marcato come fallito in \textit{ErpAI}. \\ \hline
 
     UC4 & \textbf{Attori}: Modulo Chatbot.\\
         & \textbf{Scopo}: Richiedere contesto previsione.\\
-        & \textbf{Pre-condizione}: Chatbot autorizzato verso le API del modulo di previsione.\\
+        & \textbf{Pre-condizione}: Chatbot autorizzato verso le \gls{api} del modulo di previsione.\\
         & \textbf{Post-condizione}: Richieste pronte o dati ricevuti/errore gestito. \\ \hline
     UC4.1 & \textbf{Attori}: Modulo Chatbot.\\
         & \textbf{Scopo}: Preparare richiesta e token.\\
         & \textbf{Pre-condizione}: Credenziali client configurate.\\
         & \textbf{Post-condizione}: Token ricevuto oppure errore di autenticazione. \\ \hline
     UC4.2 & \textbf{Attori}: Modulo Chatbot.\\
-        & \textbf{Scopo}: Recuperare dati previsionali via API.\\
+        & \textbf{Scopo}: Recuperare dati previsionali via \gls{api}.\\
         & \textbf{Pre-condizione}: Token valido, ID previsione noto.\\
         & \textbf{Post-condizione}: Dati ricevuti oppure errore gestito. \\ \hline
     UC4.E & \textbf{Attori}: Modulo Chatbot.\\
-        & \textbf{Scopo}: Gestire errore API.\\
+        & \textbf{Scopo}: Gestire errore \gls{api}.\\
         & \textbf{Pre-condizione}: Errore nelle chiamate di UC4.1 o UC4.2.\\
         & \textbf{Post-condizione}: Errore registrato, risposta di errore al chiamante. \\ \hline
     \end{longtable}
 \end{center}
 
 \subsection{Diagrammi dei casi d'uso}
-I diagrammi seguenti descrivono i flussi dei casi d’uso presentati.
+I diagrammi seguenti descrivono i flussi dei casi d’uso presentati (Figure~\ref{fig:usecase1}, \ref{fig:usecase2}, \ref{fig:usecase3} e \ref{fig:usecase4}).
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{img/usecase/usecase1.png}
-    \caption{Use case 1: avvio e invio richiesta di previsione}
+    \caption{UC.1: avvio e invio richiesta di previsione}
+    \label{fig:usecase1}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{img/usecase/usecase2.png}
-    \caption{Use case 2: inoltro della richiesta da ErpAI al modulo di previsione}
+    \caption{UC.2: inoltro della richiesta da \textit{ErpAI} al modulo di previsione}
+    \label{fig:usecase2}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{img/usecase/usecase3.png}
-    \caption{Use case 3: elaborazione e notifica da parte del modulo di previsione}
+    \caption{UC.3: elaborazione e notifica da parte del modulo di previsione}
+    \label{fig:usecase3}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{img/usecase/usecase4.png}
-    \caption{Use case 4: interazione del modulo chatbot con il modulo di previsione}
+    \caption{UC.4: interazione del modulo chatbot con il modulo di previsione}
+    \label{fig:usecase4}
 \end{figure}
 
 \section{Requisiti}
-Questa sezione sintetizza i requisiti del modulo di previsione. I backlog item sono stati raccolti e prioritizzati insieme al Product Owner, etichettati per criticità e condivisi come base di accordo con gli stakeholder.
+Questa sezione sintetizza i requisiti del modulo di previsione. Gli item di \gls{backlog} sono stati raccolti e prioritizzati insieme al Product Owner, etichettati per criticità e condivisi come base di accordo con gli stakeholder.
 
 \subsection{Codifica requisiti}
 Ogni requisito del modulo di previsione per \textit{ErpAI} è codificato nel seguente formato:
@@ -136,10 +143,13 @@ Ogni requisito del modulo di previsione per \textit{ErpAI} è codificato nel seg
 \end{itemize}
 
 \subsection{Elenco requisiti}
+\label{sec:elenco-requisiti}
+La Tabella~\ref{tab:requisiti} riporta l’elenco completo dei requisiti raccolti per il modulo di previsione.
 \begin{center}
     \renewcommand{\arraystretch}{1.2}
     \rowcolors{1}{}{tableGray}
     \begin{longtable}{|p{2.5cm}|p{11.5cm}|}
+    \caption[Elenco dei requisiti]{Elenco dei requisiti ~\ref{sec:elenco-requisiti}}\label{tab:requisiti}\\
     \hline
     \multicolumn{1}{|c|}{\textbf{ID}} & \multicolumn{1}{c|}{\textbf{Descrizione}}\\
     \hline 
@@ -161,18 +171,18 @@ Ogni requisito del modulo di previsione per \textit{ErpAI} è codificato nel seg
     R.O.1 & Le esecuzioni di previsione devono essere gestite come job asincroni con stati tracciati (creazione, avanzamento, successo/fallimento) e consultabili. \\ \hline
     R.O.2 & Le previsioni devono essere salvate in archivi aziendali con identificativo di run, righe previsionali e controlli su duplicati/chiavi univoche. \\ \hline
     R.O.3 & I dati \acrshort{erp} devono essere sincronizzati periodicamente in un data store locale, con normalizzazione e indici per l’uso del modello. \\ \hline
-    R.O.4 & L’accesso alle funzionalità di previsione e alle consultazioni deve essere protetto tramite autenticazione e validazione di token/JWKS. \\ \hline
+    R.O.4 & L’accesso alle funzionalità di previsione e alle consultazioni deve essere protetto tramite autenticazione e validazione di token/\gls{jwks}. \\ \hline
     R.O.5 & Il sistema deve notificare un endpoint applicativo configurabile al termine dei job (successo o errore). \\ \hline
     R.O.6 & La gestione degli errori non deve interrompere l’elaborazione: i task in background devono gestire eccezioni senza bloccare il servizio. \\ \hline
-    R.O.7 & Le API devono esporre documentazione coerente e accessibile per l’integrazione con i servizi aziendali. \\ \hline
+    R.O.7 & Le \gls{api} devono esporre documentazione coerente e accessibile per l’integrazione con i servizi aziendali. \\ \hline
     R.O.8 & Il servizio deve essere distribuibile in modo riproducibile (container/docker-compose) con configurazione via variabili ambiente. \\ \hline
     R.D.0 & Il sistema dovrebbe produrre spiegazioni delle previsioni (es. feature importanti) e associarle ai risultati salvati. \\ \hline
     R.D.1 & Il sistema dovrebbe offrire un contesto consultabile (ricerca/testo) sulle previsioni per supportare chatbot o analisi esplorativa. \\ \hline
     R.D.2 & Il modello dovrebbe calcolare e tracciare metriche di accuratezza per ogni run, con target di errore medio sotto il 20\%. \\ \hline
     R.D.3 & Il sistema dovrebbe supportare analisi “what-if”, consentendo di variare parametri e confrontare scenari di previsione. \\ \hline
     R.D.4 & Il sistema dovrebbe supportare logistica di validazione automatica (test su dati di holdout) prima di promuovere un nuovo modello in produzione. \\ \hline
-    R.F.0 & Potrebbe essere utile fornire esportazioni in formati aggiuntivi (CSV/Excel/JSON) per integrazioni non API. \\ \hline
-    R.F.1 & Potrebbe essere utile offrire notifiche opzionali via email/Slack oltre al webhook configurabile. \\ \hline
+    R.F.0 & Potrebbe essere utile fornire esportazioni in formati aggiuntivi (\gls{csv}/Excel/\gls{json}) per integrazioni non \gls{api}. \\ \hline
+    R.F.1 & Potrebbe essere utile offrire notifiche opzionali via email/Slack oltre al \gls{callback} configurabile. \\ \hline
     R.F.2 & Potrebbe essere utile prevedere dashboard sintetiche per monitorare trend e performance del modello. \\ \hline
     \end{longtable}
 \end{center}

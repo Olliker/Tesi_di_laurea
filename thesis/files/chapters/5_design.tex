@@ -1,6 +1,6 @@
 \chapter{Progettazione}
 \label{chap:design}
-Una parte consistente del monte ore iniziale dello stage è stata investita nella fase di progettazione: definizione dell’architettura del modulo di previsione, individuazione dei confini funzionali e selezione degli strumenti. Le prime settimane sono state dedicate alla prova comparativa delle tecnologie (modello, API, orchestrazione), allo studio della documentazione ufficiale e alla costruzione di prototipi rapidi; ciò ha permesso di arrivare alla fase successiva con scelte già validate e di avviare lo sviluppo su basi stabili.
+Una parte consistente del monte ore iniziale dello stage è stata investita nella fase di progettazione: definizione dell’architettura del modulo di previsione, individuazione dei confini funzionali e selezione degli strumenti. Le prime settimane sono state dedicate alla prova comparativa delle tecnologie (modello, \gls{api}, orchestrazione), allo studio della documentazione ufficiale e alla costruzione di prototipi rapidi; ciò ha permesso di arrivare alla fase successiva con scelte già validate e di avviare lo sviluppo su basi stabili.
 
 \section{Tecnologie e strumenti}
 \label{sec:tecnologie-strumenti}
@@ -15,8 +15,8 @@ In questa sezione sono elencate le principali tecnologie e librerie adottate per
 
 \subsection{Framework e server web}
 \begin{itemize}
-    \item \textbf{FastAPI}\footnote{\url{https://fastapi.tiangolo.com/}}: FastAPI è un framework web Python ad alte prestazioni per la creazione di API basate su standard come OpenAPI e JSON Schema. Utilizza tipizzazione Python e Pydantic per validazione automatica e autogenerazione della documentazione.
-    \item \textbf{Uvicorn}: server ASGI leggero e ad alte prestazioni, basato su uvloop e httptools, progettato per applicazioni web asincrone in Python. Fornisce un runtime veloce e a bassa latenza ideale per framework come FastAPI.
+    \item \textbf{FastAPI}\footnote{\url{https://fastapi.tiangolo.com/}}: FastAPI è un \textit{framework} web Python ad alte prestazioni per la creazione di \gls{api} basate su standard come OpenAPI e JSON Schema. Utilizza tipizzazione Python e Pydantic per validazione automatica e autogenerazione della documentazione.
+    \item \textbf{Uvicorn}: server \gls{asgi} leggero e ad alte prestazioni, basato su uvloop e httptools, progettato per applicazioni web asincrone in Python. Fornisce un runtime veloce e a bassa latenza ideale per \textit{framework} come FastAPI.
 \end{itemize}
 
 \subsection{Database e ORM}
@@ -24,12 +24,12 @@ In questa sezione sono elencate le principali tecnologie e librerie adottate per
     \item \textbf{SQLAlchemy}: toolkit SQL e ORM per Python che fornisce un livello di astrazione avanzato per interagire con database relazionali.
     \item \textbf{Alembic}\footnote{\url{https://alembic.sqlalchemy.org/}}: strumento di database migration per SQLAlchemy che gestisce in modo versionato l’evoluzione degli schemi relazionali. Permette di generare, applicare e monitorare migrazioni tramite script incrementali.
     \item \textbf{DuckDB}: è un database analitico in-process orientato alle query OLAP, progettato per esecuzioni ad alte prestazioni direttamente all’interno dell’applicazione. Utilizza un motore vettorizzato e columnar per elaborare rapidamente grandi dataset senza necessità di un server esterno.
-    \item \textbf{ChromaDB}: database vettoriale progettato per l’indicizzazione e la ricerca semantica tramite embedding ad alta dimensionalità. Fornisce storage ottimizzato, funzioni di similarity search e gestione di metadata per applicazioni LLM e retrieval-augmented.
+    \item \textbf{ChromaDB}: database vettoriale progettato per l’indicizzazione e la ricerca semantica tramite \gls{embedding} ad alta dimensionalità. Fornisce storage ottimizzato, funzioni di \gls{similaritysearch} e gestione di metadata per applicazioni \gls{llm} e retrieval-augmented.
 \end{itemize}
 
 \subsection{Autenticazione e sicurezza}
 \begin{itemize}
-    \item \textbf{PyJWT}\footnote{\url{https://pyjwt.readthedocs.io/}}: libreria Python per creare, firmare e validare JSON Web Token (JWT), utilizzati per autenticazione e scambio sicuro di informazioni.
+    \item \textbf{PyJWT}\footnote{\url{https://pyjwt.readthedocs.io/}}: libreria Python per creare, firmare e validare \gls{jwt}, utilizzati per autenticazione e scambio sicuro di informazioni.
 \end{itemize}
 
 \subsection{Machine Learning e Data Science}
@@ -37,27 +37,27 @@ In questa sezione sono elencate le principali tecnologie e librerie adottate per
     \item \textbf{Pydantic}\footnote{\url{https://pydantic.dev/}}: libreria Python per la validazione e la gestione di dati basata su annotazioni di tipo. Consente di definire modelli di dati con tipi forti, validazione automatica e serializzazione/deserializzazione in modo semplice ed efficiente.
     \item \textbf{Pandas}: libreria Python per la manipolazione e l’analisi di dati strutturati, basata su oggetti fondamentali come DataFrame e Series. Offre strumenti ad alte prestazioni per filtrare, trasformare, aggregare e pulire dataset.
     \item \textbf{NumPy}: libreria Python per il calcolo scientifico che fornisce array n-dimensionali ad alte prestazioni e operazioni vettorializzate. Include funzioni per algebra lineare, statistica e trasformazioni numeriche ottimizzate in C.
-    \item \textbf{scikit-learn}: libreria Python per il machine learning che offre algoritmi efficienti per classificazione, regressione, clustering e riduzione della dimensionalità. Fornisce API uniformi, strumenti per preprocessing, valutazione dei modelli e pipeline.
-    \item \textbf{XGBoost}\footnote{\url{https://xgboost.ai/}}: libreria Python ottimizzata per gradient boosting che implementa alberi decisionali ad alte prestazioni, pensata per competizioni di machine learning e applicazioni industriali. Utilizza parallelismo, pruning avanzato e ottimizzazioni su memoria e GPU. È nota per l’elevata accuratezza e l’efficienza su grandi dataset tabulari.
-    \item \textbf{SHAP}\footnote{\url{https://shap.readthedocs.io/}}: libreria Python che fornisce metodi basati sui valori di Shapley per interpretare modelli di machine learning. Calcola contributi locali e globali delle feature alle predizioni. È ampiamente utilizzata per garantire trasparenza, explainability e analisi di modelli complessi come XGBoost
+    \item \textbf{scikit-learn}: libreria Python per il machine learning che offre algoritmi efficienti per classificazione, regressione, clustering e riduzione della dimensionalità. Fornisce \acrshort{api} uniformi, strumenti per preprocessing, valutazione dei modelli e pipeline.
+    \item \textbf{XGBoost}\footnote{\url{https://xgboost.ai/}}: libreria Python ottimizzata per gradient boosting che implementa alberi decisionali ad alte prestazioni, pensata per competizioni di machine learning e applicazioni industriali. Utilizza parallelismo, pruning avanzato e ottimizzazioni su memoria e \acrshort{gpu}. È nota per l’elevata accuratezza e l’efficienza su grandi dataset tabulari.
+    \item \textbf{\acrshort{shap}}\footnote{\url{https://shap.readthedocs.io/}}: libreria Python che fornisce metodi basati sui valori di Shapley per interpretare modelli di machine learning. Calcola contributi locali e globali delle feature alle predizioni. È ampiamente utilizzata per garantire trasparenza, explainability e analisi di modelli complessi come XGBoost
 \end{itemize}
 
 \subsection{Strumenti di testing e deployment}
 \begin{itemize}
-    \item \textbf{Pytest}: framework di testing per Python che permette di scrivere test semplici, modulari e scalabili tramite un approccio basato su funzioni e fixture. Supporta parametric testing, plugin estendibili e rilevamento automatico dei test.
+    \item \textbf{Pytest}: \textit{framework} di testing per Python che permette di scrivere test semplici, modulari e scalabili tramite un approccio basato su funzioni e fixture. Supporta parametric testing, plugin estendibili e rilevamento automatico dei test.
     \item \textbf{Docker}\footnote{\url{https://www.docker.com/}}: piattaforma di containerizzazione che consente di impacchettare applicazioni e dipendenze in ambienti isolati e portabili chiamati container. Utilizza un motore leggero basato su immagini stratificate per garantire coerenza tra ambienti di sviluppo, test e produzione. Facilita il deployment scalabile e riproducibile di applicazioni moderne.
 \end{itemize}
 
 \section{Architettura}
 \label{sec:architettura}
 
-L’architettura complessiva del sistema (Figura~\ref{fig:architettura-generale}) è stata progettata secondo principi di modularità e componibilità, in modo da permettere l’evoluzione indipendente dei singoli blocchi funzionali. 
-Il modulo \textit{ErpAI-Forecasting} si inserisce come componente aggiuntivo della piattaforma ErpAI e fornisce funzionalità di previsione basate su modelli di machine learning. 
-Tutte le comunicazioni verso il modulo avvengono tramite l’API Gateway, che gestisce la validazione dei token JWT presso l’Auth Server, l’instradamento delle richieste e l’esposizione controllata delle API pubbliche e interne.
+L’architettura complessiva del sistema \ref{fig:architettura-generale} è stata progettata secondo principi di modularità e componibilità, in modo da permettere l’evoluzione indipendente dei singoli blocchi funzionali. 
+Il modulo \textit{ErpAI-Forecasting} si inserisce come componente aggiuntivo della piattaforma \textit{ErpAI} e fornisce funzionalità di previsione basate su modelli di machine learning. 
+Tutte le comunicazioni verso il modulo avvengono tramite l’\gls{api} Gateway, che gestisce la validazione dei token \acrshort{jwt} presso l’Auth Server, l’instradamento delle richieste e l’esposizione controllata delle \acrshort{api} pubbliche e interne. 
 
 L’orchestrazione vera e propria è realizzata all’interno del Modulo di Previsione, che combina tre elementi chiave: dati \gls{erp} sincronizzati tramite DuckDB, un modello XGBoost ottimizzato per il dominio applicativo, e un sistema di persistenza distribuito che comprende Prevision DB e Chroma DB. 
 Questa architettura permette di separare nettamente l’elaborazione analitica (DuckDB), l’inferenza e l’explainability (Modulo di Previsione) e la persistenza (Prevision DB / Chroma DB).  
-La presenza di contratti ben definiti (schema delle API REST, modelli Pydantic, formati dei dataset e versioning dei modelli) garantisce la possibilità di sostituire o aggiornare ciascun componente senza introdurre impatti a catena sugli altri servizi.
+La presenza di contratti ben definiti (schema delle \acrshort{api} \acrshort{rest}, modelli Pydantic, formati dei dataset e versioning dei modelli) garantisce la possibilità di sostituire o aggiornare ciascun componente senza introdurre impatti a catena sugli altri servizi.
 
 \begin{figure}[H]
     \centering
@@ -67,18 +67,18 @@ La presenza di contratti ben definiti (schema delle API REST, modelli Pydantic, 
 \end{figure}
 
 \subsection{API Gateway}
-Il sistema utilizza Kong\footnote{\url{https://konghq.com/}} come API Gateway per garantire un unico punto di ingresso alle API esposte dal modulo \textit{ErpAI-Forecasting}.  
+Il sistema utilizza Kong\footnote{\url{https://konghq.com/}} come \gls{api} Gateway per garantire un unico punto di ingresso alle \gls{api} esposte dal modulo \textit{ErpAI-Forecasting}.  
 Kong gestisce instradamento, rate limiting, logging e policy di sicurezza, consentendo di centralizzare funzioni trasversali che altrimenti dovrebbero essere replicate nei singoli servizi.  
-Ogni richiesta proveniente da ErpAI o dal Modulo LLM viene validata e inoltrata al Modulo di Previsione solo dopo la verifica del token JWT.
+Ogni richiesta proveniente da \textit{ErpAI} o dal Modulo \acrshort{llm} viene validata e inoltrata al Modulo di Previsione solo dopo la verifica del token \acrshort{jwt}.
 
 \subsection{Auth Server}
-L’Auth Server è responsabile dell’autenticazione e dell’emissione dei token JWT.  
+L’Auth Server è responsabile dell’autenticazione e dell’emissione dei token \acrshort{jwt}.  
 Espone endpoint per la richiesta di credenziali, la validazione dei token e la gestione di client applicativi autorizzati.  
 Si appoggia ad Auth DB per memorizzare utenti, ruoli e chiavi pubbliche/privati necessarie alla firma e alla verifica dei token.  
-L’API Gateway consulta l’Auth Server (o i suoi metadati JWKS) per validare l’autenticità delle richieste in ingresso.
+L’\acrshort{api} Gateway consulta l’Auth Server (o i suoi metadati \acrshort{jwks}) per validare l’autenticità delle richieste in ingresso.
 
 \subsection{Modulo DuckDB}
-DuckDB è il database embedded che alimenta il forecasting e ospita la replica dei dati \acrshort{erp}. La configurazione legge l’URL da \texttt{DUCKDB\_URL} (o \texttt{DUCKDB\_DATABASE\_URL} nel servizio di sync), costruisce il percorso su filesystem e, se la directory non è scrivibile, ripiega su un file locale in sola lettura quando già esistente. Il repository di forecasting espone \texttt{fetch\_fact\_invoices}, che restituisce \texttt{fact\_invoices} come DataFrame Pandas da usare per normalizzazione e preparazione dei dataset.
+DuckDB è il database embedded, analitico e in-process orientato a query \gls{olap} che alimenta il forecasting e ospita la replica dei dati \acrshort{erp}. La configurazione legge l’URL da \texttt{DUCKDB\_URL} (o \texttt{DUCKDB\_DATABASE\_URL} nel servizio di sync), costruisce il percorso su filesystem e, se la directory non è scrivibile, ripiega su un file locale in sola lettura quando già esistente. Il \textit{repository} di forecasting espone \texttt{fetch\_fact\_invoices}, che restituisce \texttt{fact\_invoices} come DataFrame Pandas da usare per normalizzazione e preparazione dei dataset.
 \begin{itemize}
     \item \textbf{Sincronizzazione}: un servizio di orchestrazione preleva i dati \acrshort{erp} attraverso i seguenti metodi:
     \begin{itemize}
@@ -92,14 +92,14 @@ DuckDB è il database embedded che alimenta il forecasting e ospita la replica d
 \end{itemize}
 
 \subsection{Modulo di Previsione}
-Il Modulo di Previsione orchestrato da FastAPI gestisce l’intero ciclo di inferenza, dall’accesso ai dati fino alla persistenza dei risultati. Gli endpoint REST validano il payload (Pydantic), avviano un job tracciato e coordinano i servizi sottostanti:
+Il Modulo di Previsione orchestrato da FastAPI gestisce l’intero ciclo di inferenza, dall’accesso ai dati fino alla persistenza dei risultati. Gli endpoint \acrshort{rest} validano il payload (Pydantic), avviano un job tracciato e coordinano i servizi sottostanti:
 \begin{itemize}
     \item \textbf{Acquisizione dati}: lettura delle \texttt{fact\_invoices} da DuckDB, normalizzazione di colonne/tempi e copertura mensile per articolo; filtri opzionali sulla data di cutoff.
-    \item \textbf{Feature engineering}: costruzione del dataframe utilizzato per il training del modello e aggiunta di feature derivate come lag, rolling, trend stagionali e indicatori temporali.
-    \item \textbf{Inferenza XGBoost}: allenamento del modello XGBoost sui dati raccolti e generazione delle previsioni per il periodo richiesto con calcolo delle metriche di accuratezza come MAPE, WAPE e RMSE.
-    \item \textbf{Spiegazioni SHAP}: calcolo dei valori SHAP per ogni previsione generata, con estrazione delle feature più influenti.
+    \item \textbf{\gls{featureengineering}}: costruzione del dataframe utilizzato per il training del modello e aggiunta di feature derivate come lag, rolling, trend stagionali e indicatori temporali.
+    \item \textbf{Inferenza XGBoost}: allenamento del modello XGBoost sui dati raccolti e generazione delle previsioni per il periodo richiesto con calcolo delle metriche di accuratezza come \gls{mape}, \gls{wape} e \gls{rmse}.
+    \item \textbf{Spiegazioni \acrshort{shap}}: calcolo dei valori \acrshort{shap} per ogni previsione generata, con estrazione delle feature più influenti.
     \item \textbf{Persistenza}: i risulrttati numerici, le spiegazioni e le metriche vengono salvati in Prevision DB e Chroma DB per consentire consultazioni future e audit dei processi.
-    \item \textbf{Notifiche e callback}: al termine del job di previsione viene inviata una notifica di completamento ad ErpAI tramite callback HTTP, includendo lo stato e i riferimenti ai risultati salvati.
+    \item \textbf{Notifiche e callback}: al termine del job di previsione viene inviata una notifica di completamento ad \textit{ErpAI} tramite \gls{callback} \gls{http}, includendo lo stato e i riferimenti ai risultati salvati.
 \end{itemize}
 
 \subsection{Prevision DB}
@@ -130,12 +130,12 @@ Prevision DB conserva job, run di previsione e righe di output. Le principali ta
 La struttura dei dati consente di collegare job, run e singole previsioni, supportando consultazioni e analisi successive.
 
 \subsection{Chroma DB}
-Chroma DB è l’archivio vettoriale che memorizza embedding, previsioni e spiegazioni, organizzate in due collection collegate da un ID di run nei metadati:
+Chroma DB è l’archivio vettoriale che memorizza \gls{embedding}, previsioni e spiegazioni, organizzate in due collection collegate da un ID di run nei metadati:
 \begin{itemize}
-    \item \textbf{prevision\_collection}: contiene le previsioni (article\_id, article\_name, data, quantità prevista) con embedding e metadati della run.
-    \item \textbf{explanation\_collection}: memorizza le spiegazioni SHAP per ogni previsione, con metadati che riferiscono alla stessa run e all’articolo.
+    \item \textbf{prevision\_collection}: contiene le previsioni (article\_id, article\_name, data, quantità prevista) con \gls{embedding} e metadati della run.
+    \item \textbf{explanation\_collection}: memorizza le spiegazioni \acrshort{shap} per ogni previsione, con metadati che riferiscono alla stessa run e all’articolo.
 \end{itemize}
-Le due collection permettono ricerche semantiche su risultati e spiegazioni e il collegamento rapido alla run e all’articolo, a supporto del Modulo LLM.
+Le due collection permettono ricerche semantiche su risultati e spiegazioni e il collegamento rapido alla run e all’articolo, a supporto del Modulo \acrshort{llm} tramite \gls{embedding}.
 
 \subsection{Auth DB}
 Auth DB gestisce le credenziali dei client applicativi tramite la tabella \texttt{clients}, composta da:
@@ -153,17 +153,18 @@ In questa sezione sono riassunti i pattern architetturali e di inversione del co
 
 \subsection{Architettura a layer}
 L’architettura del modulo di previsione è organizzata a layer, ogni layer ha responsabilità ben definite e comunica solo con i layer adiacenti in un approccio \emph{closed layer}.
-Il vantaggio principale di questa struttura è la separazione delle responsabilità, che consente di isolare la logica di business dalla gestione delle API e dall’accesso ai dati.
+Il vantaggio principale di questa struttura è la separazione delle responsabilità, che consente di isolare la logica di business dalla gestione delle \acrshort{api} e dall’accesso ai dati.
 \textbf{Layer implementati}:
 \begin{itemize}
-    \item \textbf{API Layer}: espone API REST (FastAPI), valida i payload e avvia il flusso; nessuna logica di dominio né accesso diretto ai dati.
-    \item \textbf{Business Layer}: logica business del modulo di previsione, riceve DTO dalle API e effettua le operazioni necessarie orchestrando i servizi sottostanti.
-    \item \textbf{Persistence Layer}: collega il business layer ai database esterni tramite repository dedicati; incapsula logica di accesso ai dati e query SQL.
+    \item \textbf{API Layer}: espone \acrshort{api} \acrshort{rest} (FastAPI), valida i payload e avvia il flusso; nessuna logica di dominio né accesso diretto ai dati.
+    \item \textbf{Business Layer}: logica business del modulo di previsione, riceve \gls{dto} dalle \gls{api} e effettua le operazioni necessarie orchestrando i servizi sottostanti.
+    \item \textbf{Persistence Layer}: collega il business layer ai database esterni tramite \textit{repository} dedicati; incapsula logica di accesso ai dati e query SQL.
     \item \textbf{Database Layer}: contiene i database del sistema. dove i dati sono effettivamente memorizzati.
 \end{itemize}
 
 \subsection{Repository pattern}
-Il sistema adotta il Repository Pattern per isolare completamente la logica di accesso ai dati dai servizi applicativi. Ogni database o storage esterno (relazionale, vettoriale o analitico) è incapsulato in un repository dedicato che espone metodi di alto livello per CRUD e query di dominio. Questa astrazione mantiene i servizi indipendenti dall’implementazione fisica del dato, semplifica l’integrazione con backend diversi, migliora la testabilità tramite mock e accelera la sostituzione o l’evoluzione dei motori di persistenza.
+Il sistema adotta il \gls{repositorypattern} per isolare completamente la logica di accesso ai dati dai servizi applicativi. Ogni database o storage esterno (relazionale, vettoriale o analitico) è incapsulato in un \textit{repository} dedicato che espone metodi di alto livello per \acrshort{crud} e query di dominio. Questa astrazione mantiene i servizi indipendenti dall’implementazione fisica del dato, semplifica l’integrazione con backend diversi, migliora la testabilità tramite mock e accelera la sostituzione o l’evoluzione dei motori di persistenza.
+Lo snippet \ref{listing:repository-pattern} mostra un esempio di \textit{repository} per Chroma DB.
 \begin{itemize}
     \item \textbf{ForecastRepository}: accesso a Prevision DB (creazione job, salvataggio run, metriche, righe previsionali).
     \item \textbf{DuckDBRepository}: accesso a DuckDB (\texttt{fact\_invoices} come DataFrame Pandas).
@@ -172,7 +173,7 @@ Il sistema adotta il Repository Pattern per isolare completamente la logica di a
 
 \captionsetup{type=listing, belowskip=0pt}
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/repository_pattern.py}
-\captionof{listing}{Esempio di repository per Chroma (\texttt{code/repository\_pattern.py}).}
+\captionof{listing}{Esempio di \textit{repository} per Chroma.}
 \label{listing:repository-pattern}
 
 \subsection{Inversione del controllo}
@@ -180,7 +181,8 @@ Il modulo di previsione utilizza il principio di Inversion of Control tramite De
 In pratica, i servizi non creano direttamente gli oggetti di cui hanno bisogno, ma li ricevono già pronti dall’esterno, ad esempio tramite il costruttore.
 Questo approccio rende il codice più ordinato e facile da mantenere, perché ogni componente è meno dipendente dagli altri.
 Permette inoltre di sostituire rapidamente una parte del sistema senza modificare il resto dell’applicazione, e semplifica molto anche la fase di test, dove è possibile fornire versioni simulate delle dipendenze.
+Lo snippet \ref{listing:dependency-injection} mostra un esempio di dependency injection in \texttt{ForecastService}.
 \captionsetup{type=listing, belowskip=0pt}
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/dependency_injection.py}
-\captionof{listing}{Esempio di dependency injection (\texttt{forecasting\_service.py}).}
+\captionof{listing}{Esempio di dependency injection.}
 \label{listing:dependency-injection}

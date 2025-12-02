@@ -1,19 +1,87 @@
 % Acronyms
-\newacronym{api}{API}{Application Program Interface}
-\newacronym{erp}{ERP}{Enterprise Resource Planning}
-\newacronym{xai}{XAI}{Explainable Artificial Intelligence}
+\newacronym[type=main,description={Acronimo di Asynchronous Server Gateway Interface: specifica di interfaccia per applicazioni web asincrone che definisce un contratto standard tra server e applicazioni, abilitando runtime basati su event-loop, connessioni persistenti e gestione efficiente di I/O concorrente; separa lo stack di trasporto dal codice applicativo e consente server/worker intercambiabili.}]{asgi}{ASGI}{Asynchronous Server Gateway Interface}
+\newacronym[type=main,description={Acronimo di Application Program Interface: interfaccia applicativa che espone funzionalit\`a e dati di un sistema software tramite contratti stabili; consente a componenti esterni di invocare operazioni e scambiare payload strutturati senza conoscere l'implementazione interna. Include aspetti di versioning, sicurezza e documentazione per garantire integrazioni affidabili.}]{api}{API}{Application Program Interface}
+\newacronym{csv}{CSV}{Comma-Separated Values}
+\newacronym{html}{HTML}{HyperText Markup Language}
+\newacronym{http}{HTTP}{Hypertext Transfer Protocol}
+\newacronym{ide}{IDE}{Integrated Development Environment}
+\newacronym{json}{JSON}{JavaScript Object Notation}
+\newacronym{jwks}{JWKS}{JSON Web Key Set}
+\newacronym{jwt}{JWT}{JSON Web Token}
+\newacronym{gpu}{GPU}{Graphics Processing Unit}
+\newacronym{crud}{CRUD}{Create, Read, Update, Delete}
+\newacronym[type=main,description={Acronimo di Large Language Model: modello di intelligenza artificiale di grandi dimensioni addestrato su corpora estesi per generare, riassumere e comprendere linguaggio naturale; utilizza architetture neurali con molti parametri per produrre risposte contestuali e coerenti in numerosi domini applicativi.}]{llm}{LLM}{Large Language Model}
+\newacronym[type=main,description={Acronimo di Enterprise Resource Planning: sistema informativo integrato che centralizza anagrafiche, processi amministrativi, logistici e produttivi in un unico database e set di moduli; garantisce coerenza dei dati, tracciabilit\`a delle operazioni e automazione di workflow aziendali.}]{erp}{ERP}{Enterprise Resource Planning}
+\newacronym{mape}{MAPE}{Mean Absolute Percentage Error}
+\newacronym{mrp}{MRP}{Material Requirements Planning}
+\newacronym{rest}{REST}{Representational State Transfer}
+\newacronym{rmse}{RMSE}{Root Mean Squared Error}
+\newacronym{shap}{SHAP}{SHapley Additive exPlanations}
+\newacronym{smape}{SMAPE}{Symmetric Mean Absolute Percentage Error}
+\newacronym{uuid}{UUID}{Universally Unique Identifier}
+\newacronym[type=main,description={Acronimo di Explainable Artificial Intelligence: disciplina che rende interpretabili i modelli di AI, fornendo motivazioni leggibili a supporto di decisioni automatiche; comprende tecniche locali e globali per evidenziare contributi delle variabili, verificare bias, soddisfare requisiti normativi e aumentare la fiducia degli utenti.}]{xai}{XAI}{Explainable Artificial Intelligence}
 \newacronym{sdk}{SDK}{Software Development Kit}
 \newacronym{uml}{UML}{Unified Modeling Language}
+\newacronym{wape}{WAPE}{Weighted Absolute Percentage Error}
 \newacronym{tsa}{TSA}{Termine solo acronimo}
-
-% Glossary
-\newglossaryentry{apig}{
-    name={API},
-    text={Application Program Interface},
-    sort=api,
-    description={In informatics, an API is a set of procedures available to programmers, typically grouped to form a toolkit for a specific task within a program. Its purpose is to provide an abstraction, usually between hardware and the programmer or between low-level and high-level software, simplifying the programming process}
+\newacronym{xml}{XML}{eXtensible Markup Language}
+\newglossaryentry{ml}{
+    name={Machine Learning},
+    sort=machine learning,
+    description={Branca dell’intelligenza artificiale che sviluppa modelli in grado di apprendere da dati e migliorare le proprie prestazioni senza programmazione esplicita, tramite addestramento su esempi e ottimizzazione di una funzione obiettivo}
+}
+\newglossaryentry{continuouseintegration}{
+    name={Integrazione continua},
+    sort=integrazione continua,
+    description={Pratica di sviluppo che prevede l’integrazione frequente del codice in un \textit{repository} condiviso, con build e test automatici a ogni modifica per rilevare errori rapidamente}
+}
+\newglossaryentry{productowner}{
+    name={Product Owner},
+    sort=product owner,
+    description={Figura del framework Scrum responsabile della massimizzazione del valore del prodotto: definisce e priorizza il backlog, chiarisce obiettivi e criteri di accettazione, rappresentando le esigenze degli stakeholder}
+}
+\newglossaryentry{scrum}{
+    name={Scrum},
+    sort=scrum,
+    description={Framework agile per la gestione di prodotti complessi, basato su iterazioni time-boxed (Sprint), ruoli definiti (Product Owner, Scrum Master, Developers) ed eventi cadenzati (Sprint Planning, Daily Scrum, Sprint Review, Sprint Retrospective) descritti dalla Scrum Guide (\url{https://scrumguides.org/scrum-guide.html})}
+}
+\newglossaryentry{scrummaster}{
+    name={Scrum Master},
+    sort=scrum master,
+    description={Facilitatore del framework Scrum: guida il team nell’applicazione delle pratiche Scrum, rimuove impedimenti, facilita le cerimonie e promuove il miglioramento continuo}
+}
+\newglossaryentry{mergerequest}{
+    name={Merge \textit{request}},
+    sort=merge request,
+    description={Richiesta di integrazione di un branch in un altro (tipicamente verso main/develop) su piattaforme di version control: include diff, discussioni, revisioni e controlli automatizzati prima del merge}
+}
+\newglossaryentry{overfitting}{
+    name={Overfitting},
+    sort=overfitting,
+    description={Situazione in cui un modello apprende troppo dai dati di training, catturando rumore o peculiarità non generalizzabili e performando peggio su dati nuovi}
+}
+\newglossaryentry{underfitting}{
+    name={Underfitting},
+    sort=underfitting,
+    description={Situazione in cui un modello è troppo semplice o poco allenato per catturare la struttura dei dati, mostrando bassa accuratezza sia su training sia su test}
+}
+\newglossaryentry{ioc}{
+    name={Inversion of Control},
+    sort=inversion of control,
+    description={Principio architetturale in cui il flusso di controllo è invertito rispetto alla programmazione tradizionale: i componenti dichiarano dipendenze che vengono fornite da un contenitore esterno, anziché crearle direttamente, favorendo disaccoppiamento e testabilità}
+}
+\newglossaryentry{di}{
+    name={Dependency Injection},
+    sort=dependency injection,
+    description={Pattern che implementa l’Inversion of Control passando dall’esterno le dipendenze necessarie a un componente (es. tramite costruttore o setter), evitando la creazione interna e permettendo configurazione e sostituzione}
+}
+\newglossaryentry{branch}{
+    name={Branch},
+    sort=branch,
+    description={Ramo di sviluppo separato in un sistema di version control distribuito, usato per lavorare su modifiche isolate prima di integrararle nel ramo principale}
 }
 
+% Glossary
 \newglossaryentry{erpg}{
     name={ERP},
     text={Enterprise Resource Planning},
@@ -39,4 +107,112 @@
     name={Nome del termine},
     sort=termine senza acronimo,
     description={Descrizione}
+}
+
+\newglossaryentry{jobasync}{
+    name={Job asincrono},
+    sort=job asincrono,
+    description={Unit\`a di lavoro eseguita in background con stato tracciato (in coda, in esecuzione, completata, fallita) e consultabile tramite identificativo}
+}
+
+\newglossaryentry{callback}{
+    name={Callback / Webhook},
+    sort=callback,
+    description={Chiamata HTTP inviata da un sistema a un endpoint esterno per notificare eventi o risultati, spesso firmata/autenticata e usata per integrazioni push}
+}
+\newglossaryentry{similaritysearch}{
+    name={Similarity search},
+    text={similarity search},
+    sort=similarity search,
+    description={Tecnica di ricerca che, dato un oggetto di query, restituisce gli oggetti più simili in base a una misura di distanza (es. cosine, L2) calcolata su rappresentazioni vettoriali come gli embedding. Usata per ricerca semantica, nearest neighbors e raccomandazione}
+}
+\newglossaryentry{dto}{
+    name={DTO},
+    text={DTO},
+    sort=dto,
+    description={Data Transfer Object: oggetto leggero e tipizzato usato per trasportare dati tra livelli o servizi, privo di logica di dominio; riduce l’accoppiamento e rende espliciti contratti di input/output}
+}
+\newglossaryentry{devops}{
+    name={DevOps},
+    text={DevOps},
+    sort=devops,
+    description={Insieme di pratiche e cultura collaborativa che integra sviluppo (Dev) e operations (Ops) per automatizzare build, test, rilascio, monitoraggio e feedback continuo; punta a cicli di consegna rapidi e affidabili}
+}
+\newglossaryentry{olap}{
+    name={OLAP},
+    text={OLAP},
+    sort=olap,
+    description={Online Analytical Processing: modello e insieme di tecniche per analisi di dati multidimensionali, tipicamente ottimizzate per interrogazioni aggregate (slice/dice) su volumi elevati; privilegia throughput e scansioni a colonne rispetto alle operazioni transazionali OLTP}
+}
+
+\newglossaryentry{featureengineering}{
+    name={Feature engineering},
+    sort=feature engineering,
+    description={Processo di creazione, trasformazione e selezione di variabili derivate dai dati grezzi per migliorare l’addestramento e le prestazioni dei modelli}
+}
+
+\newglossaryentry{holdout}{
+    name={Hold-out},
+    sort=holdout,
+    description={Sottinsieme dei dati tenuto da parte rispetto al training per valutare in modo indipendente le prestazioni di un modello}
+}
+
+\newglossaryentry{embedding}{
+    name={Embedding},
+    sort=embedding,
+    description={Rappresentazione vettoriale densa di testo o altri oggetti che preserva relazioni semantiche, usata per similarity search e modelli downstream}
+}
+
+\newglossaryentry{repositorypattern}{
+    name={Repository Pattern},
+    sort=repository pattern,
+    description={Pattern architetturale che incapsula l’accesso ai dati dietro interfacce dedicate, separando la logica di dominio dai dettagli di persistenza}
+}
+
+\newglossaryentry{usecase}{
+    name={Use case},
+    sort=use case,
+    description={Descrizione strutturata di un’interazione utente-sistema con attori, precondizioni, flusso principale e varianti; utilizzata per raccogliere e verificare requisiti}
+}
+
+\newglossaryentry{jobrun}{
+    name={Job / Run di previsione},
+    sort=job run,
+    description={Esecuzione identificata (spesso con UUID) che traccia uno specifico ciclo di elaborazione o previsione, con risultati, metriche e log associati}
+}
+
+\newglossaryentry{forecastpipeline}{
+    name={Pipeline di previsione},
+    sort=pipeline previsione,
+    description={Sequenza orchestrata di fasi (acquisizione dati, preparazione feature, inferenza, spiegazioni, persistenza, notifiche) per produrre e distribuire previsioni}
+}
+
+\newglossaryentry{happypath}{
+    name={Happy path},
+    sort=happy path,
+    description={Percorso di esecuzione ideale senza errori o eccezioni, usato nei test per validare il comportamento atteso in condizioni nominali}
+}
+
+\newglossaryentry{branchingmodel}{
+    name={Modello di branching},
+    sort=branching model,
+    description={Strategia di gestione dei rami Git (es. main/develop/feature/fix/docs) che definisce come organizzare sviluppo, integrazione e rilascio}
+}
+
+\newglossaryentry{kanban}{
+    name={Kanban board},
+    sort=kanban,
+    description={Lavagna organizzata in colonne (es. Backlog, Todo, In Progress, Done) per visualizzare e limitare il lavoro in corso secondo i principi Kanban}
+}
+
+\newglossaryentry{sprint}{
+    name={Sprint},
+    sort=sprint,
+    description={Iterazione time-boxed tipica di Scrum in cui un team pianifica, realizza e rilascia un incremento di prodotto potenzialmente utilizzabile}
+}
+
+\newglossaryentry{backlog}{
+    name={Backlog},
+    sort=backlog,
+    description={Elenco prioritizzato di attivit\`a, requisiti o user story da eseguire, gestito e raffinato nel tempo dal team di prodotto}
 }

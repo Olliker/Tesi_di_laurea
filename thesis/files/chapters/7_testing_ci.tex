@@ -1,39 +1,41 @@
 \chapter{Testing e Continuous Integration}
 \label{chap:testing}
 Durante l'ultimo periodo dello stage mi sono occupato di implementare una suite di test automatizzati e una pipeline di Continuous Integration per il progetto.
-Nella cartella \texttt{tests/} del repository sono stati creati diversi test per coprire le funzionalità principali del sistema.
+Nella cartella \texttt{tests/} del \textit{repository} sono stati creati diversi test per coprire le funzionalità principali del sistema.
 I test si occupano di:
 \begin{itemize}
     \item Garantire la correttezza delle funzionalità principali del sistema.
     \item Validare le integrazioni con librerie esterne e servizi di terze parti.
     \item Prevenire regressioni durante lo sviluppo di nuove funzionalità.
 \end{itemize}
-I test si sono divisi in unit test e integration tests, eseguiti tramite il framework \texttt{pytest}.
+I test si sono divisi in unit test e integration tests, eseguiti tramite il \textit{framework} \texttt{pytest}.
 
 \section{Unit Test}
-Gli unit test verificano il comportamento di singole funzioni o classi in isolamento, utilizzando mock e stub per simulare dipendenze esterne. Questi test sono veloci da eseguire e forniscono un feedback immediato durante lo sviluppo.
+Gli unit test verificano il comportamento di singole funzioni o classi in isolamento, utilizzando mock e stub per simulare dipendenze esterne. Questi test sono veloci da eseguire e forniscono un \textit{feedback} immediato durante lo sviluppo.
 Sono stati effettuati test per tutto il codice raggiungendo una copertura del 85\%.
 \subsection{Esempio}
 Il file \texttt{test\_forecasting\_service.py} isola la logica del servizio di forecasting sostituendo tutte le dipendenze con stub:
 \begin{itemize}
-    \item \textbf{Happy path}: con finti \texttt{XGBoostService}, \texttt{ShapService} e \texttt{DataNormalizeService} verifica che vengano invocati con i parametri attesi e che il payload persistito contenga predizioni, spiegazioni e documenti per ChromaDB/DB.
+    \item \textbf{\gls{happypath}}: con finti \texttt{XGBoostService}, \texttt{ShapService} e \texttt{DataNormalizeService} verifica che vengano invocati con i parametri attesi e che il payload persistito contenga predizioni, spiegazioni e documenti per ChromaDB/DB.
     \item \textbf{Errore di serializzazione}: forza un errore nella costruzione del \texttt{DataFrame} di output e controlla che il metodo gestisca l’eccezione senza restituire la chiave \texttt{predictions\_rows}.
 \end{itemize}
+Il Listing~\ref{listing:unit-forecasting-service} riporta il test.
 \captionsetup{type=listing, belowskip=0pt}
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/tests/test_forecasting_service.py}
-\captionof{listing}{Unit test del servizio di forecasting (\texttt{code/tests/test\_forecasting\_service.py})}
+\captionof{listing}{Unit test del servizio di forecasting.}
 \label{listing:unit-forecasting-service}
 
 \section{Integration Tests}
 I test di integrazione verificano che i vari componenti del sistema funzionino correttamente insieme. Questi test sono più lenti da eseguire rispetto agli unit test, ma sono fondamentali per garantire che le interazioni tra i moduli siano corrette.
-Sono stati creati test per le principali funzionalità del sistema, come l'interazione con il database e le chiamate API.
+Sono stati creati test per le principali funzionalità del sistema, come l'interazione con il database e le chiamate \acrshort{api}.
 \subsection{Esempio}
-Il test \texttt{test\_chromadb\_api.py} valida l’endpoint \texttt{/context} simulando la dipendenza JWT e il servizio di ricerca ChromaDB:
+Il test \texttt{test\_chromadb\_api.py} valida l’endpoint \texttt{/context} simulando la dipendenza \acrshort{jwt} e il servizio di ricerca ChromaDB:
 \begin{itemize}
     \item usa \texttt{app.dependency\_overrides} per bypassare la verifica del token con un principal fittizio;
     \item sostituisce \texttt{\_get\_service} con uno stub per controllare il risultato e tracciare i parametri ricevuti;
     \item verifica sia il caso di successo (200 con predizioni) sia l’errore server (500) propagato da un servizio che solleva eccezione.
 \end{itemize}
+Il Listing~\ref{listing:integration-chromadb} riporta il test.
 \captionsetup{type=listing, belowskip=0pt}
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/tests/test_chromadb_api.py}
 \captionof{listing}{Integration test per l’endpoint \texttt{/context}}
@@ -44,8 +46,9 @@ Nella pipeline di Continuous Integration la suite di test viene eseguita automat
 \begin{itemize}
     \item Il caching di \texttt{pip} riduce i tempi di installazione usando come chiave l’hash dei \texttt{requirements.txt}.
     \item Le dipendenze vengono installate per tutti i moduli (\texttt{auth-server}, \texttt{duckdb}, \texttt{forecasting}) più i pacchetti test comuni (\texttt{pytest}, \texttt{pytest-asyncio}, \texttt{anyio}, \texttt{pytest-cov}).
-    \item L’esecuzione dei test usa database SQLite in memoria per evitare side effect esterni e genera il report di copertura in formato XML/HTML.
+    \item L’esecuzione dei test usa database SQLite in memoria per evitare side effect esterni e genera il report di copertura in formato \gls{xml}/\gls{html}.
 \end{itemize}
+Il Listing~\ref{listing:ci-pipeline} riporta la pipeline di CI.
 \captionsetup{type=listing, belowskip=0pt}
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{yaml}{code/ci.yml}
 \captionof{listing}{Pipeline di Continuous Integration}

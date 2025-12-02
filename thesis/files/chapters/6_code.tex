@@ -5,47 +5,47 @@ In questo capitolo vengono presentate l’organizzazione della codebase e le pri
 
 \section{Struttura del codice}
 \label{chap:codebase}
-La struttura delle directory del progetto è organizzata per separare chiaramente i vari componenti e facilitare la navigazione del codice (Figura~\ref{fig:repo-structure}).
-Di seguito è riportata una descrizione delle principali cartelle e file presenti nel repository.
+La struttura delle directory del progetto è organizzata per separare chiaramente i vari componenti e facilitare la navigazione del codice \ref{fig:repo-structure}.
+Di seguito è riportata una descrizione delle principali cartelle e file presenti nel \textit{repository}.
 \subsection{Root}
 \begin{itemize}
-    \item \textbf{ErpAI-Forecasting/}: cartella principale del progetto contenente tutto il codice sorgente.
+    \item \texttt{ErpAI-Forecasting/}: cartella principale del progetto contenente tutto il codice sorgente.
     \begin{itemize}
-        \item \textbf{.gitea/}: cartella contenente le configurazioni per l’integrazione continua con Gitea.
-        \item \textbf{auth-server/}: modulo di autenticazione.
-        \item \textbf{forecasting/}: modulo principale del sistema.
-        \item \textbf{duckdb/}: servizio di sincronizzazione dati \gls{erp} con scheduler mensile.
-        \item \textbf{kong/}: cartella contenente la configurazione del gateway API che espone i servizi interni.
-        \item \textbf{openapi/}: servizio che pubblica la documentazione \acrshort{erp}.
-        \item \textbf{.env}: variabili d’ambiente.
-        \item \textbf{.gitignore}: file di esclusione git.
-        \item \textbf{alembic.ini}: configurazione di Alembic per le migrazioni del database.
-        \item \textbf{compose.base.yml}: definizione Docker Compose base.
-        \item \textbf{compose.yml}: definizione Docker Compose principale.
-        \item \textbf{Dockerfile}: build dell’immagine principale.
-        \item \textbf{pytest.ini}: configurazioni per i test.
-        \item \textbf{README.md}: documentazione di progetto.
+        \item \texttt{.gitea/}: cartella contenente le configurazioni per l’integrazione continua con Gitea.
+        \item \texttt{auth-server/}: modulo di autenticazione.
+        \item \texttt{forecasting/}: modulo principale del sistema.
+        \item \texttt{duckdb/}: servizio di sincronizzazione dati \gls{erp} con scheduler mensile.
+        \item \texttt{kong/}: cartella contenente la configurazione del gateway \acrshort{api} che espone i servizi interni.
+        \item \texttt{openapi/}: servizio che pubblica la documentazione \acrshort{api}.
+        \item \texttt{.env}: variabili d’ambiente.
+        \item \texttt{.gitignore}: file di esclusione git.
+        \item \texttt{alembic.ini}: configurazione di Alembic per le migrazioni del database.
+        \item \texttt{compose.base.yml}: definizione Docker Compose base.
+        \item \texttt{compose.yml}: definizione Docker Compose principale.
+        \item \texttt{Dockerfile}: build dell’immagine principale.
+        \item \texttt{pytest.ini}: configurazioni per i test.
+        \item \texttt{README.md}: documentazione di progetto.
     \end{itemize}
 \end{itemize}
 \subsection{forecasting}
 Approfondiamo il modulo di previsione in quanto cuore del sistema e oggetto principale di questo lavoro di tesi.
 \begin{itemize}
-    \item \textbf{app/}: cartella principale del modulo di previsione.
+    \item \texttt{app/}: cartella principale del modulo di previsione.
     \begin{itemize}
-        \item \textbf{api/}: cartella che contiene i router FastAPI per gli endpoint REST.
-        \item \textbf{db/}: cartella che contiene engine e setup DB locale.
-        \item \textbf{dependencies/}: cartella che contiene la configurazione per la dependency injection.
-        \item \textbf{models/}: cartella che contiene i modelli Pydantic e SQLModel per payload e tabelle.
-        \item \textbf{repositories/}: cartella che contiene le implementazioni del repository pattern per l’accesso ai database esterni.
-        \item \textbf{services/}: cartella che contiene le classi che implementano la logica di business e orchestrazione del flusso di previsione.
+        \item \texttt{api/}: cartella che contiene i router FastAPI per gli endpoint \acrshort{rest}.
+        \item \texttt{db/}: cartella che contiene engine e setup DB locale.
+        \item \texttt{dependencies/}: cartella che contiene la configurazione per la dependency injection.
+        \item \texttt{models/}: cartella che contiene i modelli Pydantic e SQLModel per payload e tabelle.
+        \item \texttt{repositories/}: cartella che contiene le implementazioni del repository pattern per l’accesso ai database esterni.
+        \item \texttt{services/}: cartella che contiene le classi che implementano la logica di business e orchestrazione del flusso di previsione.
     \end{itemize}
-    \item \textbf{chroma-data/}: cartella che contiene i dati persistenti di Chroma DB.
-    \item \textbf{graphs/}: cartella che contiene gli output grafici SHAP generati.
-    \item \textbf{migrations/}: cartella che contiene gli script Alembic per la gestione delle migrazioni del database.
-    \item \textbf{tests/}: cartella che contiene la suite di test.
-    \item \textbf{compose.forecasting.yml}: definizione Docker Compose specifica per il servizio forecasting.
-    \item \textbf{Dockerfile}: build dell’immagine del servizio forecasting.
-    \item \textbf{requirements.txt}: dipendenze Python.
+    \item \texttt{chroma-data/}: cartella che contiene i dati persistenti di Chroma DB.
+    \item \texttt{graphs/}: cartella che contiene gli output grafici \acrshort{shap} generati.
+    \item \texttt{migrations/}: cartella che contiene gli script Alembic per la gestione delle migrazioni del database.
+    \item \texttt{tests/}: cartella che contiene la suite di test.
+    \item \texttt{compose.forecasting.yml}: definizione Docker Compose specifica per il servizio forecasting.
+    \item \texttt{Dockerfile}: build dell’immagine del servizio forecasting.
+    \item \texttt{requirements.txt}: dipendenze Python.
 \end{itemize}
 
 \begin{figure}[H]
@@ -57,186 +57,200 @@ Approfondiamo il modulo di previsione in quanto cuore del sistema e oggetto prin
 
 \section{Modelli dei dati}
 \label{sec:code-models}
-Nella cartella \texttt{models/} si trovano i modelli utilizzati per descrivere in modo tipizzato i dati che attraversano l’applicazione: gli schema Pydantic definiscono i payload di richiesta e risposta esposti dalle API FastAPI, mentre i modelli SQLModel rappresentano le tabelle e le relazioni persistite nei database operazionali. Di seguito sono riportati i principali modelli implementati, con una breve descrizione dei campi e il codice di riferimento.
+Nella cartella \texttt{models/} si trovano i modelli utilizzati per descrivere in modo tipizzato i dati che attraversano l’applicazione: gli schema Pydantic definiscono i payload di richiesta e risposta esposti dalle \acrshort{api} FastAPI, mentre i modelli SQLModel rappresentano le tabelle e le relazioni persistite nei database operazionali. Di seguito sono riportati i principali modelli implementati, con una breve descrizione dei campi e il codice di riferimento.
 \subsection{Modelli Pydantic}
-\subsubsection{Article}
+\subsubsection{\texttt{Article}}
 Questo modello definisce e valida un articolo del catalogo prodotti. Ogni \texttt{Article} è composto dai seguenti campi:
 \begin{itemize}
-    \item \textbf{id}: intero che identifica univocamente l’articolo.
-    \item \textbf{name}: stringa con il nome dell’articolo.
-    \item \textbf{code}: stringa con il codice identificativo.
-    \item \textbf{vat}: numero (float) con l’aliquota IVA associata.
+    \item \texttt{id}: intero che identifica univocamente l’articolo.
+    \item \texttt{name}: stringa con il nome dell’articolo.
+    \item \texttt{code}: stringa con il codice identificativo.
+    \item \texttt{vat}: numero (float) con l’aliquota IVA associata.
 \end{itemize}
+Il Listing~\ref{listing:model-article} riporta l’implementazione.
 
 \begin{listing}[H]
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/models/article.py}
-\caption{Modello Pydantic \texttt{Article} (\texttt{models/article.py}).}
+\caption{Modello Pydantic \texttt{Article}.}
 \label{listing:model-article}
 \end{listing}
 
-\subsubsection{Invoice}
+\subsubsection{\texttt{Invoice}}
 Questo modello definisce e valida una fattura con le sue righe di dettaglio. Ogni \texttt{Invoice} include:
 \begin{itemize}
-    \item \textbf{id}: intero identificativo della fattura.
-    \item \textbf{customer}: stringa con l’anagrafica cliente.
-    \item \textbf{creating\_date}: data di emissione.
-    \item \textbf{expiring\_date}: data di scadenza (opzionale).
-    \item \textbf{expected\_shipping\_date} / \textbf{real\_shipping\_date}: date di spedizione prevista/effectiva (opzionali).
-    \item \textbf{total}: numero (float) dell’importo totale.
-    \item \textbf{articles}: lista di righe articolo (\texttt{ArticleInvoice}).
+    \item \texttt{id}: intero identificativo della fattura.
+    \item \texttt{customer}: stringa con l’anagrafica cliente.
+    \item \texttt{creating\_date}: data di emissione.
+    \item \texttt{expiring\_date}: data di scadenza (opzionale).
+    \item \texttt{expected\_shipping\_date} / \texttt{real\_shipping\_date}: date di spedizione prevista/effectiva (opzionali).
+    \item \texttt{total}: numero (float) dell’importo totale.
+    \item \texttt{articles}: lista di righe articolo (\texttt{ArticleInvoice}).
 \end{itemize}
+Il Listing~\ref{listing:model-invoice} riporta il codice del modello.
 \begin{listing}[H]
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/models/invoice.py}
-\caption{Modello Pydantic \texttt{Invoice} (\texttt{models/invoice.py}).}
+\caption{Modello Pydantic \texttt{Invoice}.}
 \label{listing:model-invoice}
 \end{listing}
 
-\subsubsection{Job, JobKind, JobStatus}
+\subsubsection{\texttt{Job}, \texttt{JobKind}, \texttt{JobStatus}}
 Questi modelli definiscono e validano i job di training/forecasting e il loro ciclo di vita. I campi principali sono:
 \begin{itemize}
-    \item \textbf{job\_id}: stringa identificativa del job.
-    \item \textbf{status}: enum con stato corrente (\texttt{queued}, \texttt{running}, \texttt{succeeded}, \texttt{failed}).
-    \item \textbf{kind}: enum con il tipo di job (\texttt{training} o \texttt{forecasting}).
-    \item \textbf{detail}: stringa opzionale con dettagli/errore.
-    \item \textbf{created\_at}, \textbf{started\_at}, \textbf{finished\_at}: timestamp (stringa) di creazione, avvio e fine (opzionali).
+    \item \texttt{job\_id}: stringa identificativa del job.
+    \item \texttt{status}: enum con stato corrente (\texttt{queued}, \texttt{running}, \texttt{succeeded}, \texttt{failed}).
+    \item \texttt{kind}: enum con il tipo di job (\texttt{training} o \texttt{forecasting}).
+    \item \texttt{detail}: stringa opzionale con dettagli/errore.
+    \item \texttt{created\_at}, \texttt{started\_at}, \texttt{finished\_at}: timestamp (stringa) di creazione, avvio e fine (opzionali).
 \end{itemize}
+Il Listing~\ref{listing:model-job} riporta l’implementazione.
 \begin{listing}[H]
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/models/job.py}
-\caption{Modelli Pydantic \texttt{Job}/\texttt{JobKind}/\texttt{JobStatus} (\texttt{models/job.py}).}
+\caption{Modelli Pydantic \texttt{Job}/\texttt{JobKind}/\texttt{JobStatus}.}
 \label{listing:model-job}
 \end{listing}
 
-\subsubsection{NotificationEvent}
-Questo modello definisce e valida un evento di callback verso ErpAI con stato del job/run:
+\subsubsection{\texttt{NotificationEvent}}
+Questo modello definisce e valida un evento di \gls{callback} verso \textit{ErpAI} con stato del job/run:
 \begin{itemize}
-    \item \textbf{event}: stringa con il tipo di evento notificato.
-    \item \textbf{job\_id}: stringa identificativa del job.
-    \item \textbf{forecast\_id}: stringa identificativa della run di previsione.
-    \item \textbf{status}: stringa con lo stato del job/run.
-    \item \textbf{error}: stringa opzionale con il messaggio di errore.
+    \item \texttt{event}: stringa con il tipo di evento notificato.
+    \item \texttt{job\_id}: stringa identificativa del job.
+    \item \texttt{forecast\_id}: stringa identificativa della run di previsione.
+    \item \texttt{status}: stringa con lo stato del job/run.
+    \item \texttt{error}: stringa opzionale con il messaggio di errore.
 \end{itemize}
+Il Listing~\ref{listing:model-notification} riporta il modello di evento.
 \begin{listing}[H]
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/models/notification.py}
-\caption{Modello Pydantic \texttt{NotificationEvent} (\texttt{models/notification.py}).}
+\caption{Modello Pydantic \texttt{NotificationEvent}.}
 \label{listing:model-notification}
 \end{listing}
 
-\subsubsection{JWTConfig}
-Dataclass che definisce e valida la configurazione JWT:
-\begin{itemize}
-    \item \textbf{secret\_key}: stringa con la chiave segreta per la firma dei token.
-    \item \textbf{algorithm}: stringa con l’algoritmo di firma (es. HS256).
-    \item \textbf{expire\_minutes}: intero con la durata di validità dei token in minuti.
-\end{itemize}
-\begin{listing}[H]
-\inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/models/jwt_config.py}
-\caption{Dataclass \texttt{JWTConfig} (\texttt{models/jwt\_config.py}).}
-\label{listing:model-jwt-config}
-\end{listing}
-
-\subsubsection{ChromaCollection}
+\subsubsection{\texttt{ChromaCollection}}
 Questo modello definisce e valida un documento indicizzato in Chroma:
 \begin{itemize}
-    \item \textbf{id}: stringa identificativa del documento.
-    \item \textbf{content}: stringa con il testo/descrizione indicizzata.
-    \item \textbf{metadata}: dizionario di metadati associati.
-    \item \textbf{embedding}: lista di numeri (float) per l’embedding.
+    \item \texttt{id}: stringa identificativa del documento.
+    \item \texttt{content}: stringa con il testo/descrizione indicizzata.
+    \item \texttt{metadata}: dizionario di metadati associati.
+    \item \texttt{embedding}: lista di numeri (float) per l’\gls{embedding}.
 \end{itemize}
+Il Listing~\ref{listing:model-chroma-document} riporta l’implementazione.
 \begin{listing}[H]
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/models/chroma_document.py}
-\caption{Modello Pydantic \texttt{ChromaCollection} (\texttt{models/chroma\_document.py}).}
+\caption{Modello Pydantic \texttt{ChromaCollection}.}
 \label{listing:model-chroma-document}
 \end{listing}
 
-\subsubsection{ShapExplanation}
-Questo modello definisce e valida la serializzazione dei valori SHAP:
+\subsubsection{\texttt{ShapExplanation}}
+Questo modello definisce e valida la serializzazione dei valori \acrshort{shap}:
 \begin{itemize}
-    \item \textbf{values}: array NumPy di float per i valori SHAP, convertiti in lista in serializzazione.
+    \item \texttt{values}: array NumPy di float per i valori \acrshort{shap}, convertiti in lista in serializzazione.
 \end{itemize}
+Il Listing~\ref{listing:model-shap-explanation} riporta la definizione.
 \begin{listing}[H]
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/models/shap_explanation.py}
-\caption{Modello Pydantic \texttt{ShapExplanation} (\texttt{models/shap\_explanation.py}).}
+\caption{Modello Pydantic \texttt{ShapExplanation}.}
 \label{listing:model-shap-explanation}
 \end{listing}
 
-\subsubsection{PredictionResult}
+\subsubsection{\texttt{PredictionResult}}
 Questo modello definisce e valida il payload di risposta con le previsioni future:
 \begin{itemize}
-    \item \textbf{future\_predictions}: dizionario generico delle previsioni future.
-    \item \textbf{MAPE}: numero (float) con la metrica di errore medio percentuale.
+    \item \texttt{future\_predictions}: dizionario generico delle previsioni future.
+    \item \texttt{\acrshort{mape}}: numero (float) con la metrica di errore medio percentuale.
 \end{itemize}
+Il Listing~\ref{listing:model-prediction-result} riporta il payload di risposta.
 \begin{listing}[H]
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/models/prediction_result.py}
-\caption{Modello Pydantic \texttt{PredictionResult} (\texttt{models/prediction\_result.py}).}
+\caption{Modello Pydantic \texttt{PredictionResult}.}
 \label{listing:model-prediction-result}
 \end{listing}
 
-\subsubsection{ForecastSearchResult}
+\subsubsection{\texttt{ForecastSearchResult}}
 Questo modello definisce e valida l’esito di una ricerca semantica su previsioni/spiegazioni:
 \begin{itemize}
-    \item \textbf{predictions}: lista di stringhe con i risultati previsionali.
-    \item \textbf{explanations}: lista di stringhe opzionali con le spiegazioni SHAP.
-    \item \textbf{count}: intero con il numero di risultati trovati.
-    \item \textbf{fallback}: booleano che indica se è stato usato un percorso di fallback.
-    \item \textbf{error}: stringa opzionale con l’eventuale errore riscontrato.
+    \item \texttt{predictions}: lista di stringhe con i risultati previsionali.
+    \item \texttt{explanations}: lista di stringhe opzionali con le spiegazioni \acrshort{shap}.
+    \item \texttt{count}: intero con il numero di risultati trovati.
+    \item \texttt{fallback}: booleano che indica se è stato usato un percorso di fallback.
+    \item \texttt{error}: stringa opzionale con l’eventuale errore riscontrato.
 \end{itemize}
+Il Listing~\ref{listing:model-forecast-search-result} riporta il modello.
 \begin{listing}[H]
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/models/search_result.py}
-\caption{Modello Pydantic \texttt{ForecastSearchResult} (\texttt{models/search\_result.py}).}
+\caption{Modello Pydantic \texttt{ForecastSearchResult}.}
 \label{listing:model-forecast-search-result}
 \end{listing}
 
 \subsection{Modelli SQLModel}
 
-\subsubsection{XGBoostPrediction}
+\subsubsection{\texttt{XGBoostPrediction}}
 Questo modello definisce e valida la tabella \texttt{predictions\_xgboost} per le righe previsionali:
 \begin{itemize}
-    \item \textbf{forecast\_id}: stringa (UUID) di riferimento alla run di previsione.
-    \item \textbf{article\_id}: intero identificativo dell’articolo.
-    \item \textbf{article\_name}: stringa con il nome dell’articolo.
-    \item \textbf{prediction\_date}: data/ora (datetime) della previsione.
-    \item \textbf{predicted\_quantity}: numero (float) della quantità stimata.
-    \item \textbf{run}: relazione opzionale verso \texttt{ForecastRun} (lato N:1).
+    \item \texttt{forecast\_id}: stringa (\gls{uuid}) di riferimento alla \gls{jobrun} di previsione.
+    \item \texttt{article\_id}: intero identificativo dell’articolo.
+    \item \texttt{article\_name}: stringa con il nome dell’articolo.
+    \item \texttt{prediction\_date}: data/ora (datetime) della previsione.
+    \item \texttt{predicted\_quantity}: numero (float) della quantità stimata.
+    \item \texttt{run}: relazione opzionale verso \texttt{ForecastRun} (lato N:1).
 \end{itemize}
+Il Listing~\ref{listing:model-xgboost-prediction} riporta la definizione della tabella.
 \begin{listing}[H]
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/models/prediction.py}
-\caption{Modello SQLModel \texttt{XGBoostPrediction} (\texttt{models/prediction.py}).}
+\caption{Modello SQLModel \texttt{XGBoostPrediction}.}
 \label{listing:model-xgboost-prediction}
 \end{listing}
 
-\subsubsection{ForecastRun}
+\subsubsection{\texttt{ForecastRun}}
 Questo modello definisce e valida la tabella \texttt{forecast\_runs}:
 \begin{itemize}
-    \item \textbf{id}: stringa UUID identificativa della run.
-    \item \textbf{mape}: numero (float) con la metrica di errore della run.
-    \item \textbf{created\_at}: timestamp (datetime) di creazione.
-    \item \textbf{predictions}: lista di \texttt{XGBoostPrediction} (relazione 1:N).
+    \item \texttt{id}: stringa \acrshort{uuid} identificativa della \gls{jobrun}.
+    \item \texttt{mape}: numero (float) con la metrica di errore della run.
+    \item \texttt{created\_at}: timestamp (datetime) di creazione.
+    \item \texttt{predictions}: lista di \texttt{XGBoostPrediction} (relazione 1:N).
 \end{itemize}
+Il Listing~\ref{listing:model-forecast-run} riporta il modello.
 \begin{listing}[H]
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/models/forecast_run.py}
-\caption{Modello SQLModel \texttt{ForecastRun} (\texttt{models/forecast\_run.py}).}
+\caption{Modello SQLModel \texttt{ForecastRun}.}
 \label{listing:model-forecast-run}
 \end{listing}
 
-\subsubsection{JobRun}
+\subsubsection{\texttt{JobRun} (SQLModel)}
 Questo modello definisce e valida le run dei job persistite in \texttt{jobs}. I campi principali sono:
 \begin{itemize}
-    \item \textbf{id}: stringa UUID identificativa della run.
-    \item \textbf{kind}: enum \texttt{JobKind} che indica il tipo di job.
-    \item \textbf{status}: enum \texttt{JobStatus} con lo stato corrente.
-    \item \textbf{detail}: stringa opzionale con dettagli/errore.
-    \item \textbf{dataset\_id}: stringa opzionale di riferimento al dataset usato.
-    \item \textbf{output\_forecast\_run\_id}: stringa opzionale con la run di previsione prodotta.
-\item \textbf{created\_at}: timestamp (datetime) di creazione.
-    \item \textbf{started\_at}, \textbf{finished\_at}: timestamp (datetime) di avvio e fine (opzionali).
-    \item \textbf{updated\_at}: timestamp (datetime) dell’ultimo aggiornamento.
+    \item \texttt{id}: stringa \acrshort{uuid} identificativa della \gls{jobrun}.
+    \item \texttt{kind}: enum \texttt{JobKind} che indica il tipo di job.
+    \item \texttt{status}: enum \texttt{JobStatus} con lo stato corrente.
+    \item \texttt{detail}: stringa opzionale con dettagli/errore.
+    \item \texttt{dataset\_id}: stringa opzionale di riferimento al dataset usato.
+    \item \texttt{output\_forecast\_run\_id}: stringa opzionale con la run di previsione prodotta.
+\item \texttt{created\_at}: timestamp (datetime) di creazione.
+    \item \texttt{started\_at}, \texttt{finished\_at}: timestamp (datetime) di avvio e fine (opzionali).
+    \item \texttt{updated\_at}: timestamp (datetime) dell’ultimo aggiornamento.
 \end{itemize}
+Il Listing~\ref{listing:model-job-run} riporta il modello persistito.
 \captionsetup{type=listing, aboveskip=2pt, belowskip=0pt}
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/models/job_run.py}
-\captionof{listing}{Modello \texttt{JobRun} (\texttt{models/job\_run.py}).}
+\captionof{listing}{Modello SQLModel \texttt{JobRun}.}
 \label{listing:model-job-run}
 
-\subsection{Modello di configurazione XGBoost}
+\subsection{Modelli di configurazione}
+
+\subsubsection{Modello di configurazione \texttt{JWTConfig}}
+\label{sec:code-jwt-config}
+Dataclass che definisce e valida la configurazione \acrshort{jwt}:
+\begin{itemize}
+    \item \texttt{secret\_key}: stringa con la chiave segreta per la firma dei token.
+    \item \texttt{algorithm}: stringa con l’algoritmo di firma (es. HS256).
+    \item \texttt{expire\_minutes}: intero con la durata di validità dei token in minuti.
+\end{itemize}
+Il Listing~\ref{listing:model-jwt-config} riporta il dataclass di configurazione.
+\captionsetup{type=listing, belowskip=0pt}
+\inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/models/jwt_config.py}
+\captionof{listing}{Dataclass \texttt{JWTConfig}.}
+\label{listing:model-jwt-config}
+
+\subsubsection{Modello di configurazione \texttt{XGBoostConfig}}
 \label{sec:code-dataclass-config}
 La configurazione di XGBoost è definita come dataclass per garantire tipizzazione forte e default espliciti. \texttt{XGBoostConfig} raccoglie gli iperparametri chiave:
 \begin{itemize}
@@ -251,23 +265,29 @@ La configurazione di XGBoost è definita come dataclass per garantire tipizzazio
     \item \texttt{random\_state}: seme di riproducibilità; rende deterministici split e campionamenti.
     \item \texttt{tree\_method} / \texttt{max\_bin}: algoritmo di costruzione e granularità dell’istogramma; \texttt{hist} con \texttt{max\_bin} regola velocità e approssimazione delle soglie.
     \item \texttt{objective}: funzione obiettivo (regressione \texttt{squarederror}); definisce la loss ottimizzata.
-    \item \texttt{eval\_metric}: metrica di valutazione interna (RMSE); guida la diagnostica e l’eventuale early stopping.
+    \item \texttt{eval\_metric}: metrica di valutazione interna (\acrshort{rmse}); guida la diagnostica e l’eventuale early stopping.
     \item \texttt{early\_stopping\_rounds}: round senza miglioramento prima di fermare il training (0 = disabilitato); evita iterazioni inutili a metrica saturata.
     \item \texttt{target\_transform}: trasformazione del target (es. \texttt{log1p}); stabilizza la distribuzione e gestisce valori molto variabili.
     \item \texttt{verbosity}: livello di log del training; controlla il dettaglio dell’output.
 \end{itemize}
+Il Listing~\ref{listing:xgboost-config} riporta la dataclass completa.
 
 \captionsetup{type=listing, belowskip=0pt}
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/services/config/xgboost_config.py}
-\captionof{listing}{Configurazione \texttt{XGBoostConfig} (\texttt{services/config/xgboost\_config.py}).}
+\captionof{listing}{Dataclass di configurazione \texttt{XGBoostConfig}.}
 \label{listing:xgboost-config}
-
-\newpage
 
 \section{Servizi}
 \label{sec:code-services}
 Nella cartella \texttt{services/} si trovano le classi che implementano la logica di business e orchestrano il flusso di previsione.
-\subsection{InvoiceConversionService}
+Il diagramma \ref{fig:diagramma-servizi} illustra le principali classi di servizio e le loro interazioni.
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.25\linewidth]{img/diagramma_servizi.png}}
+    \caption{Panoramica dei servizi e delle loro interazioni.}
+    \label{fig:diagramma-servizi}
+\end{figure}
+\subsection{\texttt{InvoiceConversionService}}
 \label{sec:code-invoice-conversion-service}
 Il servizio \texttt{InvoiceConversionService} si occupa di leggere \texttt{fact\_invoices} dal database DuckDB e restituire un dataframe Pandas pronto per l’addestramento del modello normalizzando tipi, aggregando le fatture per mese e articolo.
 Il metodo principale \texttt{convert\_db\_to\_df} svolge le seguenti operazioni:
@@ -277,12 +297,13 @@ Il metodo principale \texttt{convert\_db\_to\_df} svolge le seguenti operazioni:
     \item Aggregare le righe per mese e articolo sommando le quantità.
     \item Restituire un dataframe Pandas ordinato.
 \end{itemize}
+Il Listing~\ref{listing:invoice-conversion-service} riporta l’implementazione del servizio.
 \captionsetup{type=listing, belowskip=0pt}
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/services/invoice_conversion_service.py}
-\captionof{listing}{Servizio \texttt{InvoiceConversionService}}
+\captionof{listing}{Servizio \texttt{InvoiceConversionService}.}
 \label{listing:invoice-conversion-service}
 
-\subsection{DataFrameService}
+\subsection{\texttt{DataFrameService}}
 \label{sec:code-data-frame-service}
 Il servizio \texttt{DataFrameService} seleziona e prepara le feature numeriche per l’addestramento:
 \begin{itemize}
@@ -291,65 +312,69 @@ Il servizio \texttt{DataFrameService} seleziona e prepara le feature numeriche p
     \item opzionalmente include colonne di prezzo e relative derivate;
     \item offre helper per lo split temporale train/test.
 \end{itemize}
+Il Listing~\ref{listing:data-frame-service} riporta il codice del servizio.
 \captionsetup{type=listing, belowskip=0pt}
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/services/data_frame_service.py}
-\captionof{listing}{Servizio \texttt{DataFrameService}}
+\captionof{listing}{Servizio \texttt{DataFrameService}.}
 \label{listing:data-frame-service}
 
-\subsection{ForecastingDataService}
+\subsection{\texttt{ForecastingDataService}}
 \label{sec:code-forecasting-data-service}
-Il servizio \texttt{ForecastingDataService} coordina la preparazione dei dati unendo conversione fatture e feature engineering:
+Il servizio \texttt{ForecastingDataService} coordina la preparazione dei dati unendo conversione fatture e \gls{featureengineering}:
 \begin{itemize}
     \item carica il dataframe fatture tramite \texttt{InvoiceConversionService};
     \item normalizza/filtra la colonna data, applicando opzionalmente un cutoff temporale;
     \item delega a \texttt{DataFrameService} la creazione delle feature e restituisce dataset, feature e target;
     \item espone un helper per generare righe future autoregressive.
 \end{itemize}
+Il Listing~\ref{listing:forecasting-data-service} riporta l’implementazione.
 \captionsetup{type=listing, belowskip=0pt}
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/services/forecasting_data_service.py}
-\captionof{listing}{Servizio \texttt{ForecastingDataService}}
+\captionof{listing}{Servizio \texttt{ForecastingDataService}.}
 \label{listing:forecasting-data-service}
 
-\subsection{MetricsService}
+\subsection{\texttt{MetricsService}}
 \label{sec:code-metrics-service}
 La classe \texttt{MetricsService} incapsula le metriche di valutazione personalizzate usate per l’addestramento e la diagnosi del modello XGBoost:
 \begin{itemize}
-    \item \texttt{mape\_percent}: Mean Absolute Percentage Error (MAPE\%).
-    \item \texttt{smape\_percent}: Symmetric MAPE (SMAPE\%).
-    \item \texttt{wape\_percent}: Weighted Absolute Percentage Error (WAPE\%).
+    \item \texttt{mape\_percent}: Mean Absolute Percentage Error (\acrshort{mape}\%).
+    \item \texttt{smape\_percent}: Symmetric MAPE (\gls{smape}\%).
+    \item \texttt{wape\_percent}: Weighted Absolute Percentage Error (\acrshort{wape}\%).
 \end{itemize}
+Il Listing~\ref{listing:metrics-service} riporta il servizio.
 \captionsetup{type=listing, belowskip=0pt}
-\inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/Services/metrics_service.py}
-\captionof{listing}{Servizio \texttt{MetricsService} (\texttt{services/metrics\_service.py}).}
+\inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/services/metrics_service.py}
+\captionof{listing}{Servizio \texttt{MetricsService}.}
 \label{listing:metrics-service}
 
-\subsection{NotificationService}
-Il servizio \texttt{NotificationService} invia callback HTTP verso il sistema esterno (Laravel) al termine dei job/run:
+\subsection{\texttt{NotificationService}}
+Il servizio \texttt{NotificationService} invia \gls{callback} \acrshort{http} verso il sistema esterno (Laravel) al termine dei job/run:
 \begin{itemize}
-    \item estrae le credenziali e gli URL dal \texttt{.env} (\texttt{LARAVEL\_LOGIN\_URL}, \texttt{LARAVEL\_MAIL}, \texttt{LARAVEL\_PASSWORD}, \texttt{LARAVEL\_NOTIFY\_URL});
-    \item ottiene un token JWT con una richiesta di login e lo usa per autenticare la chiamata di notifica;
-    \item accetta payload \texttt{NotificationEvent} o dizionari e li invia in POST all’endpoint di callback.
+    \item estrae le credenziali e l'endpoint dalle variabili d’ambiente;
+    \item ottiene un token \acrshort{jwt} con una richiesta di login e lo usa per autenticare la chiamata di notifica;
+    \item accetta payload \texttt{NotificationEvent} o dizionari e li invia in POST all’endpoint di \gls{callback}.
 \end{itemize}
+Il Listing~\ref{listing:notification-service} riporta l’implementazione del servizio.
 \captionsetup{type=listing, belowskip=0pt}
-\inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/Services/notification_service.py}
-\captionof{listing}{Servizio \texttt{NotificationService} (\texttt{services/notification\_service.py}).}
+\inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/services/notification_service.py}
+\captionof{listing}{Servizio \texttt{NotificationService}.}
 \label{listing:notification-service}
 
-\subsection{DataNormalizeService}
+\subsection{\texttt{DataNormalizeService}}
 \label{sec:code-normalize-service}
-Il servizio \texttt{DataNormalizeService} è pensato per rendere le previsioni e le spiegazioni comprensibili al Modulo LLM, trasformando numeri e SHAP in linguaggio naturale e documenti indicizzabili.
+Il servizio \texttt{DataNormalizeService} è pensato per rendere le previsioni e le spiegazioni comprensibili al Modulo \acrshort{llm}, trasformando numeri e \acrshort{shap} in linguaggio naturale e documenti indicizzabili.
 
 Esempi di input/output:
 \begin{itemize}
-    \item \textbf{Input}: previsioni XGBoost (article\_id, prediction\_date, predicted\_quantity) e valori SHAP per ciascuna riga.
-    \item \textbf{Output testo (predizioni)}: frasi come “Per l’articolo A123, il 01 marzo 2025 prevediamo 12.4 unità (finestra 1/3).”
-    \item \textbf{Output testo (spiegazioni)}: frasi come “Spiegazione per A123 (marzo 2025): feature prezzo scontato ha aumentato la previsione, stagionalità ha ridotto la previsione.”
-    \item \textbf{Documenti embedding}: blocchi di testo con contesto (articolo, periodo, quantità, top driver SHAP) e metadati (article\_id, data, forecast\_window).
+    \item \texttt{Input}: previsioni XGBoost (article\_id, prediction\_date, predicted\_quantity) e valori \acrshort{shap} per ciascuna riga.
+    \item \texttt{Output testo (predizioni)}: frasi come “Per l’articolo A123, il 01 marzo 2025 prevediamo 12.4 unità (finestra 1/3).”
+    \item \texttt{Output testo (spiegazioni)}: frasi come “Spiegazione per A123 (marzo 2025): feature prezzo scontato ha aumentato la previsione, stagionalità ha ridotto la previsione.”
+    \item \texttt{Documenti embedding}: blocchi di testo con contesto (articolo, periodo, quantità, top driver \acrshort{shap}) e metadati (article\_id, data, forecast\_window).
 \end{itemize}
 
-Questi output alimentano sia la presentazione all’utente, sia la creazione di embedding (ChromaDB) per recupero semantico e interazione con l’LLM.
+Questi output alimentano sia la presentazione all’utente, sia la creazione di \gls{embedding} (ChromaDB) per recupero semantico e interazione con l’\acrshort{llm}.
 
-\subsection{XgboostService}
+\subsection{\texttt{XgboostService}}
 \label{sec:code-xgboost-service}
 La classe \texttt{XgboostService} incapsula configurazione, training e predizione del modello XGBoost:
 \begin{itemize}
@@ -357,90 +382,95 @@ La classe \texttt{XgboostService} incapsula configurazione, training e predizion
     \item servizio dati per preparare feature e target (\texttt{ForecastingDataService}, sez.~\ref{sec:code-forecasting-data-service});
     \item parametri del modello (\texttt{XGBoostConfig}) per controllare alberi, regolarizzazione e sampling.
 \end{itemize}
-\paragraph{Inizializzazione.}
+\subsubsection{Inizializzazione}
 Il costruttore crea il regressore XGBoost con gli iperparametri di \texttt{XGBoostConfig}, collega il servizio dati e le metriche e inizializza gli stati interni (feature usate, ultima metrica calcolata).
+Il Listing~\ref{listing:xgboost-service-init} riporta l’inizializzazione della classe.
 \captionsetup{type=listing, belowskip=0pt}
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/services/init/xgboost_service_init.py}
-\captionof{listing}{Inizializzazione di \texttt{XGBoostService}}
+\captionof{listing}{Inizializzazione di \texttt{XGBoostService}.}
 \label{listing:xgboost-service-init}
 
-Il servizio gestisce due processi principali: \textbf{training} (prepara i dati e addestra il modello) e \textbf{previsione} (genera le quantità future).
+Il servizio gestisce due processi principali: \texttt{training} (prepara i dati e addestra il modello) e \texttt{previsione} (genera le quantità future).
 \paragraph{Training.}
-Recupera i dati dal \texttt{ForecastingDataService} e addestra il modello con \texttt{train\_model} (Listing~\ref{listing:xgboost-train-model}). Il cuore è \texttt{\_\_fit\_model}: imputa i missing (mediana/zero), forza il target a valori non negativi, effettua uno split temporale 80/20, applica l’eventuale \texttt{log1p} sul target e allena XGBoost. Se disponibile un hold-out, calcola il WAPE\% (invertendo la trasformazione) e lo salva in \texttt{\_\_last\_wape} per la diagnostica.
+Il Listing~\ref{listing:xgboost-train-model} riporta il metodo \texttt{train\_model}. Recupera i dati dal \texttt{ForecastingDataService} e addestra il modello: \texttt{\_\_fit\_model} imputa i missing (mediana/zero), forza il target a valori non negativi, effettua uno split temporale 80/20, applica l’eventuale \texttt{log1p} sul target e allena XGBoost. Se disponibile un \gls{holdout}, calcola il \acrshort{wape}\% (invertendo la trasformazione) e lo salva in \texttt{\_\_last\_wape} per la diagnostica.
 \captionsetup{type=listing, belowskip=0pt}
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/services/def/xgboost_train_model.py}
-\captionof{listing}{Metodo \texttt{train\_model}}
+\captionof{listing}{Metodo \texttt{train\_model} di \texttt{XGBoostService}.}
 \label{listing:xgboost-train-model}
 
-\paragraph{Previsione.}
-Per generare le previsioni (Listing~\ref{listing:xgboost-predict}) il servizio:
+\subsubsection{Previsione}
+Il Listing~\ref{listing:xgboost-predict} riporta il metodo \texttt{predict}. Per generare le previsioni il servizio:
 \begin{itemize}
     \item riaddestra il modello sui dati disponibili fino al mese prima di \texttt{start\_date};
     \item crea le date future e costruisce le feature in modo autoregressivo;
-    \item predice le quantità future e restituisce il \texttt{PredictionResult} con la MAPE stimata, la matrice delle feature future e la lista delle colonne usate.
+    \item predice le quantità future e restituisce il \texttt{PredictionResult} con la \acrshort{mape} stimata, la matrice delle feature future e la lista delle colonne usate.
 \end{itemize}
 \captionsetup{type=listing, belowskip=0pt}
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/services/def/xgboost_predict.py}
-\captionof{listing}{Metodo \texttt{predict} di \texttt{XGBoostService}}
+\captionof{listing}{Metodo \texttt{predict} di \texttt{XGBoostService}.}
 \label{listing:xgboost-predict}
 
 \subsection{ShapService}
 Il servizio \texttt{ShapService} fornisce spiegazioni locali e visualizzazioni delle feature per il modello XGBoost:
 \begin{itemize}
-    \item \texttt{explain\_prediction} calcola i valori SHAP su un set di input tramite \texttt{TreeExplainer}.
+    \item \texttt{explain\_prediction} calcola i valori \acrshort{shap} su un set di input tramite \texttt{TreeExplainer}.
     \item \texttt{generate\_summary\_plot} produce il summary plot principale e restituisce il path salvato.
 \end{itemize}
+Il Listing~\ref{listing:shap-explain} riporta l’estrazione dei valori \acrshort{shap}, mentre il Listing~\ref{listing:shap-summary-plot} genera il summary plot.
 \captionsetup{type=listing, belowskip=0pt}
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/services/def/shap_explain.py}
-\captionof{listing}{Metodo \texttt{explain\_prediction} di \texttt{ShapService}}
+\captionof{listing}{Metodo \texttt{explain\_prediction} di \texttt{ShapService}.}
 \label{listing:shap-explain}
 \captionsetup{type=listing, belowskip=0pt}
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/services/def/shap_summary_plot.py}
-\captionof{listing}{Metodo \texttt{generate\_summary\_plot} di \texttt{ShapService}}
+\captionof{listing}{Metodo \texttt{generate\_summary\_plot} di \texttt{ShapService}.}
 \label{listing:shap-summary-plot}
 \subsection{ForecastingService}
 La classe \texttt{ForecastingService} fa da orchestratore principale per il flusso di previsione.
 Il metodo chiave è \texttt{forecast} e coordina l’intero processo di previsione:
 \begin{itemize}
     \item invoca \texttt{XGBoostService.predict} per ottenere previsioni future e feature generate;
-    \item arricchisce il payload con feature usate, MAPE stimata, data finale;
-    \item traduce e prepara le previsioni per salvataggio ed esposizione API;
+    \item arricchisce il payload con feature usate, \acrshort{mape} stimata, data finale;
+    \item traduce e prepara le previsioni per salvataggio ed esposizione \acrshort{api};
     \item salva i risultati tramite \texttt{ForecastPersistenceService} su database/ChromaDB;
-    \item calcola le spiegazioni SHAP e genera i plot di interpretabilità.
+    \item calcola le spiegazioni \acrshort{shap} e genera i plot di interpretabilità.
 \end{itemize}
+Il Listing~\ref{listing:forecasting-service} riporta il metodo \texttt{forecast}.
 \captionsetup{type=listing, belowskip=0pt}
-\inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/Services/forecasting_service.py}
-\captionof{listing}{Metodo \texttt{forecast} di \texttt{ForecastingService}}
+\inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/services/forecasting_service.py}
+\captionof{listing}{Metodo \texttt{forecast} di \texttt{ForecastingService}.}
 \label{listing:forecasting-service}
 
 \section{API Router}
-Nella cartella \texttt{api/} si trovano i router FastAPI che espongono gli endpoint REST per interagire con il modulo di previsione, coperti da autenticazione JWT tramite le dipendenze definite nel modulo \texttt{jwt\_dependencies}. Per completezza si include anche il router di autenticazione dell’\texttt{auth-server}, che è un modulo separato rispetto al servizio di forecasting ma fornisce le chiavi pubbliche e i token necessari.
+Nella cartella \texttt{api/} si trovano i router FastAPI che espongono gli endpoint \acrshort{rest} per interagire con il modulo di previsione, coperti da autenticazione \acrshort{jwt} tramite le dipendenze definite nel modulo \texttt{jwt\_dependencies}. Per completezza si include anche il router di autenticazione dell’\texttt{auth-server}, che è un modulo separato rispetto al servizio di forecasting ma fornisce le chiavi pubbliche e i token necessari.
 
 \subsection{Authentication (Auth Server)}
 \label{sec:code-api-authentication}
-Router dell’\texttt{auth-server}, modulo autonomo che rilascia token JWT e pubblica il JWKS usato dagli altri servizi:
+Router dell’\texttt{auth-server}, modulo autonomo che rilascia token \acrshort{jwt} e pubblica il \acrshort{jwks} usato dagli altri servizi:
 \begin{itemize}
-    \item \texttt{GET /.well-known/jwks.json}: restituisce il set di chiavi pubbliche in formato JWKS tramite \texttt{JWKService}.
-    \item \texttt{POST /token}: espone la dependency \texttt{jwt\_dependencies.get\_new\_token} per generare un nuovo JWT firmato.
+    \item \texttt{GET /.well-known/jwks.json}: restituisce il set di chiavi pubbliche in formato \acrshort{jwks} tramite \texttt{JWKService}.
+    \item \texttt{POST /token}: espone la dependency \texttt{jwt\_dependencies.get\_new\_token} per generare un nuovo \acrshort{jwt} firmato.
 \end{itemize}
+Il Listing~\ref{listing:api-authentication} riporta il router.
 \captionsetup{type=listing, belowskip=0pt}
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/api/authentication.py}
-\captionof{listing}{Router di autenticazione (\texttt{api/authentication.py}, modulo \texttt{auth-server})}
+\captionof{listing}{Router di autenticazione: \texttt{/.well-known/jwks.json}, \texttt{/token} (modulo \texttt{auth-server}).}
 \label{listing:api-authentication}
 
-\subsection{JWT}
+\subsection{\texttt{/verify-token}}
 \label{sec:code-api-jwt}
-Router minimale per verificare i token JWT in ingresso:
+Router minimale per verificare i token \acrshort{jwt} in ingresso:
 \begin{itemize}
     \item endpoint \texttt{POST /verify-token} che accetta le credenziali via dependency injection e restituisce un semplice messaggio di conferma.
     \item sfrutta \texttt{jwt\_dependencies.check\_token} per bloccare le richieste non autorizzate.
 \end{itemize}
+Il Listing~\ref{listing:api-jwt} riporta il router.
 \captionsetup{type=listing, belowskip=0pt}
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/api/jwt.py}
-\captionof{listing}{Router JWT (\texttt{api/jwt.py})}
+\captionof{listing}{Router \texttt{/verify-token}.}
 \label{listing:api-jwt}
 
-\subsection{Forecasting}
+\subsection{\texttt{/forecast}}
 \label{sec:code-api-forecasting}
 L’endpoint di previsione avvia in background una run di forecasting e restituisce subito l’identificativo del job:
 \begin{itemize}
@@ -448,12 +478,13 @@ L’endpoint di previsione avvia in background una run di forecasting e restitui
     \item avvia un task asincrono che aggiorna lo stato del job (\texttt{queued} $\rightarrow$ \texttt{running} $\rightarrow$ \texttt{succeeded}/\texttt{failed}), invoca \texttt{ForecastingService.forecast} e invia notifiche esterne tramite \texttt{NotificationService}.
     \item in caso di errore durante il task, marca il job come \texttt{failed} e spedisce una notifica con il dettaglio dell’errore.
 \end{itemize}
+Il Listing~\ref{listing:api-forecasting} riporta il router.
 \captionsetup{type=listing, belowskip=0pt}
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/api/forecasting.py}
-\captionof{listing}{Router di previsione (\texttt{api/forecasting.py})}
+\captionof{listing}{Router \texttt{/forecast}.}
 \label{listing:api-forecasting}
 
-\subsection{Job}
+\subsection{\texttt{/jobs}}
 \label{sec:code-api-job}
 Router per interrogare lo stato dei job di training/forecasting:
 \begin{itemize}
@@ -461,20 +492,24 @@ Router per interrogare lo stato dei job di training/forecasting:
     \item \texttt{GET /jobs/\{job\_id\}}: restituisce il singolo job oppure 404 se non esiste.
     \item la logica di persistenza e filtro è delegata a \texttt{JobService}.
 \end{itemize}
+Il Listing~\ref{listing:api-job} riporta il router.
 \captionsetup{type=listing, belowskip=0pt}
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/api/job.py}
-\captionof{listing}{Router dei job (\texttt{api/job.py})}
+\captionof{listing}{Router \texttt{/jobs}.}
 \label{listing:api-job}
 
-\subsection{ChromaDB}
+\subsection{\texttt{/context}}
 \label{sec:code-api-chromadb}
-Endpoint per la ricerca semantica su previsioni ed embedding SHAP indicizzati in ChromaDB:
+Endpoint per la ricerca semantica su previsioni ed \gls{embedding} \acrshort{shap} indicizzati in ChromaDB:
 \begin{itemize}
     \item \texttt{GET /context}: accetta una domanda naturale (\texttt{question}), il numero di risultati desiderati e, opzionalmente, un \texttt{forecast\_id} per filtrare.
     \item inizializza pigramente un singleton di \texttt{ChromaSearchService}, esegue \texttt{query\_forecast} e restituisce predizioni/spiegazioni rilevanti.
     \item in caso di eccezione solleva un \texttt{HTTPException} 500 con il dettaglio dell’errore.
 \end{itemize}
+Il Listing~\ref{listing:api-chromadb} riporta il router.
 \captionsetup{type=listing, belowskip=0pt}
 \inputminted[fontsize=\small, breaklines, breakanywhere=true, linenos=true, bgcolor=gray!10]{python}{code/api/chromadb.py}
-\captionof{listing}{Router ChromaDB (\texttt{api/chromadb.py})}
+\captionof{listing}{Router \texttt{/context}.}
 \label{listing:api-chromadb}
+
+\newpage

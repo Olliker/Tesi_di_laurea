@@ -2,13 +2,13 @@
 \label{chap:descrizione-stage}
 
 \section{Introduzione al progetto}
-Il modulo di previsione sviluppato durante lo stage stima la domanda futura di prodotti finiti per supportare la pianificazione MRP di \textit{ErpAI}. Le stime si basano sullo storico delle fatture di vendita e vengono propagate lungo le distinte base per evidenziare i fabbisogni di semilavorati e materie prime. I risultati vengono messi a disposizione dei planner come proposte rivedibili, affiancando inizialmente il processo manuale.
+Il modulo di previsione sviluppato durante lo stage stima la domanda futura di prodotti finiti per supportare la pianificazione \gls{mrp} di \textit{ErpAI}. Le stime si basano sullo storico delle fatture di vendita e vengono propagate lungo le distinte base per evidenziare i fabbisogni di semilavorati e materie prime. I risultati vengono messi a disposizione dei planner come proposte rivedibili, affiancando inizialmente il processo manuale.
 
 Obiettivi principali:
 \begin{itemize}
-    \item ridurre stock-out e fermate impianto anticipando materiali critici;
-    \item limitare overstock e costi di magazzino evitando produzioni o acquisti non necessari;
-    \item fornire previsioni integrabili con il modulo di planning e l’interfaccia utente per approvare o modificare le proposte.
+    \item ridurre \textit{stock-out} e fermate impianto anticipando materiali critici;
+    \item limitare \textit{overstock} e costi di magazzino evitando produzioni o acquisti non necessari;
+    \item fornire previsioni integrabili con il modulo di \textit{planning} e l’interfaccia utente per approvare o modificare le proposte.
 \end{itemize}
 
 
@@ -22,9 +22,9 @@ Durante la fase iniziale sono stati individuati alcuni rischi specifici per il m
     \label{risk:data-quality}
 \end{risk}
 
-\begin{risk}{Integrazione con l’\gls{erp} e le API}
-    \riskdescription{ritardi o incongruenze nello scambio dati tra modulo di previsione, planning e \acrshort{erp}}
-    \risksolution{contratto API documentato (OpenAPI), ambiente di staging per test end-to-end prima del rilascio}
+\begin{risk}{Integrazione con l’\gls{erp} e le \gls{api}}
+    \riskdescription{ritardi o incongruenze nello scambio dati tra modulo di previsione, \textit{planning} e \gls{erp}}
+    \risksolution{contratto \gls{api} documentato (OpenAPI), ambiente di staging per test end-to-end prima del rilascio}
     \label{risk:integration-api}
 \end{risk}
 
@@ -34,44 +34,41 @@ Durante la fase iniziale sono stati individuati alcuni rischi specifici per il m
     \label{risk:performance}
 \end{risk}
 
+\begin{risk}{Qualità di generalizzazione del modello}
+    \riskdescription{rischio di \gls{overfitting} o \gls{underfitting} a causa di dati sporchi o parametrizzazione non ottimale}
+    \risksolution{pulizia e normalizzazione dei dati, regolarizzazione e ottimizzazione degli iperparametri per bilanciare complessità e capacità predittiva}
+    \label{risk:model-generalization}
+\end{risk}
+
 \begin{risk}{Adozione da parte dei planner}
     \riskdescription{diffidenza verso i risultati del modello e ritardi nell’uso in produzione}
-    \risksolution{esecuzione parallela al processo manuale per più cicli, raccolta feedback e correzioni iterative}
+    \risksolution{esecuzione parallela al processo manuale per più cicli, raccolta \textit{feedback} e correzioni iterative}
     \label{risk:user-adoption}
 \end{risk}
 
 \section{Pianificazione}
 \subsection{Modalità di stage e interazione}
-Lo stage si svolge in presenza, con allineamenti quotidiani e tre touchpoint settimanali con il tutor aziendale per supporto tecnico e validazione degli step. La comunicazione avviene di persona; il tutor fornisce revisione del codice, risoluzione problemi e verifica delle scelte progettuali.
+Lo stage si svolge in presenza, con allineamenti quotidiani e tre \textit{touchpoint} settimanali con il tutor aziendale per supporto tecnico e validazione degli step. La comunicazione avviene di persona; il tutor fornisce revisione del codice, risoluzione problemi e verifica delle scelte progettuali.
 
 \subsection{Pianificazione settimanale}
-\begin{center}
-\rowcolors{1}{}{tableGray}
-\begin{longtable}{|c|p{8cm}|c|}
-\hline
-\textbf{Settimana} & \textbf{Obiettivi/Attività} & \textbf{Ore}\\ \hline
-\endfirsthead
-\rowcolor{white}
-\multicolumn{3}{c}{{\bfseries \tablename\ \thetable{} -- Continuo della tabella}}\\
-\hline
-\textbf{Settimana} & \textbf{Obiettivi/Attività} & \textbf{Ore}\\ \hline
-\endhead
-\hline
-\rowcolor{white}
-\multicolumn{3}{|r|}{{Continua nella prossima pagina...}}\\
-\hline
-\endfoot
-\endlastfoot
-1 & Analisi requisiti e rischi; studio delle tecnologie da utilizzare. & 40\\ \hline
-2 & Progettazione e revisione della documentazione esistente. & 40\\ \hline
-3 & Codifica del progetto. & 40\\ \hline
-4 & Codifica del progetto. & 40\\ \hline
-5 & Codifica del progetto. & 40\\ \hline
-6 & Codifica del progetto. & 40\\ \hline
-7 & Codifica dei test e stesura della documentazione. & 40\\ \hline
-8 & Preparazione della presentazione finale, test conclusivi e chiusura attività. & 20\\ \hline
-\caption{Pianificazione settimanale delle attività di stage.}
-\label{tab:pianificazione_settimanale}
-\end{longtable}
-\end{center}
+La Tabella~\ref{tab:pianificazione_settimanale} riporta la pianificazione delle attività settimanali concordata con il tutor aziendale all’inizio dello stage.
+\begin{table}[htbp]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \rowcolors{1}{}{tableGray}
+    \begin{tabular}{|c|p{8cm}|c|}
+    \hline
+    \textbf{Settimana} & \textbf{Obiettivi/Attività} & \textbf{Ore}\\ \hline
+    1 & Analisi requisiti e rischi; studio delle tecnologie da utilizzare. & 40\\ \hline
+    2 & Progettazione e revisione della documentazione esistente. & 40\\ \hline
+    3 & Codifica del progetto. & 40\\ \hline
+    4 & Codifica del progetto. & 40\\ \hline
+    5 & Codifica del progetto. & 40\\ \hline
+    6 & Codifica del progetto. & 40\\ \hline
+    7 & Codifica dei test e stesura della documentazione. & 40\\ \hline
+    8 & Preparazione della presentazione finale, test conclusivi e chiusura attività. & 20\\ \hline
+    \end{tabular}
+    \caption{Pianificazione settimanale delle attività di stage.}
+    \label{tab:pianificazione_settimanale}
+\end{table}
 \newpage

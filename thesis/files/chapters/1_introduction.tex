@@ -2,7 +2,7 @@
 \label{chap:introduzione}
 
 \section{L'azienda}
-Spazio Dev S.r.l. è una realtà giovane, fondata nel 2023 a Tombolo (PD), che opera come partner tecnologico per aziende industriali e commerciali con un approccio aperto e flessibile. Offre sviluppo software su misura, integrazione di sistemi e servizi cloud; progetta siti web, e-commerce e soluzioni gestionali per migliorare i processi produttivi e commerciali, con focus su integrazioni affidabili e supporto post-rilascio.
+Spazio Dev S.r.l.\footnote{\url{https://spaziodev.eu/}} è una realtà giovane, fondata nel 2023 a Tombolo (PD), che opera come partner tecnologico per aziende industriali e commerciali con un approccio aperto e flessibile. Offre sviluppo software su misura, integrazione di sistemi e servizi cloud; progetta siti web, e-commerce e soluzioni gestionali per migliorare i processi produttivi e commerciali, con focus su integrazioni affidabili e supporto post-rilascio.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{img/Logo_SpazioDev.png}
@@ -11,19 +11,19 @@ Spazio Dev S.r.l. è una realtà giovane, fondata nel 2023 a Tombolo (PD), che o
 \end{figure}
 
 \subsection{ErpAI}
-\mbox{ErpAI} è un progetto di Spazio Dev S.r.l. volto a realizzare un gestionale \gls{erp} modulare, destinato a essere venduto e personalizzato per le aziende clienti. La piattaforma è pensata per coprire anagrafiche (prodotti, clienti, fornitori), flussi amministrativi (fatture di vendita e acquisto, ordini, magazzino) e componenti avanzate come schedulazione di macchine/turni e previsione delle vendite. L’architettura modulare consente di attivare solo i domini necessari e di integrarli con sistemi esistenti tramite \gls{api}, mantenendo la flessibilità per personalizzazioni settoriali e successive estensioni di prodotto.
+\textit{ErpAI} è un progetto di Spazio Dev S.r.l. volto a realizzare un gestionale \acrfull{erp} modulare, destinato a essere venduto e personalizzato per le aziende clienti. La piattaforma è pensata per coprire anagrafiche (prodotti, clienti, fornitori), flussi amministrativi (fatture di vendita e acquisto, ordini, magazzino) e componenti avanzate come schedulazione di macchine/turni e previsione delle vendite. L’architettura modulare consente di attivare solo i domini necessari e di integrarli con sistemi esistenti tramite \acrfull{api}, mantenendo la flessibilità per personalizzazioni settoriali e successive estensioni di prodotto.
 
 \section{L'idea}
-Per completare l’offerta di ErpAI, è stata identificata la necessità di un motore di previsione vendite che supporti la pianificazione produttiva e riduca il rischio di stock-out o overstock. Il progetto nasce dal confronto con le richieste di clienti che vogliono decisioni più tempestive su produzione, approvvigionamenti e allocazione delle risorse.
+Per completare l’offerta di \textit{ErpAI}, è stata identificata la necessità di un motore di previsione vendite che supporti la pianificazione produttiva e riduca il rischio di \textit{stock-out} o \textit{overstock}. Il progetto nasce dal confronto con le richieste di clienti che vogliono decisioni più tempestive su produzione, approvvigionamenti e allocazione delle risorse.
 
-Il lavoro dello stage si concentra su questa componente predittiva: partire dai dati storici delle fatture, pulirli e trasformarli in feature utili, addestrare un modello di Machine Learning per stimare la domanda futura, valutarlo usando metriche di errore e rendere i risultati disponibili al sistema \acrshort{erp}. Il modulo è implementato in Python ed esposto tramite FastAPI per l’integrazione via \acrshort{api} con ErpAI; include spiegazioni delle previsioni con SHAP per aderire ai principi di \gls{xai}. La prima versione è stata sviluppata su un caso aziendale specifico e potrà essere adattata in futuro per gestire dataset e contesti di aziende differenti, variando feature, pre-processing e parametri del modello in base alle esigenze.
+Il lavoro dello stage si concentra su questa componente predittiva: partire dai dati storici delle fatture, pulirli e trasformarli in feature utili, addestrare un modello di \gls{ml} per stimare la domanda futura, valutarlo usando metriche di errore e rendere i risultati disponibili al sistema \acrshort{erp}. Il modulo è implementato in Python ed esposto tramite FastAPI per l’integrazione via \gls{api} con \textit{ErpAI}; include spiegazioni delle previsioni con \gls{shap} per aderire ai principi di \acrfull{xai}. La prima versione è stata sviluppata su un caso aziendale specifico e potrà essere adattata in futuro per gestire dataset e contesti di aziende differenti, variando feature, pre-processing e parametri del modello in base alle esigenze.
 
 \section{Organizzazione del testo}
 \begin{description}
     \item[{\hyperref[chap:processi-metodologie]{Il secondo capitolo}}] descrive i processi aziendali e le metodologie adottate durante lo stage.
     \item[{\hyperref[chap:descrizione-stage]{Il terzo capitolo}}] inquadra l’azienda, il percorso di stage e gli obiettivi concordati.
     \item[{\hyperref[chap:analisi-requisiti]{Il quarto capitolo}}] raccoglie e struttura i requisiti funzionali e non funzionali del motore di previsione.
-    \item[{\hyperref[chap:design]{Il quinto capitolo}}] illustra la progettazione complessiva: architettura, pipeline dati, modello predittivo e \acrshort{api} di servizio.
+    \item[{\hyperref[chap:design]{Il quinto capitolo}}] illustra la progettazione complessiva: architettura, pipeline dati, modello predittivo e \gls{api} di servizio.
     \item[{\hyperref[chap:codebase]{Il sesto capitolo}}] presenta il codice sviluppato, l’organizzazione dei moduli e gli esempi principali.
     \item[{\hyperref[chap:testing]{Il settimo capitolo}}] documenta la strategia di testing, i test automatici e la pipeline di integrazione continua.
     \item[{\hyperref[chap:conclusioni]{L’ottavo capitolo}}] riporta conclusioni, risultati ottenuti e possibili evoluzioni future.
@@ -31,10 +31,10 @@ Il lavoro dello stage si concentra su questa componente predittiva: partire dai 
 
 Riguardo la stesura del testo, relativamente al documento sono state adottate le seguenti convenzioni tipografiche:
 \begin{itemize}
-    \item gli acronimi, le abbreviazioni e i termini ambigui o di uso non comune menzionati vengono definiti nel glossario, situato alla fine del presente documento, e questa convenzione viene applicata in tutto il testo;
-    \item per la prima occorrenza dei termini riportati nel glossario viene utilizzata la forma estesa seguita dall’acronimo (ad esempio \gls{apig});
+    \item gli acronimi, le abbreviazioni e i termini ambigui o di uso non comune menzionati vengono definiti nel glossario, e questa convenzione è applicata in modo uniforme in tutto il testo;
+    \item per la prima occorrenza dei termini riportati nel glossario viene utilizzata la forma estesa seguita dall’acronimo (ad esempio \gls{api});
     \item i termini in lingua straniera o facenti parti del gergo tecnico sono evidenziati con il carattere \textit{corsivo};
-    \item i nomi di oggetti, funzioni, tabelle, colonne, classi e rotte API sono riportati in carattere \texttt{monospaziato}.
+    \item i nomi di oggetti, funzioni, tabelle, colonne, classi e rotte \gls{api} sono riportati in carattere \texttt{monospaziato}.
 \end{itemize}
 
 \newpage
