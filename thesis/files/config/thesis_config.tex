@@ -118,6 +118,9 @@
 \renewcommand*{\glspostdescription}{}
 % Redefine the format for the glossary entries to be italic
 \renewcommand*{\glstextformat}[1]{\textit{#1}\glox}
+
+% Garantisce ancore Hyperref univoche per i listing (evita warning di destinazioni duplicate)
+\providecommand*{\theHlisting}{\thechapter.\arabic{listing}}
 %\glsaddall
 
 \bibliography{references/bibliography}
