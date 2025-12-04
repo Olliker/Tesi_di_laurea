@@ -1,28 +1,35 @@
 \PassOptionsToPackage{dvipsnames}{xcolor} % colori PDF/A
-\PassOptionsToPackage{hyperfootnotes=false,hypertexnames=false}{hyperref} % evita warning Hfootnote/ancore duplicate
 
 \usepackage{colorprofiles}
-% PDF/A
-% validate in https://www.pdf-online.com/osa/validate.aspx
-\usepackage[a-1a,mathxmp]{pdfx}[2018/12/22]
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[italian]{babel}
 \usepackage{bookmark}
 \usepackage{caption}
 \usepackage{comment}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{caption}
 \usepackage{chngpage, calc} % centra il frontespizio
 \usepackage{emptypage} % pagine vuote senza testatina e piede di pagina
 \usepackage{epigraph} % per epigrafi
 \usepackage{indentfirst} % rientra il primo paragrafo di ogni sezione
 \usepackage{graphicx} % immagini
-\usepackage[pdfa]{hyperref} % collegamenti ipertestuali
+\usepackage{tagpdf}
+\tagpdfsetup{
+    activate-all=true,
+    interwordspace=true,
+    tabsorder=structure,
+    uncompress=true
+}
+\usepackage{hyperref} % collegamenti ipertestuali
 \usepackage{mparhack,relsize}  % finezze tipografiche
 \usepackage{nameref} % visualizza nome dei riferimenti
 \usepackage[font=small]{quoting} % citazioni
 \usepackage{subfig} % sottofigure, sottotabelle
 \usepackage[italian]{varioref} % riferimenti completi della pagina
 \usepackage{longtable} % tabelle su più pagine
+\usepackage{supertabular}
 \usepackage[toc, acronym, automake]{glossaries}
 \usepackage[backend=biber, style=verbose-ibid, hyperref, backref]{biblatex}
 \usepackage{lmodern}
@@ -37,5 +44,3 @@
 \usepackage{etoolbox}
 \usepackage[bottom]{footmisc}
 \usepackage{zref-totpages}
-\usepackage{float} % per il posizionamento rigido delle figure
-\usepackage{placeins} % per \FloatBarrier e controllo dei float
