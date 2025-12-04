@@ -4,44 +4,62 @@ In questo capitolo vengono riassunti i risultati ottenuti durante lo stage, valu
 
 \section{Copertura dei requisiti}
 La tabella~\ref{tab:copertura-requisiti} mostra la copertura dei requisiti elencati nella Sezione~\ref{sec:elenco-requisiti} (Tabella~\ref{tab:requisiti}): per ciascun requisito è indicato se è stato soddisfatto o meno.
+
+{
+\centering
 \renewcommand{\arraystretch}{1.2}
-\rowcolors{1}{}{tableGray}
-\begin{longtable}{|p{2.75cm}|p{2.75cm}|}
-\caption{Tabella del tracciamento del soddisfacimento dei requisiti.}\label{tab:copertura-requisiti}\\
+\rowcolors{2}{tableGray}{}
+\refstepcounter{table}
+\addcontentsline{lot}{table}{\thetable~~~Tabella di copertura dei requisiti}
+\vspace{0.5cm}
+\tablefirsthead{
+  \hiderowcolors
+  \hline
+  \textbf{Identificativo} & \textbf{Soddisfatto} \\
+  \hline
+  \showrowcolors
+}
+\tablehead{
+  \hiderowcolors
+  \hline \multicolumn{2}{r}{\small Continua...} \\ \hline
+  \textbf{Identificativo} & \textbf{Soddisfatto} \\
+  \hline
+  \showrowcolors
+}
+\tabletail{
+  \hline \multicolumn{2}{r}{\small Continua...} \\ \hline
+}
+\tablelasttail{\hline}
+
+\begin{supertabular}{|p{2.75cm}|p{2.75cm}|}
 \hline
-\multicolumn{1}{|c|}{\textbf{Identificativo}} & \multicolumn{1}{c|}{\textbf{Soddisfatto}} \\
-\hline
-\endfirsthead
-\rowcolor{white}
-\multicolumn{2}{c}{{\bfseries \tablename\ \thetable{} -- Continuo della tabella}}\\
-\hline
-\multicolumn{1}{|c|}{\textbf{Identificativo}} & \multicolumn{1}{c|}{\textbf{Soddisfatto}} \\
-\hline
-\endhead
-\rowcolor{white}
-\multicolumn{2}{|r|}{{Continua nella prossima pagina...}}\\
-\hline
-\endfoot
-\endlastfoot
-R.O.0 & Sì\\ \hline
+R.O.0 & Sì \\ \hline
 R.O.1 & Sì \\ \hline
-R.O.2 & Sì  \\ \hline
-R.O.3 & Sì  \\ \hline
-R.O.4 & Sì  \\ \hline
-R.O.5 & Sì  \\ \hline
-R.O.6 & Sì  \\ \hline
-R.O.7 & Sì  \\ \hline
-R.O.8 & Sì  \\ \hline
-R.D.0 & Sì  \\ \hline
-R.D.1 & Sì  \\ \hline
-R.D.2 & Sì   \\ \hline
-R.D.3 & No   \\ \hline
-R.D.4 & No   \\ \hline
-R.F.0 & No   \\ \hline
-R.F.1 & No  \\ \hline
-R.F.2 & Sì  \\ \hline
-\end{longtable}
-\rowcolors{1}{}{}
+R.O.2 & Sì \\ \hline
+R.O.3 & Sì \\ \hline
+R.O.4 & Sì \\ \hline
+R.O.5 & Sì \\ \hline
+R.O.6 & Sì \\ \hline
+R.O.7 & Sì \\ \hline
+R.O.8 & Sì \\ \hline
+R.D.0 & Sì \\ \hline
+R.D.1 & Sì \\ \hline
+R.D.2 & Sì \\ \hline
+R.D.3 & No \\ \hline
+R.D.4 & No \\ \hline
+R.F.0 & No \\ \hline
+R.F.1 & No \\ \hline
+R.F.2 & Sì \\ \hline
+\end{supertabular}
+
+\par
+}
+
+\begin{center}
+\textbf{Tabella \thetable:} Tracciamento del soddisfacimento dei requisiti
+\label{tab:copertura-requisiti}
+\end{center}
+
 
 \section{Analisi del prodotto}
 Il prodotto sviluppato è già in uso presso il cliente e ora sta passando una fase di monitoraggio e raccolta \textit{feedback} per futuri miglioramenti. Di seguito sono riportati i risultati ottenuti fino alla data di fine stage.

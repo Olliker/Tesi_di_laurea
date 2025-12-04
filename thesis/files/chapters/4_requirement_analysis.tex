@@ -16,27 +16,40 @@ L’interazione è orchestrata da \textit{ErpAI}, che media verso il modulo di p
 
 \subsection{Casi d'uso}
 La Tabella~\ref{tab:casi-uso} riporta i casi d’uso principali individuati per il modulo di previsione.
-\begin{center}
-    \renewcommand{\arraystretch}{1.2}
-    \rowcolors{1}{}{tableGray}
-    \begin{longtable}{|p{2.2cm}|p{11.8cm}|}
-    \caption{Casi d’uso principali del modulo di previsione}\label{tab:casi-uso}\\
-    \hline
-    \multicolumn{1}{|c|}{\textbf{ID}} & \multicolumn{1}{c|}{\textbf{Descrizione}}\\
-    \hline 
-    \endfirsthead
-    \rowcolor{white}
-    \multicolumn{2}{c}{{\bfseries \tablename\ \thetable{} -- Continuo della tabella}}\\
-    \hline
-    \multicolumn{1}{|c|}{\textbf{ID}} & \multicolumn{1}{c|}{\textbf{Descrizione}}\\
-    \hline 
-    \endhead
-    \hline
-    \rowcolor{white}
-    \multicolumn{2}{|r|}{{Continua nella prossima pagina...}}\\
-    \hline
-    \endfoot
-    \endlastfoot 
+\refstepcounter{table}
+\addcontentsline{lot}{table}{\thetable~~~Tabella dei casi d'uso}
+\vspace{0.5cm}
+\tablefirsthead{\hline \textbf{Identificativo} & \textbf{Descrizione} \\ \hline}
+\tablehead{\hline \multicolumn{2}{r}{\small Continua...} \\ \hline
+           \textbf{Identificativo} & \textbf{Descrizione} \\ \hline}
+\tabletail{\hline \multicolumn{2}{r}{\small Continua...} \\ \hline}
+\tablelasttail{\hline}
+
+\tablefirsthead{
+  \hiderowcolors
+  \hline
+  \textbf{Identificativo} & \textbf{Descrizione} \\
+  \hline
+  \showrowcolors
+}
+\tablehead{
+  \hiderowcolors
+  \hline \multicolumn{2}{r}{\small Continua...} \\ \hline
+  \textbf{Identificativo} & \textbf{Descrizione} \\
+  \hline
+  \showrowcolors
+}
+\tabletail{
+  \hline \multicolumn{2}{r}{\small Continua...} \\ \hline
+}
+\tablelasttail{\hline}
+
+{
+\centering
+\rowcolors{2}{tableGray}{}
+
+\begin{supertabular}{|p{2.75cm}|p{8cm}|}
+\hline
     
     UC1 & \textbf{Attori}: Utente finale.\\
         & \textbf{Scopo}: Avviare una richiesta di previsione.\\
@@ -97,7 +110,12 @@ La Tabella~\ref{tab:casi-uso} riporta i casi d’uso principali individuati per 
         & \textbf{Scopo}: Gestire errore \gls{api}.\\
         & \textbf{Pre-condizione}: Errore nelle chiamate di UC4.1 o UC4.2.\\
         & \textbf{Post-condizione}: Errore registrato, risposta di errore al chiamante. \\ \hline
-    \end{longtable}
+\end{supertabular}
+\par
+}
+\begin{center}
+\textbf{Tabella \thetable:} Tabella dei casi d'uso
+\label{tab:casi-uso}
 \end{center}
 
 \subsection{Diagrammi dei casi d'uso}
@@ -144,47 +162,60 @@ Ogni requisito del modulo di previsione per \textit{ErpAI} è codificato nel seg
 
 \subsection{Elenco requisiti}
 \label{sec:elenco-requisiti}
-La Tabella~\ref{tab:requisiti} riporta l’elenco completo dei requisiti raccolti per il modulo di previsione.
+La tabella \ref{tab:requisiti} riporta l’elenco completo dei requisiti raccolti per il modulo di previsione.
+
+{
+\centering
+\renewcommand{\arraystretch}{1.2}
+\rowcolors{2}{tableGray}{}
+\refstepcounter{table}
+\addcontentsline{lot}{table}{\thetable~~~Tabella dei requisiti}
+\tablefirsthead{
+  \hiderowcolors
+  \hline
+  \textbf{ID} & \textbf{Descrizione} \\
+  \hline
+  \showrowcolors
+}
+\tablehead{
+  \hiderowcolors
+  \hline \multicolumn{2}{r}{\small Continua...} \\ \hline
+  \textbf{ID} & \textbf{Descrizione} \\
+  \hline
+  \showrowcolors
+}
+\tabletail{
+  \hline \multicolumn{2}{r}{\small Continua...} \\ \hline
+}
+\tablelasttail{\hline}
+
+\begin{supertabular}{|p{2.5cm}|p{11.5cm}|}
+\hline
+R.O.0 & Il sistema deve stimare quante vendite (in pezzi) l’azienda effettuerà nei periodi futuri configurabili, partendo dai dati \gls{erp}. \\ \hline
+R.O.1 & Le esecuzioni di previsione devono essere gestite come job asincroni con stati tracciati (creazione, avanzamento, successo/fallimento) e consultabili. \\ \hline
+R.O.2 & Le previsioni devono essere salvate in archivi aziendali con identificativo di run, righe previsionali e controlli su duplicati/chiavi univoche. \\ \hline
+R.O.3 & I dati \acrshort{erp} devono essere sincronizzati periodicamente in un data store locale, con normalizzazione e indici per l’uso del modello. \\ \hline
+R.O.4 & L’accesso alle funzionalità di previsione e alle consultazioni deve essere protetto tramite autenticazione e validazione di token/\gls{jwks}. \\ \hline
+R.O.5 & Il sistema deve notificare un endpoint applicativo configurabile al termine dei job (successo o errore). \\ \hline
+R.O.6 & La gestione degli errori non deve interrompere l’elaborazione: i task in background devono gestire eccezioni senza bloccare il servizio. \\ \hline
+R.O.7 & Le \gls{api} devono esporre documentazione coerente e accessibile per l’integrazione con i servizi aziendali. \\ \hline
+R.O.8 & Il servizio deve essere distribuibile in modo riproducibile (container/docker-compose) con configurazione via variabili ambiente. \\ \hline
+R.D.0 & Il sistema dovrebbe produrre spiegazioni delle previsioni (es. feature importanti) e associarle ai risultati salvati. \\ \hline
+R.D.1 & Il sistema dovrebbe offrire un contesto consultabile (ricerca/testo) sulle previsioni per supportare chatbot o analisi esplorativa. \\ \hline
+R.D.2 & Il modello dovrebbe calcolare e tracciare metriche di accuratezza per ogni run, con target di errore medio sotto il 20\%. \\ \hline
+R.D.3 & Il sistema dovrebbe supportare analisi “what-if”, consentendo di variare parametri e confrontare scenari di previsione. \\ \hline
+R.D.4 & Il sistema dovrebbe supportare logistica di validazione automatica (test su dati di holdout) prima di promuovere un nuovo modello in produzione. \\ \hline
+R.F.0 & Potrebbe essere utile fornire esportazioni in formati aggiuntivi (\gls{csv}/Excel/\gls{json}) per integrazioni non \gls{api}. \\ \hline
+R.F.1 & Potrebbe essere utile offrire notifiche opzionali via email/Slack oltre al \gls{callback} configurabile. \\ \hline
+R.F.2 & Potrebbe essere utile prevedere dashboard sintetiche per monitorare trend e performance del modello. \\ \hline
+\end{supertabular}
+
+\par
+}
+
 \begin{center}
-    \renewcommand{\arraystretch}{1.2}
-    \rowcolors{1}{}{tableGray}
-    \begin{longtable}{|p{2.5cm}|p{11.5cm}|}
-    \caption[Elenco dei requisiti]{Elenco dei requisiti ~\ref{sec:elenco-requisiti}}\label{tab:requisiti}\\
-    \hline
-    \multicolumn{1}{|c|}{\textbf{ID}} & \multicolumn{1}{c|}{\textbf{Descrizione}}\\
-    \hline 
-    \endfirsthead
-    \rowcolor{white}
-    \multicolumn{2}{c}{{\bfseries \tablename\ \thetable{} -- Continuo della tabella}}\\
-    \hline
-    \multicolumn{1}{|c|}{\textbf{ID}} & \multicolumn{1}{c|}{\textbf{Descrizione}}\\
-    \hline 
-    \endhead
-    \hline
-    \rowcolor{white}
-    \multicolumn{2}{|r|}{{Continua nella prossima pagina...}}\\
-    \hline
-    \endfoot
-    \endlastfoot 
-    
-    R.O.0 & Il sistema deve stimare quante vendite (in pezzi) l’azienda effettuerà nei periodi futuri configurabili, partendo dai dati \gls{erp}. \\ \hline
-    R.O.1 & Le esecuzioni di previsione devono essere gestite come job asincroni con stati tracciati (creazione, avanzamento, successo/fallimento) e consultabili. \\ \hline
-    R.O.2 & Le previsioni devono essere salvate in archivi aziendali con identificativo di run, righe previsionali e controlli su duplicati/chiavi univoche. \\ \hline
-    R.O.3 & I dati \acrshort{erp} devono essere sincronizzati periodicamente in un data store locale, con normalizzazione e indici per l’uso del modello. \\ \hline
-    R.O.4 & L’accesso alle funzionalità di previsione e alle consultazioni deve essere protetto tramite autenticazione e validazione di token/\gls{jwks}. \\ \hline
-    R.O.5 & Il sistema deve notificare un endpoint applicativo configurabile al termine dei job (successo o errore). \\ \hline
-    R.O.6 & La gestione degli errori non deve interrompere l’elaborazione: i task in background devono gestire eccezioni senza bloccare il servizio. \\ \hline
-    R.O.7 & Le \gls{api} devono esporre documentazione coerente e accessibile per l’integrazione con i servizi aziendali. \\ \hline
-    R.O.8 & Il servizio deve essere distribuibile in modo riproducibile (container/docker-compose) con configurazione via variabili ambiente. \\ \hline
-    R.D.0 & Il sistema dovrebbe produrre spiegazioni delle previsioni (es. feature importanti) e associarle ai risultati salvati. \\ \hline
-    R.D.1 & Il sistema dovrebbe offrire un contesto consultabile (ricerca/testo) sulle previsioni per supportare chatbot o analisi esplorativa. \\ \hline
-    R.D.2 & Il modello dovrebbe calcolare e tracciare metriche di accuratezza per ogni run, con target di errore medio sotto il 20\%. \\ \hline
-    R.D.3 & Il sistema dovrebbe supportare analisi “what-if”, consentendo di variare parametri e confrontare scenari di previsione. \\ \hline
-    R.D.4 & Il sistema dovrebbe supportare logistica di validazione automatica (test su dati di holdout) prima di promuovere un nuovo modello in produzione. \\ \hline
-    R.F.0 & Potrebbe essere utile fornire esportazioni in formati aggiuntivi (\gls{csv}/Excel/\gls{json}) per integrazioni non \gls{api}. \\ \hline
-    R.F.1 & Potrebbe essere utile offrire notifiche opzionali via email/Slack oltre al \gls{callback} configurabile. \\ \hline
-    R.F.2 & Potrebbe essere utile prevedere dashboard sintetiche per monitorare trend e performance del modello. \\ \hline
-    \end{longtable}
+\textbf{Tabella \thetable:} Elenco dei requisiti
+\label{tab:requisiti}
 \end{center}
 
 \newpage
