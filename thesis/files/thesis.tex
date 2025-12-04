@@ -1,3 +1,14 @@
+\input{glyphtounicode}
+\pdfgentounicode=1
+% Map minted line-break glyphs to Unicode to satisfy PDF/A
+\pdfglyphtounicode{arrowhookleft}{21A9}
+\pdfglyphtounicode{arrowhookright}{21AA}
+\DocumentMetadata{
+    pdfstandard=A-3a,
+    pdfversion=1.7,
+    lang=it
+}
+
 \documentclass[
     table,
     12pt,
@@ -11,10 +22,7 @@
 
 \date{}
 
-\hypersetup{
-    pdfstartview=,
-    hyperfootnotes=false
-}
+\hypersetup{pdfstartview=}
 \begin{document}
     \frontmatter
     \input{preface/1_title_page}
@@ -28,6 +36,7 @@
     \blankpage % example of a blank page that also increases the page couter by 1
 
     \mainmatter
+    Contenuto di test per generare almeno una pagina e produrre un PDF valido.
     \input{chapters/1_introduction}
     \input{chapters/2_processes}
     \input{chapters/3_stage_desc}
@@ -39,6 +48,6 @@
 
     \backmatter
     % Bibliografia disattivata
-    % \input{references/bibliography}
-    \input{references/webliography}
+    %\input{references/bibliography}
+    %\input{references/webliography}
 \end{document}
